@@ -1,0 +1,128 @@
+//-----------------------------------------//
+//-----------------------------------------//
+      _       ______     ______   ______    
+     / \     |_   _ `. .' ____ \ |_   _ `.  
+    / _ \      | | `. \| (___ \_|  | | `. \ 
+   / ___ \     | |  | | _.____`.   | |  | | 
+ _/ /   \ \_  _| |_.' /| \____) | _| |_.' / 
+|____| |____||______.'  \______.'|______.'  
+                                            
+//-----------------------------------------//
+//-----------------------------------------//
+
+--Instrucciones de Uso del repositorio GIT--
+
+¿Que es GIT?
+
+Git es un software de control de versiones de proyectos. Fue desarrolado por Linus Torvalds (el creador de Linux) pensando en una forma de controlar proyectos de programadores en conjunto y como facilitar el trabajo a distancia.
+
+¿Que es GIThub?
+
+GIThub es un entorno social y amigable para el uso de control git. En esta pagina se pueden hacer comentarios, seguir personas, agregar "amigos" y muchas otras funciones de las redes sociales, pero enfocado al desarrollo de software. Esta disponible para linux, mac y windows.
+
+¿Como comenzar?
+
+Primero, hay que tener una cuenta en github, para ello solo se necesita registrarse y listo.(los pasos se enumeran con [.])
+
+[1] https://github.com/
+[2] Crear cuenta:
+	[2.1]Pick a username (selecciona un nombre de usuario)
+	[2.2]your email (Asocia un email)
+	[2.3]Create a password (crea una contraseña, github exige que tenga al menos un numero)
+	[2.4] Sing Up for GitHub (dale click)
+
+
+Una vez se tiene la cuenta en github (usando linux) se puede ser parte de un proyecto o crear uno propio desde el comienzo.Las instrucciones [3] son para la creacion de un proyecto nuevo (repositorio)  y las instrucciones [4] son para unirse a un proyecto ya existente.
+
+[3] En la pestaña Repositories ( Contributions, Repositories,Public Activity) se encuentran los repositorios ya creados, para crear uno nuevo, nos dirigimos  a NEW( all,public,source,forks, mirrors, New).
+
+Despues de darle click a new, aparecera una nueva interfaz para escoger el creador  el nombre del repositorio (owner /Repository name).Tambien es importante poner una descripcion del repositorio y si el repositorio es de caracter publico o privado (para privado toca pagar ).
+
+Luego (para evitar muchas lineas de codigo y sufrir despues ) es indispensable darle check al cuadrito de INITIALIZE THIS REPOSITORY WITH A README y escoger add.gitignore (C,java,pyhton,etc) y un archivo de licencia (GPL :libre libre,Apache:guarda patentes ...).
+ 
+Listo, ya esta el repositorio creado, podemos ir a nuestro usuario en la esquina superior derecha y ver nuestro usuario una hojita con un +, un destornillador con una llave inglesa y un logo de salir.
+
+Ahora saldra en nuestra pestaña de Repositories el nuevo REpo que acabamos de crear.
+
+[4]Buscamos la persona dueña del repositorio ( puede ser nosotros mismos) y entramos al repo.
+
+ [4.1]Nos aparecera en la parte superior el nombre del usuario seguido de una slash / y el nombre del repositorio. Abajo la descripcion de repositorio y mas abajo el numero de commits  hechos, el numero de branchs, el numero de releases y contrituros.
+
+ [4.2]Debajo de estas estadisticas del git, vemos los archivos dentro del repositorios ( y las carpetas tambien) con el usuario que realizo la ultima modificacion y a que horas.
+
+ [4.3] Por ultimo se vera el README del proyecto.
+
+ [4.4]Si nos dirigimos a la parte  derecha de la pantalla vemos <>Code con informaciond e issues, PUll requests, wiki, pulse, graphs, network, settings y por ultimo y mas importante el HTTP del git.
+
+ [4.5]El http del git ( no el del navegador que estaremos viendo en ese momento ) Https clone URL es la informacion con la cual sincronizaremos nuestr PC con el git ( asi como dropbox). ASi que copiamos esta direccion que sale en HTTPS CLONE URL. 
+
+[4.6]Nos dirigimos a nuestra carpeta en linux que querramos usar para trabajar en el proyecto, y desde la terminal usando comandos cd llegamos a ese directorio. Una vez dentro, usamos el comando :
+
+      git clone https://github.com/wallamejorge/ADSD_Proyecto2_2013_2.git
+
+El link se cambiara segun el repositorio que se necesite.
+
+Este comando git clone descargara a su computador todo el contenido del git y genera un link (indirecto ) con git.
+
+[4.7] Una vez creada la carpeta del git, trabajamos sobre el proyecto, y a diferencia de dropbox, este no se actualiza automaticamente, tenemos que darle  una serie de comandos para subir los cambios.
+
+[4.8] Los comandos para subir cambios son los siguentes ; lo que este entre %% es para cambiar:
+ 
+
+git add %nombre del archivo%
+o si se desea toda la carpeta seria git add *
+
+git commit -m "%Mensaje de los cambios hechos%"
+
+git push 
+
+ y listo , si revisamos la pagina de git en internet estara actualizada con la nueva informacion.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
