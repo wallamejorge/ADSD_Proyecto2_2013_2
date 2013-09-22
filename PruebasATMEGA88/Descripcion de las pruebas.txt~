@@ -10,8 +10,14 @@
 //-----------------------------------------//
 //-----------------------------------------//
 
--- Prueba:BlinkingLedC atmega 88
-	Esta version de blinking led prende y apaga un led en los pines PORTB cada 500 ms.
+-- Prueba:BlinkingLedControlado atmega 88
+	Esta version de blinking led prende y apaga un led en los pines PORTB cada 500 ms, si la entrada PORTD.0 esta en 0, sino se hace set en el puerto PORTB.0.
+
+-- Prueba : LedSecuencial Atmega 88
+	Esta version hace set y reset pin a pin del PORTB de manera que se veria la siguente secuencia: 10000000,01000000,00100000,00010000...
+
+-- Prueba : SecuencialLed_conReset Atmega 88
+	Esta version hace set y reset pin a pin del PORTB de manera que se veria la siguente secuencia: 10000000,01000000,00100000,00010000... pero si el pin0 de PORTD esta en 1 se resetea  la salida es 00000000
 
 
 
