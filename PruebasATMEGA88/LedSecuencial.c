@@ -20,7 +20,7 @@ int main(void)
     DDRB=0xff; //PORTB as OUTPUT
     PORTB=0x00;
     DDRD=0x00; //PORTD as INPUT
-    PORTD=0xff; //Enable Pull-up on the input port
+    PORTD=0xff; //Enable Pull-up on the input portD
 
     while(1) //Infinite loop
     {
