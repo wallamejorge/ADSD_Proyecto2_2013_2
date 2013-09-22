@@ -80,7 +80,9 @@ git push
 
 
 
+Por ultimo subo el link de referencia donde tome los pasos
 
+http://rogerdudler.github.io/git-guide/index.es.html
 
 
 
