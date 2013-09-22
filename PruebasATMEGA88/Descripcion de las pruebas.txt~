@@ -11,7 +11,7 @@
 //-----------------------------------------//
 
 -- Prueba:BlinkingLedC atmega 88
-	Esta version de blinking led prende y apaga un led en los 		pines PORTB cada 500 ms.
+	Esta version de blinking led prende y apaga un led en los pines PORTB cada 500 ms.
 
 
 
