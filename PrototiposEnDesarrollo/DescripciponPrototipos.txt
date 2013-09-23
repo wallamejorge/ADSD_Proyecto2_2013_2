@@ -1,0 +1,15 @@
+//------------------------------------------------//
+// DESCRIPCION DE PROTOTIPOS EN DESARROLLO DE GIT //
+//------------------------------------------------//
+
+//------------------------------------------------//
+//------------------------------------------------//
+
+**PrototipoNo1:Prototipo1_Acelerometro_SinV0.c
+
+	Este prototipo mide el angulo en radianes con un acelerometro de 3 ejes.
+	Aun no se sabe como medir la velocidad inicial, ademas, se mide la distancia
+	final con la formual de V0²*sin(2*angle)/g.
+	
+	Notas: PortA=>ADC, PORTB=>DigitalInput ,PORTC=>DigitalOuput,PORTD=>DigitalOutput;
+	PA0,PA1,PA2 son ax,ay,az. PB0=Start, PB1=End, PB3=Reset.
