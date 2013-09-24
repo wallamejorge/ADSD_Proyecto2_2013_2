@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------------------------------------------------------------------------------//
-//Prototipo NO.1 Proyecto 2 Cohete Agua. Codigo que lee 3 señales analogas de 0-5v y calcula los angulos de inclinacion y con las aceleracion
+//Prototipo NO.1 Proyecto 2 Cohete Agua. Codigo que lee 3 seï¿½ales analogas de 0-5v y calcula los angulos de inclinacion y con las aceleracion
 //determina velocidades para predecir la trayectoria del cohete.
 // Autores: Juan Felipe Martinez, Monica Tuta Farjado, Jorge Luis Mayorga
 // Universidad de los Andes
@@ -105,12 +105,12 @@ void main(void)
 //------------------------------------------------------//
 void init_ports(void){
 	
-DDRA=0x00;		//Defino Puerto B como Inputs
+DDRA=0x00;	//Defino Puerto A como Inputs
 PORTA=0xff;     //Habilito los puertos de A
 DDRB = 0x00;    //Defino Puerto B como Inputs
 PORTB=0xff;     //Habilito los puertos de B
 	
-DDRC=0xff;		//Defino Puerto C como Inputs
+DDRC=0xff;	//Defino Puerto C como Inputs
 PORTC=0x00;     //Habilito los puertos de C
 DDRD = 0xff;    //Defino Puerto D como Inputs
 PORTD=0x00;     //Habilito los puertos de D
