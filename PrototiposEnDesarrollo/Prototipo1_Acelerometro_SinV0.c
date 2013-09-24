@@ -225,7 +225,7 @@ if(Reset==0){
 //------------------------------------------------------//
 double final_distance(angle0xz,vy0,vx0,t){
 	int g=9.8;
-	return (((sqrt(vy0*vy0+vx0*vx0))*sin(angle0xz))/(g));
+	return (((sqrt(vy0*vy0+vx0*vx0))*sin(2*angle0xz))/(g));
 }
 //------------------------------------------------------//
 
