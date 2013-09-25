@@ -1,7 +1,7 @@
 //----------------------------------------------------------------------------------------------------------------------------------------------//
-//Prototipo NO.2 Proyecto 2 Cohete Agua. Codigo que lee 3 se?ales analogas de 0-5v y calcula los angulos de inclinacion.Tomando tambien lso tiempos
+//Prototipo NO.2 Proyecto 2 Cohete Agua. Codigo que lee 3 señales analogas de 0-5v y calcula los angulos de inclinacion.Tomando tambien los tiempos
 // es capaz de predecir la distancia maxima
-// Autores: Juan Felipe Martinez, Monica Tuta Farjado, Jorge Luis Mayorga
+// Autores: Juan Felipe Martinez, Monica Tuta Fajardo, Jorge Luis Mayorga
 // Universidad de los Andes
 //----------------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -15,7 +15,6 @@
 //------------------------------------------------//
 
 
-
 //------------------------------------------------//
 //---------------DEFINIR FUNCIONES----------------//
 //------------------------------------------------//
@@ -24,14 +23,14 @@
 #define tbi(x,y) x ^= _BV(y) //Cambia el estado logico del yth bit del puerto X
 #define is_high(x,y) ((x & _BV(y)) == _BV(y)) //Verifica si el yth bit del puerto X es 1
 #define is_low(x,y) ((x & _BV(y)) == 0) //Verifica si el yth bit del puerto X es 0
-double initial_anglexz(int ax, int ay, int az); // Calcula el angulo xz inicial de lanzamiento
-double initial_anglexy(int ax, int ay, int az); // Calcula el angulo xy inicial de lanzamiento
-double initial_angleyz(int ax, int ay, int az); // Calcula el angulo yz inicial de lanzamiento
-double final_distance(double angle0xz,double tf);
-void time_counter(int Start,int End,int Reset,int i,int time_tmp);
-void init_ports(void);
-void select_ADC_port(int i);
-void test_ADC(int x0,int x1,int x2);
+double initial_anglexz(double ax, double ay, double az); // Calcula el angulo xz inicial de lanzamiento
+double initial_anglexy(double ax, double ay, double az); // Calcula el angulo xy inicial de lanzamiento
+double initial_angleyz(double ax, double ay, double az); // Calcula el angulo yz inicial de lanzamiento
+double final_distance(double angle0xz,double tf); // Calcula la distancia del cohete en mts usando el angulo y el tiempo
+int time_counter(int Reset,int count,int count0); // Contador mientras que este activo count
+void init_ports(void); //Inicializa los puertos
+void select_ADC_port(int i);// Seleccion cual puerto de ADC leer
+void print_Angle_Binary(int NoPortCD,double angle);// Imprime en PORTD el angulo medido en binario
 //------------------------------------------------------//
 
 
@@ -40,57 +39,31 @@ void test_ADC(int x0,int x1,int x2);
 //------------------------------------------------------//
 void main(void)
 {
-	init_ports();
-	unsigned char compare_value = 180;
-	unsigned char x[3];
+	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
 	int i=0;
 	double angle0xy=0.0;
 	double angle0yz=0.0;
 	double angle0xz=0.0;
 	double x_total=0.0;
-	int time_tmp=0.0;
-	int a[3];
-	int j=0;
-	int Start=0;
+	double a[3];
+	int time=0.0;
+	int Count=0;
 	int Reset=0;
-	int End=0;
-
 
 	while (1)
-	{
-		for(i=0;i<4;i++)
-		{
-			select_ADC_port(i); // Seleccionar puerto de entrada ADC
-			a[i]=ADCH;
-			if(ADCH > compare_value) x[i]=1; // Cargar X[i] para el tes de pines
-			else x[i]=0;
-		}
-		cbi(PORTD,PD1);
-		angle0xy=initial_anglexy(a[0],a[1],a[2]);
-		angle0xz=initial_anglexz(a[0],a[1],a[2]);
-		angle0yz=initial_angleyz(a[0],a[1],a[2]);
+	{  for(i=0;i<4;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH;} // Cargar en el vector a[i] los valores ax ay az
 
-		x_total=final_distance(angle0xz,time_tmp);
-		test_ADC(x[0],x[1],x[2]);
-		if(angle0xy>=0.7)
-		{
-			sbi(PORTD,PD0); 
-			sbi(PORTD,PD1);
-			sbi(PORTD,PD2); 
-			sbi(PORTD,PD3); 
-		}
-		else if(angle0xy>=0.1)
-		{
-			cbi(PORTD,PD0); 
-			cbi(PORTD,PD1);
-			cbi(PORTD,PD2); 
-			cbi(PORTD,PD3); 
-		}
+		angle0xy=initial_anglexy(a[0],a[1],a[2]); // Genero angulo entre x y y en grados
+		angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
+		angle0yz=initial_angleyz(a[0],a[1],a[2]); // Genero angulo entre y y z en grados
+		print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD
+		x_total=final_distance(angle0xz,time); //
+
+		
 
 	}
 }
 //------------------------------------------------------//
-
 
 
 
@@ -111,14 +84,10 @@ void init_ports(void){
 	DDRD = 0xff;    //Defino Puerto D como Inputs
 	PORTD=0x00;     //Habilito los puertos de D
 
-	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0);
+	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0); // Habilito preescaler para tener una buena resolucion de datos de ADC
 
 }
 //------------------------------------------------------//
-
-
-
-
 
 
 //------------------------------------------------------//
@@ -133,89 +102,78 @@ void select_ADC_port(int i){
 //------------------------------------------------------//
 
 
-
-
-
-//------------------------------------------------------//
-//----------------------Test_ADC------------------------//
-//------------------------------------------------------//
-void test_ADC(int x0,int x1,int x2){
-	int x[3];
-	x[0]=x0;
-	x[1]=x1;
-	x[2]=x2;
-
-	if(x[0] == 1){sbi(PORTC,PC0);}else{cbi(PORTC,PC0);}
-	if(x[1] == 1){sbi(PORTC,PC1);}else{cbi(PORTC,PC1);}
-	if(x[2] == 1){sbi(PORTC,PC2);}else{cbi(PORTC,PC2);}
-
-}
-//------------------------------------------------------//
-
 //------------------------------------------------------//
 //----------------Initial_Angle_XY----------------------//
 //------------------------------------------------------//
-double initial_anglexy(int ax, int ay, int az){
-	return atan(ax/ay);
+double initial_anglexy(double ax, double ay, double az){
+	return atan(ax/ay)*(57.2958);
 }
 //------------------------------------------------------//
-
 
 
 //------------------------------------------------------//
 //----------------Initial_Angle_XZ----------------------//
 //------------------------------------------------------//
-double initial_anglexz(int ax, int ay, int az){
-	return atan(ax/az);
+double initial_anglexz(double ax, double ay, double az){
+	return atan(az/ax)*(57.2958);
 }
 //------------------------------------------------------//
-
-
 
 
 //------------------------------------------------------//
 //----------------Initial_Angle_YZ----------------------//
 //------------------------------------------------------//
-double initial_angleyz(int ax, int ay, int az){
-	return atan(ay/az);
+double initial_angleyz(double ax, double ay, double az){
+	return atan(ay/az)*(57.2958);
 }
 //------------------------------------------------------//
-
-
-//------------------------------------------------------//
-//----------------Initial_velocityY---------------------//
-//------------------------------------------------------//
-double initial_velocityY(int ax, int ay, int az){
-	return 0;
-}
-//------------------------------------------------------//
-
-
-
-//------------------------------------------------------//
-//----------------Initial_velocityX---------------------//
-//------------------------------------------------------//
-double initial_velocityX(int ax, int ay, int az){
-	return 0;
-}
-//------------------------------------------------------//
-
-
 
 
 //------------------------------------------------------//
 //---------------------Time_Counter---------------------//
 //------------------------------------------------------//
-void time_counter(int Start,int End,int Reset,int i,int time_tmp){
-	if(Reset==0){
-		if(Start==1){time_tmp=time_tmp+1;}
-		else if(End==1){time_tmp=time_tmp;}
-	else time_tmp=0;}
-	else time_tmp=0;
+int time_counter(int Reset,int count,int count0){
+	int salida=0;
+	if(Reset==0)
+	{
+		if(count==1){salida=count0+count;}else{salida=count0;}
+	}
+	else
+	{
+		salida=0;
+	}
+	return salida;
 }
 //------------------------------------------------------//
 
 
+//------------------------------------------------------//
+//---------------------Time_Counter---------------------//
+//------------------------------------------------------//
+void print_Angle_Binary(int NoPortCD,double angle){
+	double angle_segment_1=10;
+	double angle_segment_2=20;
+	double angle_segment_3=30;
+	double angle_segment_4=40;
+	double angle_segment_5=50;
+	double angle_segment_6=60;
+	double angle_segment_7=70;
+	double angle_segment_8=80;
+	double angle_segment_9=90;
+	
+if(angle>angle_segment_9){     sbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=1010//
+else if(angle>angle_segment_8){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=1001//
+else if(angle>angle_segment_7){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=1000//
+else if(angle>angle_segment_6){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0111//
+else if(angle>angle_segment_5){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=0110//
+else if(angle>angle_segment_4){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0101//
+else if(angle>angle_segment_3){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=0100//
+else if(angle>angle_segment_2){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0011//
+else if(angle>angle_segment_1){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=0010//
+else if(angle>0){              cbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0001//
+	
+}
+//------------------------------------------------------//
 
 //------------------------------------------------------//
 //--------------------Final_Distance--------------------//
@@ -228,11 +186,6 @@ double final_distance(double angle0xz,double tf){
 	float b=g;
 	float c=(-1/4)*g*g*t*t*sin(2*theta);
 	float r=(1/(2*a))*(-b+sqrt(b*b-4*a*c));
-	
-	/*if(c<-154){sbi(PORTD,PD0);}else{cbi(PORTD,PD0);}
-	if(c>-152){sbi(PORTD,PD1);}else{cbi(PORTD,PD1);}*/
-	
-		
 	return r;
 }
 //------------------------------------------------------//
