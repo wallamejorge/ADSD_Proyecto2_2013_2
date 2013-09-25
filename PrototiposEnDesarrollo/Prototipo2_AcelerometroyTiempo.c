@@ -71,7 +71,7 @@ void main(void)
 
 		x_total=final_distance(angle0xz,time_tmp);
 		test_ADC(x[0],x[1],x[2]);
-		if(x_total<30 && x_total>0){sbi(PORTD,PD0);}else{cbi(PORTD,PD0);}
+		
 
 	}
 }
@@ -207,13 +207,18 @@ void time_counter(int Start,int End,int Reset,int i,int time_tmp){
 //--------------------Final_Distance--------------------//
 //------------------------------------------------------//
 double final_distance(double angle0xz,double tf){
-	double theta=0.7156;
-	double t=2.544;
-	double g=9.8;
-	double a=-sin(2*theta)/(t*t);
-	double b=g;
-	double c=(-1/4)*g*g*t*t*sin(2*theta);
-	double r=(1/(2*a))*(-b+sqrt(b*b-4*a*c));
+	float theta=0.7156;
+	float t=2.544;
+	float g=9.8;
+	float a=-sin(2*theta)/(t*t); 
+	float b=g;
+	float c=(-1/4)*g*g*t*t*sin(2*theta);
+	float r=(1/(2*a))*(-b+sqrt(b*b-4*a*c));
+	
+	if(c<-154){sbi(PORTD,PD0);}else{cbi(PORTD,PD0);}
+	if(c>-152){sbi(PORTD,PD1);}else{cbi(PORTD,PD1);}
+	
+		
 	return r;
 }
 //------------------------------------------------------//
