@@ -65,7 +65,7 @@ void main(void)
 			if(ADCH > compare_value) x[i]=1; // Cargar X[i] para el tes de pines
 			else x[i]=0;
 		}
-		cbi(PORTD,PD1);
+		
 		angle0xy=initial_anglexy(a[0],a[1],a[2]);
 		angle0xz=initial_anglexz(a[0],a[1],a[2]);
 		angle0yz=initial_angleyz(a[0],a[1],a[2]);

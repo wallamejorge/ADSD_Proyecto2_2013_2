@@ -65,21 +65,21 @@ void main(void)
 			if(ADCH > compare_value) x[i]=1; // Cargar X[i] para el tes de pines
 			else x[i]=0;
 		}
-		cbi(PORTD,PD1);
+		
 		angle0xy=initial_anglexy(a[0],a[1],a[2]);
 		angle0xz=initial_anglexz(a[0],a[1],a[2]);
 		angle0yz=initial_angleyz(a[0],a[1],a[2]);
 
 		x_total=final_distance(angle0xz,time_tmp);
 		test_ADC(x[0],x[1],x[2]);
-		if(angle0xy>=0.7)
+		if(angle0xz>=0.7)
 		{
 			sbi(PORTD,PD0); 
 			sbi(PORTD,PD1);
 			sbi(PORTD,PD2); 
 			sbi(PORTD,PD3); 
 		}
-		else if(angle0xy>=0.1)
+		else if(angle0xz>=0.1)
 		{
 			cbi(PORTD,PD0); 
 			cbi(PORTD,PD1);

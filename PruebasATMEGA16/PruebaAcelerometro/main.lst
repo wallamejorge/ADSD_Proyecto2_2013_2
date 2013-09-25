@@ -1,0 +1,511 @@
+GAS LISTING /tmp/ccTltiCf.s 			page 1
+
+
+   1               		.file	"main.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__ = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.stabs	"/home/monica/Documents/ADSD_Proyecto2_2013_2/PruebasATMEGA16/PruebaAcelerometro/",100,0,2,
+   9               		.stabs	"main.c",100,0,2,.Ltext0
+  10               		.text
+  11               	.Ltext0:
+  12               		.stabs	"gcc2_compiled.",60,0,0,0
+  13               		.stabs	"int:t(0,1)=r(0,1);-32768;32767;",128,0,0,0
+  14               		.stabs	"char:t(0,2)=@s8;r(0,2);0;255;",128,0,0,0
+  15               		.stabs	"long int:t(0,3)=@s32;r(0,3);020000000000;017777777777;",128,0,0,0
+  16               		.stabs	"unsigned int:t(0,4)=r(0,4);0;0177777;",128,0,0,0
+  17               		.stabs	"long unsigned int:t(0,5)=@s32;r(0,5);0;037777777777;",128,0,0,0
+  18               		.stabs	"long long int:t(0,6)=@s64;r(0,6);01000000000000000000000;0777777777777777777777;",128,0,0,
+  19               		.stabs	"long long unsigned int:t(0,7)=@s64;r(0,7);0;01777777777777777777777;",128,0,0,0
+  20               		.stabs	"short int:t(0,8)=r(0,8);-32768;32767;",128,0,0,0
+  21               		.stabs	"short unsigned int:t(0,9)=r(0,9);0;0177777;",128,0,0,0
+  22               		.stabs	"signed char:t(0,10)=@s8;r(0,10);-128;127;",128,0,0,0
+  23               		.stabs	"unsigned char:t(0,11)=@s8;r(0,11);0;255;",128,0,0,0
+  24               		.stabs	"float:t(0,12)=r(0,1);4;0;",128,0,0,0
+  25               		.stabs	"double:t(0,13)=r(0,1);4;0;",128,0,0,0
+  26               		.stabs	"long double:t(0,14)=r(0,1);4;0;",128,0,0,0
+  27               		.stabs	"void:t(0,15)=(0,15)",128,0,0,0
+  28               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/avr/io.h",130,0,0,0
+  29               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/avr/sfr_defs.h",130,0,0,0
+  30               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/inttypes.h",130,0,0,0
+  31               		.stabs	"/usr/lib/gcc/avr/4.5.3/include/stdint.h",130,0,0,0
+  32               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/stdint.h",130,0,0,0
+  33               		.stabs	"int8_t:t(5,1)=(0,10)",128,0,121,0
+  34               		.stabs	"uint8_t:t(5,2)=(0,11)",128,0,122,0
+  35               		.stabs	"int16_t:t(5,3)=(0,1)",128,0,123,0
+  36               		.stabs	"uint16_t:t(5,4)=(0,4)",128,0,124,0
+  37               		.stabs	"int32_t:t(5,5)=(0,3)",128,0,125,0
+  38               		.stabs	"uint32_t:t(5,6)=(0,5)",128,0,126,0
+  39               		.stabs	"int64_t:t(5,7)=(0,6)",128,0,128,0
+  40               		.stabs	"uint64_t:t(5,8)=(0,7)",128,0,129,0
+  41               		.stabs	"intptr_t:t(5,9)=(5,3)",128,0,142,0
+  42               		.stabs	"uintptr_t:t(5,10)=(5,4)",128,0,147,0
+  43               		.stabs	"int_least8_t:t(5,11)=(5,1)",128,0,159,0
+  44               		.stabs	"uint_least8_t:t(5,12)=(5,2)",128,0,164,0
+  45               		.stabs	"int_least16_t:t(5,13)=(5,3)",128,0,169,0
+  46               		.stabs	"uint_least16_t:t(5,14)=(5,4)",128,0,174,0
+  47               		.stabs	"int_least32_t:t(5,15)=(5,5)",128,0,179,0
+  48               		.stabs	"uint_least32_t:t(5,16)=(5,6)",128,0,184,0
+  49               		.stabs	"int_least64_t:t(5,17)=(5,7)",128,0,192,0
+  50               		.stabs	"uint_least64_t:t(5,18)=(5,8)",128,0,199,0
+  51               		.stabs	"int_fast8_t:t(5,19)=(5,1)",128,0,213,0
+  52               		.stabs	"uint_fast8_t:t(5,20)=(5,2)",128,0,218,0
+  53               		.stabs	"int_fast16_t:t(5,21)=(5,3)",128,0,223,0
+  54               		.stabs	"uint_fast16_t:t(5,22)=(5,4)",128,0,228,0
+  55               		.stabs	"int_fast32_t:t(5,23)=(5,5)",128,0,233,0
+  56               		.stabs	"uint_fast32_t:t(5,24)=(5,6)",128,0,238,0
+  57               		.stabs	"int_fast64_t:t(5,25)=(5,7)",128,0,246,0
+GAS LISTING /tmp/ccTltiCf.s 			page 2
+
+
+  58               		.stabs	"uint_fast64_t:t(5,26)=(5,8)",128,0,253,0
+  59               		.stabs	"intmax_t:t(5,27)=(5,7)",128,0,273,0
+  60               		.stabs	"uintmax_t:t(5,28)=(5,8)",128,0,278,0
+  61               		.stabn	162,0,0,0
+  62               		.stabn	162,0,0,0
+  63               		.stabs	"int_farptr_t:t(3,1)=(5,5)",128,0,77,0
+  64               		.stabs	"uint_farptr_t:t(3,2)=(5,6)",128,0,81,0
+  65               		.stabn	162,0,0,0
+  66               		.stabn	162,0,0,0
+  67               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/avr/fuse.h",130,0,0,0
+  68               		.stabs	"__fuse_t:t(6,1)=(6,2)=s2low:(0,11),0,8;high:(0,11),8,8;;",128,0,252,0
+  69               		.stabn	162,0,0,0
+  70               		.stabn	162,0,0,0
+  71               		.stabs	"main:F(0,1)",36,0,25,main
+  72               	.global	main
+  73               		.type	main, @function
+  74               	main:
+  75               		.stabd	46,0,0
+   1:main.c        **** #include<avr/io.h>
+   2:main.c        **** #define cte 1.2778
+   3:main.c        **** #define seg_initial 170
+   4:main.c        **** #define seg_1 seg_initial-1*cte
+   5:main.c        **** #define seg_2 seg_initial-2*cte
+   6:main.c        **** #define seg_3 seg_initial-3*cte
+   7:main.c        **** #define seg_4 seg_initial-4*cte
+   8:main.c        **** #define seg_5 seg_initial-5*cte
+   9:main.c        **** #define seg_6 seg_initial-6*cte
+  10:main.c        **** #define seg_7 seg_initial-7*cte
+  11:main.c        **** #define seg_8 seg_initial-8*cte
+  12:main.c        **** #define seg_9 seg_initial-9*cte
+  13:main.c        **** #define seg_10 seg_initial-10*cte
+  14:main.c        **** #define seg_11 seg_initial-11*cte
+  15:main.c        **** #define seg_12 seg_initial-12*cte
+  16:main.c        **** #define seg_13 seg_initial-13*cte
+  17:main.c        **** #define seg_14 seg_initial-14*cte
+  18:main.c        **** #define seg_15 seg_initial-15*cte
+  19:main.c        **** #define seg_16 seg_initial-16*cte
+  20:main.c        **** #define seg_17 seg_initial-17*cte
+  21:main.c        **** #define seg_18 seg_initial-18*cte
+  22:main.c        **** #define sbi(x,y) x |= _BV(y)
+  23:main.c        **** #define cbi(x,y) x &=~_BV(y)
+  24:main.c        **** 
+  25:main.c        **** int main(void)
+  26:main.c        **** {
+  76               		.stabn	68,0,26,.LM0-.LFBB1
+  77               	.LM0:
+  78               	.LFBB1:
+  79               	/* prologue: function */
+  80               	/* frame size = 0 */
+  81               	/* stack size = 0 */
+  82               	.L__stack_usage = 0
+  27:main.c        **** 	DDRD=0xff; //PORTB as output
+  83               		.stabn	68,0,27,.LM1-.LFBB1
+  84               	.LM1:
+  85 0000 8FEF      		ldi r24,lo8(-1)
+  86 0002 81BB      		out 49-32,r24
+  28:main.c        **** 	PORTD=0x00;
+GAS LISTING /tmp/ccTltiCf.s 			page 3
+
+
+  87               		.stabn	68,0,28,.LM2-.LFBB1
+  88               	.LM2:
+  89 0004 12BA      		out 50-32,__zero_reg__
+  29:main.c        **** 	DDRA=0x00; //PORTA set as input (since we want to take inputs for the ADC)
+  90               		.stabn	68,0,29,.LM3-.LFBB1
+  91               	.LM3:
+  92 0006 1ABA      		out 58-32,__zero_reg__
+  30:main.c        **** 	PORTA=0xff; //Enable the pull-ups on PORTA
+  93               		.stabn	68,0,30,.LM4-.LFBB1
+  94               	.LM4:
+  95 0008 8BBB      		out 59-32,r24
+  31:main.c        **** 
+  32:main.c        **** 	ADMUX =_BV(ADLAR); //Enable the Left aligning of the ADC result
+  96               		.stabn	68,0,32,.LM5-.LFBB1
+  97               	.LM5:
+  98 000a 80E2      		ldi r24,lo8(32)
+  99 000c 87B9      		out 39-32,r24
+  33:main.c        **** 
+  34:main.c        **** 	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0); //Enable the ADC with prescaler=128
+ 100               		.stabn	68,0,34,.LM6-.LFBB1
+ 101               	.LM6:
+ 102 000e 87E8      		ldi r24,lo8(-121)
+ 103 0010 86B9      		out 38-32,r24
+ 104               	.L23:
+  35:main.c        **** 
+  36:main.c        **** 	ADCSRA |=_BV(ADSC); //Set the bit to start the conversion
+ 105               		.stabn	68,0,36,.LM7-.LFBB1
+ 106               	.LM7:
+ 107 0012 369A      		sbi 38-32,6
+ 108               	.L22:
+  37:main.c        **** 	while(1)
+  38:main.c        **** 	{
+  39:main.c        **** 		while(ADCSRA &_BV(ADSC)) {} //Waits for ADC conversion to complete
+ 109               		.stabn	68,0,39,.LM8-.LFBB1
+ 110               	.LM8:
+ 111 0014 3699      		sbic 38-32,6
+ 112 0016 00C0      		rjmp .L22
+  40:main.c        **** 		
+  41:main.c        **** 		if(ADCH>=170)
+ 113               		.stabn	68,0,41,.LM9-.LFBB1
+ 114               	.LM9:
+ 115 0018 85B1      		in r24,37-32
+ 116 001a 8A3A      		cpi r24,lo8(-86)
+ 117 001c 00F0      		brlo .L3
+  42:main.c        **** 		{
+  43:main.c        **** 			sbi(PORTD,PD0); 
+ 118               		.stabn	68,0,43,.LM10-.LFBB1
+ 119               	.LM10:
+ 120 001e 909A      		sbi 50-32,0
+ 121 0020 00C0      		rjmp .L24
+ 122               	.L3:
+  44:main.c        **** 			sbi(PORTD,PD1);
+  45:main.c        **** 			sbi(PORTD,PD2); 
+  46:main.c        **** 			sbi(PORTD,PD3); 
+  47:main.c        **** 		}
+  48:main.c        **** 		else if(ADCH>=165)
+ 123               		.stabn	68,0,48,.LM11-.LFBB1
+GAS LISTING /tmp/ccTltiCf.s 			page 4
+
+
+ 124               	.LM11:
+ 125 0022 85B1      		in r24,37-32
+ 126 0024 853A      		cpi r24,lo8(-91)
+ 127 0026 00F0      		brlo .L5
+  49:main.c        **** 		{
+  50:main.c        **** 			cbi(PORTD,PD0); 
+ 128               		.stabn	68,0,50,.LM12-.LFBB1
+ 129               	.LM12:
+ 130 0028 9098      		cbi 50-32,0
+ 131               	.L24:
+  51:main.c        **** 			sbi(PORTD,PD1);
+ 132               		.stabn	68,0,51,.LM13-.LFBB1
+ 133               	.LM13:
+ 134 002a 919A      		sbi 50-32,1
+ 135               	.L30:
+  52:main.c        **** 			sbi(PORTD,PD2); 
+ 136               		.stabn	68,0,52,.LM14-.LFBB1
+ 137               	.LM14:
+ 138 002c 929A      		sbi 50-32,2
+ 139               	.L28:
+  53:main.c        **** 			sbi(PORTD,PD3); 
+ 140               		.stabn	68,0,53,.LM15-.LFBB1
+ 141               	.LM15:
+ 142 002e 939A      		sbi 50-32,3
+ 143 0030 00C0      		rjmp .L23
+ 144               	.L5:
+  54:main.c        **** 		}
+  55:main.c        **** 		else if(ADCH>=160)
+ 145               		.stabn	68,0,55,.LM16-.LFBB1
+ 146               	.LM16:
+ 147 0032 85B1      		in r24,37-32
+ 148 0034 803A      		cpi r24,lo8(-96)
+ 149 0036 00F0      		brlo .L6
+  56:main.c        **** 		{
+  57:main.c        **** 			sbi(PORTD,PD0); 
+ 150               		.stabn	68,0,57,.LM17-.LFBB1
+ 151               	.LM17:
+ 152 0038 909A      		sbi 50-32,0
+  58:main.c        **** 			cbi(PORTD,PD1);
+ 153               		.stabn	68,0,58,.LM18-.LFBB1
+ 154               	.LM18:
+ 155 003a 9198      		cbi 50-32,1
+ 156 003c 00C0      		rjmp .L30
+ 157               	.L6:
+  59:main.c        **** 			sbi(PORTD,PD2); 
+  60:main.c        **** 			sbi(PORTD,PD3); 
+  61:main.c        **** 		}
+  62:main.c        **** 		else if(ADCH>=155)
+ 158               		.stabn	68,0,62,.LM19-.LFBB1
+ 159               	.LM19:
+ 160 003e 85B1      		in r24,37-32
+ 161 0040 8B39      		cpi r24,lo8(-101)
+ 162 0042 00F0      		brlo .L7
+  63:main.c        **** 		{
+  64:main.c        **** 			sbi(PORTD,PD0); 
+ 163               		.stabn	68,0,64,.LM20-.LFBB1
+ 164               	.LM20:
+GAS LISTING /tmp/ccTltiCf.s 			page 5
+
+
+ 165 0044 909A      		sbi 50-32,0
+  65:main.c        **** 			sbi(PORTD,PD1);
+ 166               		.stabn	68,0,65,.LM21-.LFBB1
+ 167               	.LM21:
+ 168 0046 919A      		sbi 50-32,1
+ 169 0048 00C0      		rjmp .L31
+ 170               	.L7:
+  66:main.c        **** 			cbi(PORTD,PD2); 
+  67:main.c        **** 			sbi(PORTD,PD3); 
+  68:main.c        **** 		}
+  69:main.c        **** 		else if(ADCH>=147)
+ 171               		.stabn	68,0,69,.LM22-.LFBB1
+ 172               	.LM22:
+ 173 004a 85B1      		in r24,37-32
+ 174 004c 8339      		cpi r24,lo8(-109)
+ 175 004e 00F4      		brsh .L35
+ 176               	.L8:
+  70:main.c        **** 		{
+  71:main.c        **** 			sbi(PORTD,PD0); 
+  72:main.c        **** 			sbi(PORTD,PD1);
+  73:main.c        **** 			sbi(PORTD,PD2); 
+  74:main.c        **** 			cbi(PORTD,PD3); 
+  75:main.c        **** 		}
+  76:main.c        **** 		else if(ADCH>=140)
+ 177               		.stabn	68,0,76,.LM23-.LFBB1
+ 178               	.LM23:
+ 179 0050 85B1      		in r24,37-32
+ 180 0052 8C38      		cpi r24,lo8(-116)
+ 181 0054 00F4      		brsh .L18
+ 182               	.L9:
+  77:main.c        **** 		{
+  78:main.c        **** 			cbi(PORTD,PD0); 
+  79:main.c        **** 			cbi(PORTD,PD1);
+  80:main.c        **** 			cbi(PORTD,PD2); 
+  81:main.c        **** 			cbi(PORTD,PD3); 
+  82:main.c        **** 		}
+  83:main.c        **** 		else if(ADCH>=80)
+ 183               		.stabn	68,0,83,.LM24-.LFBB1
+ 184               	.LM24:
+ 185 0056 85B1      		in r24,37-32
+ 186 0058 8035      		cpi r24,lo8(80)
+ 187 005a 00F0      		brlo .L10
+  84:main.c        **** 		{
+  85:main.c        **** 			sbi(PORTD,PD0); 
+ 188               		.stabn	68,0,85,.LM25-.LFBB1
+ 189               	.LM25:
+ 190 005c 909A      		sbi 50-32,0
+ 191 005e 00C0      		rjmp .L29
+ 192               	.L10:
+  86:main.c        **** 			cbi(PORTD,PD1);
+  87:main.c        **** 			cbi(PORTD,PD2); 
+  88:main.c        **** 			sbi(PORTD,PD3); 
+  89:main.c        **** 		}
+  90:main.c        **** 		else if(ADCH>=70)
+ 193               		.stabn	68,0,90,.LM26-.LFBB1
+ 194               	.LM26:
+ 195 0060 85B1      		in r24,37-32
+GAS LISTING /tmp/ccTltiCf.s 			page 6
+
+
+ 196 0062 8634      		cpi r24,lo8(70)
+ 197 0064 00F0      		brlo .L11
+  91:main.c        **** 		{
+  92:main.c        **** 			cbi(PORTD,PD0); 
+ 198               		.stabn	68,0,92,.LM27-.LFBB1
+ 199               	.LM27:
+ 200 0066 9098      		cbi 50-32,0
+ 201               	.L29:
+  93:main.c        **** 			cbi(PORTD,PD1);
+ 202               		.stabn	68,0,93,.LM28-.LFBB1
+ 203               	.LM28:
+ 204 0068 9198      		cbi 50-32,1
+ 205               	.L31:
+  94:main.c        **** 			cbi(PORTD,PD2); 
+ 206               		.stabn	68,0,94,.LM29-.LFBB1
+ 207               	.LM29:
+ 208 006a 9298      		cbi 50-32,2
+ 209 006c 00C0      		rjmp .L28
+ 210               	.L11:
+  95:main.c        **** 			sbi(PORTD,PD3); 
+  96:main.c        **** 		}
+  97:main.c        **** 		else if(ADCH>=60)
+ 211               		.stabn	68,0,97,.LM30-.LFBB1
+ 212               	.LM30:
+ 213 006e 85B1      		in r24,37-32
+ 214 0070 8C33      		cpi r24,lo8(60)
+ 215 0072 00F0      		brlo .L12
+ 216               	.L35:
+  98:main.c        **** 		{
+  99:main.c        **** 			sbi(PORTD,PD0); 
+ 217               		.stabn	68,0,99,.LM31-.LFBB1
+ 218               	.LM31:
+ 219 0074 909A      		sbi 50-32,0
+ 220 0076 00C0      		rjmp .L36
+ 221               	.L12:
+ 100:main.c        **** 			sbi(PORTD,PD1);
+ 101:main.c        **** 			sbi(PORTD,PD2); 
+ 102:main.c        **** 			cbi(PORTD,PD3); 
+ 103:main.c        **** 		}
+ 104:main.c        **** 		else if(ADCH>=50)
+ 222               		.stabn	68,0,104,.LM32-.LFBB1
+ 223               	.LM32:
+ 224 0078 85B1      		in r24,37-32
+ 225 007a 8233      		cpi r24,lo8(50)
+ 226 007c 00F0      		brlo .L13
+ 105:main.c        **** 		{
+ 106:main.c        **** 			cbi(PORTD,PD0); 
+ 227               		.stabn	68,0,106,.LM33-.LFBB1
+ 228               	.LM33:
+ 229 007e 9098      		cbi 50-32,0
+ 230               	.L36:
+ 107:main.c        **** 			sbi(PORTD,PD1);
+ 231               		.stabn	68,0,107,.LM34-.LFBB1
+ 232               	.LM34:
+ 233 0080 919A      		sbi 50-32,1
+ 234 0082 00C0      		rjmp .L34
+ 235               	.L13:
+GAS LISTING /tmp/ccTltiCf.s 			page 7
+
+
+ 108:main.c        **** 			sbi(PORTD,PD2); 
+ 109:main.c        **** 			cbi(PORTD,PD3); 
+ 110:main.c        **** 		}
+ 111:main.c        **** 		else if(ADCH>=40)
+ 236               		.stabn	68,0,111,.LM35-.LFBB1
+ 237               	.LM35:
+ 238 0084 85B1      		in r24,37-32
+ 239 0086 8832      		cpi r24,lo8(40)
+ 240 0088 00F0      		brlo .L14
+ 112:main.c        **** 		{
+ 113:main.c        **** 			sbi(PORTD,PD0); 
+ 241               		.stabn	68,0,113,.LM36-.LFBB1
+ 242               	.LM36:
+ 243 008a 909A      		sbi 50-32,0
+ 244 008c 00C0      		rjmp .L33
+ 245               	.L14:
+ 114:main.c        **** 			cbi(PORTD,PD1);
+ 115:main.c        **** 			sbi(PORTD,PD2); 
+ 116:main.c        **** 			cbi(PORTD,PD3); 
+ 117:main.c        **** 		}
+ 118:main.c        **** 		else if(ADCH>=30)
+ 246               		.stabn	68,0,118,.LM37-.LFBB1
+ 247               	.LM37:
+ 248 008e 85B1      		in r24,37-32
+ 249 0090 8E31      		cpi r24,lo8(30)
+ 250 0092 00F0      		brlo .L15
+ 119:main.c        **** 		{
+ 120:main.c        **** 			cbi(PORTD,PD0); 
+ 251               		.stabn	68,0,120,.LM38-.LFBB1
+ 252               	.LM38:
+ 253 0094 9098      		cbi 50-32,0
+ 254               	.L33:
+ 121:main.c        **** 			cbi(PORTD,PD1);
+ 255               		.stabn	68,0,121,.LM39-.LFBB1
+ 256               	.LM39:
+ 257 0096 9198      		cbi 50-32,1
+ 258               	.L34:
+ 122:main.c        **** 			sbi(PORTD,PD2); 
+ 259               		.stabn	68,0,122,.LM40-.LFBB1
+ 260               	.LM40:
+ 261 0098 929A      		sbi 50-32,2
+ 262 009a 00C0      		rjmp .L27
+ 263               	.L15:
+ 123:main.c        **** 			cbi(PORTD,PD3); 
+ 124:main.c        **** 		}
+ 125:main.c        **** 		else if(ADCH>=20)
+ 264               		.stabn	68,0,125,.LM41-.LFBB1
+ 265               	.LM41:
+ 266 009c 85B1      		in r24,37-32
+ 267 009e 8431      		cpi r24,lo8(20)
+ 268 00a0 00F0      		brlo .L16
+ 126:main.c        **** 		{
+ 127:main.c        **** 			sbi(PORTD,PD0); 
+ 269               		.stabn	68,0,127,.LM42-.LFBB1
+ 270               	.LM42:
+ 271 00a2 909A      		sbi 50-32,0
+ 272 00a4 00C0      		rjmp .L32
+GAS LISTING /tmp/ccTltiCf.s 			page 8
+
+
+ 273               	.L16:
+ 128:main.c        **** 			sbi(PORTD,PD1);
+ 129:main.c        **** 			cbi(PORTD,PD2); 
+ 130:main.c        **** 			cbi(PORTD,PD3); 
+ 131:main.c        **** 		}
+ 132:main.c        **** 		else if(ADCH>=10)
+ 274               		.stabn	68,0,132,.LM43-.LFBB1
+ 275               	.LM43:
+ 276 00a6 85B1      		in r24,37-32
+ 277 00a8 8A30      		cpi r24,lo8(10)
+ 278 00aa 00F0      		brlo .L17
+ 133:main.c        **** 		{
+ 134:main.c        **** 			cbi(PORTD,PD0); 
+ 279               		.stabn	68,0,134,.LM44-.LFBB1
+ 280               	.LM44:
+ 281 00ac 9098      		cbi 50-32,0
+ 282               	.L32:
+ 135:main.c        **** 			sbi(PORTD,PD1);
+ 283               		.stabn	68,0,135,.LM45-.LFBB1
+ 284               	.LM45:
+ 285 00ae 919A      		sbi 50-32,1
+ 286 00b0 00C0      		rjmp .L26
+ 287               	.L17:
+ 136:main.c        **** 			cbi(PORTD,PD2); 
+ 137:main.c        **** 			cbi(PORTD,PD3); 
+ 138:main.c        **** 		}
+ 139:main.c        **** 		else if(ADCH>=9)
+ 288               		.stabn	68,0,139,.LM46-.LFBB1
+ 289               	.LM46:
+ 290 00b2 85B1      		in r24,37-32
+ 291 00b4 8930      		cpi r24,lo8(9)
+ 292 00b6 00F0      		brlo .L18
+ 140:main.c        **** 		{
+ 141:main.c        **** 			sbi(PORTD,PD0); 
+ 293               		.stabn	68,0,141,.LM47-.LFBB1
+ 294               	.LM47:
+ 295 00b8 909A      		sbi 50-32,0
+ 296 00ba 00C0      		rjmp .L25
+ 297               	.L18:
+ 142:main.c        **** 			cbi(PORTD,PD1);
+ 143:main.c        **** 			cbi(PORTD,PD2); 
+ 144:main.c        **** 			cbi(PORTD,PD3); 
+ 145:main.c        **** 		}
+ 146:main.c        **** 		else /* if(ADCH>=8)*/
+ 147:main.c        **** 		{
+ 148:main.c        **** 			cbi(PORTD,PD0); 
+ 298               		.stabn	68,0,148,.LM48-.LFBB1
+ 299               	.LM48:
+ 300 00bc 9098      		cbi 50-32,0
+ 301               	.L25:
+ 149:main.c        **** 			cbi(PORTD,PD1);
+ 302               		.stabn	68,0,149,.LM49-.LFBB1
+ 303               	.LM49:
+ 304 00be 9198      		cbi 50-32,1
+ 305               	.L26:
+ 150:main.c        **** 			cbi(PORTD,PD2); 
+ 306               		.stabn	68,0,150,.LM50-.LFBB1
+GAS LISTING /tmp/ccTltiCf.s 			page 9
+
+
+ 307               	.LM50:
+ 308 00c0 9298      		cbi 50-32,2
+ 309               	.L27:
+ 151:main.c        **** 			cbi(PORTD,PD3); 
+ 310               		.stabn	68,0,151,.LM51-.LFBB1
+ 311               	.LM51:
+ 312 00c2 9398      		cbi 50-32,3
+ 313 00c4 00C0      		rjmp .L23
+ 314               		.size	main, .-main
+ 315               	.Lscope1:
+ 316               		.stabs	"",36,0,0,.Lscope1-.LFBB1
+ 317               		.stabd	78,0,0
+ 318               		.stabs	"",100,0,0,.Letext0
+ 319               	.Letext0:
+GAS LISTING /tmp/ccTltiCf.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+     /tmp/ccTltiCf.s:2      *ABS*:0000003f __SREG__
+     /tmp/ccTltiCf.s:3      *ABS*:0000003e __SP_H__
+     /tmp/ccTltiCf.s:4      *ABS*:0000003d __SP_L__
+     /tmp/ccTltiCf.s:5      *ABS*:00000034 __CCP__
+     /tmp/ccTltiCf.s:6      *ABS*:00000000 __tmp_reg__
+     /tmp/ccTltiCf.s:7      *ABS*:00000001 __zero_reg__
+     /tmp/ccTltiCf.s:74     .text:00000000 main
+
+NO UNDEFINED SYMBOLS
