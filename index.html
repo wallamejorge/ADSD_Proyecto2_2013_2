@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Proyecto No.2 ADSD 2013-2 Universidad de los Andes by wallamejorge</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Proyecto No.2 ADSD 2013-2 Universidad de los Andes</h1>
+        <h2>ADSD_Proyecto2_2013_2 Proyecto en C y assembler para un microcontrolador ATMEGA16 para la medición de la distancia recorrida por un cohete de agua.</h2>
+        <a href="https://github.com/wallamejorge/ADSD_Proyecto2_2013_2" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h3>
+<a name="proyecto-de-arquitectura-y-dise%C3%B1o-de-sistemas-digitales-2013-2-universidad-de-los-andes" class="anchor" href="#proyecto-de-arquitectura-y-dise%C3%B1o-de-sistemas-digitales-2013-2-universidad-de-los-andes"><span class="octicon octicon-link"></span></a>Proyecto de Arquitectura y Diseño de Sistemas Digitales 2013-2 Universidad de los Andes</h3>
+
+<p>Bienvenidos!
+En este proyecto se medira la distancia recorrida por un cohete de agua utilizando un microprocesador ATMEGA16 implementado el codigo en C y assembler.:</p>
+
+<pre><code>$ cd your_repo_root/repo_name
+$ git fetch origin
+$ git checkout gh-pages
+</code></pre>
+
+<h3>
+<a name="metodolog%C3%ADa" class="anchor" href="#metodolog%C3%ADa"><span class="octicon octicon-link"></span></a>Metodología</h3>
+
+<p>Para el desarrollo de proyecto se utiliza un repositorio en GitHub para el trabajo distribuido. En el git se suben los archivos en 3 tipos de carpetas.PruebasATMEGA88 PruebasATMEGA16 y Prototipos.En la carpeta de PruebasATMEGA88 se almacenaran los códigos para los microprocesadores ATMEGA88 para comenzar  a programar algoritmos básicos y afianzar el conocimiento del lenguaje C. En las PruebasATMEGA16 se almacenan las pruebas para comenzar a manejar el microprocesador de ATMEL que se utilizara en el cohete.
+Por ultimo la carpeta de Prototipos se almacén ya los códigos para el cohete con el micro atmega16. </p>
+
+<p>En cada carpeta se encontrara un archivo de texto de descripciones donde se encuentra detalladamente los puertos, las funciones, lo que hace cada algoritmo, etc.</p>
+
+<p>En la primera fase se tienen 2 ideas para medir la distancia. La primera consiste en relacionar estadisticamente el numero de bombeo con el angulo y así encontrar una predicción de las distancias. La otra opcion es utilizar una formula de cinematica despejada de una cuadratica pero tiene el problema de no contemplar ni peso del proyectil , ni rebotes en el suelo, ni friccion del aire.</p>
+
+<h3>
+<a name="las-reglas-del-proyectos" class="anchor" href="#las-reglas-del-proyectos"><span class="octicon octicon-link"></span></a>Las reglas del proyectos</h3>
+
+<p>ADSD_Proyecto2_2013_2 Proyecto en C y assembler para un microcontrolador ATMEGA16 para la medicion de la distancia recorrida por un cohete de agua.</p>
+
+<p>Un cohete de agua o un cohete de botella es un tipo de cohete de modelismo que usa agua como propelente de reaccion. La camara de presion, motor del cohete, es generalmente una botella de plastico. El agua es lanzada fuera por un gas a presion, normalmente aire comprimido, lo que impulsa el cohete segun la 3a ley de Newton. Su trabajo consiste en implementar un dispositivo que pueda estimar el desplazamiento horizontal que ha recorrido un cohete de agua en su vuelo, por medio de una rutina en Assembler y C en un microcontrolador disponible en el mercado colombiano. El dispositivo se encontrara dentro del cohete que usted mismo dise~ne y fabrique. Al nalizar el vuelo del cohete, el dispositivo debera tener un sistema que visualice el desplazamiento recorrido. No se conoce ni el angulo, ni la presion de lanzamiento.</p>
+
+<p>Usted debe utilizar microcontroladores disponibles en el mercado colombiano, sin embargo, bajo ninguna circunstancia esta permitido el uso de PICs, dsPICs, Arduinos y/o Wiring, se sugiere el uso de microcontroladores de nucleo AVR (i.e. ATtiny, ATMega, ATXMega).</p>
+
+<p>La dia de la entrega del proyecto usted lazara su cohete con la base de lanzamiento provista por los asistentes del curso y se hara la comprobacion de estimacion de la distancia. Esto implica que para la hora de la entrega usted debe tener todo el sistema ensamblado dentro del cohete.</p>
+
+<p>Asi mismo, usted debe desarrollar una pagina en la Wiki TTDE (<a href="http://ttde.uniandes.edu.co">http://ttde.uniandes.edu.co</a>) donde presente de forma detallada el ujo de dise~no usado, los nombres de los integrantes del grupo, el nombre del producto,los elementos publicitarios utilizados, la arquitectura de la soluciion y diagramas de fujos del algoritmo, indicadores de uso del microcontrolador, codigo fuente, archivos fuente del material generado, video(s) de demostracion, descripcion detallada del analisis teorico y experimental utilizado para lograr estimar la distancia recorrida del cohete. Todo ha de ser incluido en la pagina, bajo el formato especicado en la misma wiki. De igual forma se debe incluir el analisis de las causas de exito y no exito del proyecto, propuestas de mejoras para proyectos futuros y nalmente la bibliograca utilizada. La pagina de la wiki debera estar lista a mas tardar a la media noche del da anterior de la entrega. Los mejores productos y dise~nos serian conservados en la Wiki de la linea TTDE junto con los demas proyectos que se han desarrollados por los demas miembros de la linea.</p>
+
+<p>Se deben consignar los logros y problemas presentados da a da en el desarrollo del proyecto en la pagina WIKI TTDE. Para esto el grupo debera incluir en la primera semana de clases un cronograma de actividades y la distribucion de tareas entre los integrantes del grupo. La nota del proyecto sera dependiendo los resultados obtenidos luego de tres lanzamientos, con la correlacion entre los valores medidos electronicamente y lo valores medidas con un decametro. Se espera que el valor medido no tenga un error superior a 20cm.</p>
+
+<h3>
+<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+
+<p>Los autores de este proyecto son Jorge Luis Mayorga alias Wallamejorge <a href="https://github.com/wallamejorge" class="user-mention">@wallamejorge</a> Monica Tuta <a href="https://github.com/monicatuta1" class="user-mention">@monicatuta1</a> y Juan Felipe Martinez <a href="https://github.com/juanfemartinez" class="user-mention">@juanfemartinez</a> </p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/wallamejorge/ADSD_Proyecto2_2013_2/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/wallamejorge/ADSD_Proyecto2_2013_2/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/wallamejorge/ADSD_Proyecto2_2013_2"></a> is maintained by <a href="https://github.com/wallamejorge">wallamejorge</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
