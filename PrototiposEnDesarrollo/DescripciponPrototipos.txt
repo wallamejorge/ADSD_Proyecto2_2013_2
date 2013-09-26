@@ -13,3 +13,15 @@
 	
 	Notas: PortA=>ADC, PORTB=>DigitalInput ,PORTC=>DigitalOuput,PORTD=>DigitalOutput;
 	PA0,PA1,PA2 son ax,ay,az. PB0=Start, PB1=End, PB3=Reset.
+
+**PrototipoNo2:Prototipo1_AcelerometroyTiempo.c
+
+	Este prototipo mide el angulo en grados con un acelerometro de 3 ejes.
+	Usando este angulo y el tiempo que recorre en el aire, este codigo utiliza una formula
+	cuadratica para predecir el recorrido total.Si se llegasen a presentar errores entre la formula y la experiencia
+	se implementara un sistema estadistico que corrija estas variaciones.
+	
+	Notas: PortA=>ADC, PORTB=>DigitalInput ,PORTC=>DigitalOuput,PORTD=>DigitalOutput;
+	PA0,PA1,PA2 son ax,ay,az. PD0-PD3 son las salidas del "nivel" del angulo, es decir:
+		10°-----0001
+		20°-----0010... etc hasta 90.
