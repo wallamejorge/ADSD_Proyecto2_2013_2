@@ -47,44 +47,44 @@ void main(void)
 	double angle0xz=0.0;
 	double x_total=0.0;
 	double a[5];
+	int rstanalogo=0;
 	int time=0;
 	double ms_time=0.0;
 	int count=0;
-	int rstanalogo=0;
+	double temp=0.0;
 
 	while (1)
-	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Cargar en el vector a[i] los valores ax ay az
+	{  
+		
+	for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Cargar en el vector a[i] los valores ax ay az
 	a[3]=a[3]+81;
 	a[4]=a[4]+81;
 	
-		angle0xy=initial_anglexy(a[0],a[1],a[2]); // Genero angulo entre x y y en grados
-		angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
-		angle0yz=initial_angleyz(a[0],a[1],a[2]); // Genero angulo entre y y z en grados
-		print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD
+	angle0xy=initial_anglexy(a[0],a[1],a[2]); // Genero angulo entre x y y en grados
+	angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
+	angle0yz=initial_angleyz(a[0],a[1],a[2]); // Genero angulo entre y y z en grados
+	print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD
+	
+	// Conversión de entrada análoga
+	
+	if(a[3]>132){count=1;}
+	else{count=0;}
 		
-		// Conversión de entrada análoga
-		
-		if(a[3]>132){count=1;}
-		else{count=0;}
-		if(a[4]>132){rstanalogo=1;}
-		else{rstanalogo=0;}
-		// Si reset (análogo) todas la señales a 0, sino los contadores de milisegundos y segundos funcionan normal	
-			
-			if (count==1)	{
-				if(ms_time==10){time=time+1;ms_time=0;}else{time=time+0;}
-				_delay_ms(100);
-				ms_time=ms_time+1;	
-				print_Time_Binary(time);}
-			else { ms_time=ms_time;time=time;}
-			
+	if (count==1){
+		if(ms_time==10){time=time+1;ms_time=0;}else{time=time+0;}
+		_delay_ms(100);
+		ms_time=ms_time+1;
+		print_Time_Binary(time);
+		}
+	else { ms_time=ms_time;time=time;}
+    
+	if(rstanalogo==1){break;}else{ms_time=ms_time;time=time;}
 
-		
+	x_total=final_distance(angle0xz,time); // Calcula la distancia final.
 
-		x_total=final_distance(angle0xz,time); // Calcula la distancia final.
+	
 
-		
-
-	}
+}
 }
 //------------------------------------------------------//
 
@@ -184,16 +184,16 @@ void print_Angle_Binary(int NoPortCD,double angle){
 	double angle_segment_8=80;
 	double angle_segment_9=90;
 	
-if(angle>angle_segment_9){     cbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0001//
-else if(angle>angle_segment_8){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=0010//
-else if(angle>angle_segment_7){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0011//
-else if(angle>angle_segment_6){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=0100//
-else if(angle>angle_segment_5){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0101//
-else if(angle>angle_segment_4){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} 
-else if(angle>angle_segment_3){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0111// 
-else if(angle>angle_segment_2){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=1000// 
-else if(angle>angle_segment_1){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=1001// 
-else if(angle>0){              sbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=1010//
+	if(angle>angle_segment_9){     cbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0001//
+	else if(angle>angle_segment_8){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=0010//
+	else if(angle>angle_segment_7){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0011//
+	else if(angle>angle_segment_6){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=0100//
+	else if(angle>angle_segment_5){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0101//
+	else if(angle>angle_segment_4){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=0110//
+	else if(angle>angle_segment_3){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0111//
+	else if(angle>angle_segment_2){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=1000//
+	else if(angle>angle_segment_1){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=1001//
+	else if(angle>0){              sbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=1010//
 	
 }
 //------------------------------------------------------//
@@ -204,22 +204,22 @@ else if(angle>0){              sbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(
 //----------------------Print Angle---------------------//
 //------------------------------------------------------//
 void print_Time_Binary(int time){
-int time_segment_1=1;
-int time_segment_2=2;
-int time_segment_3=3;
-int time_segment_4=4;
-int time_segment_5=5;
-int time_segment_6=6;
-int time_segment_7=7;
-int times=time;
-if(times>time_segment_7){	   sbi(PORTC,PC2);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORC=111//
-else if(times>time_segment_6){  sbi(PORTC,PC2);sbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=110//
-else if(times>time_segment_5){  sbi(PORTC,PC2);cbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=101//
-else if(times>time_segment_4){  sbi(PORTC,PC2);cbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=100//
-else if(times>time_segment_3){  cbi(PORTC,PC2);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=011//
-else if(times>time_segment_2){  cbi(PORTC,PC2);sbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=010//
-else if(times>time_segment_1){  cbi(PORTC,PC2);cbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=001//
-else {			               cbi(PORTC,PC2);cbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=000//
+	int time_segment_1=1;
+	int time_segment_2=2;
+	int time_segment_3=3;
+	int time_segment_4=4;
+	int time_segment_5=5;
+	int time_segment_6=6;
+	int time_segment_7=7;
+	int times=time;
+	if(times>time_segment_7){	sbi(PORTC,PC2);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORC=111//
+	else if(times>time_segment_6){  sbi(PORTC,PC2);sbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=110//
+	else if(times>time_segment_5){  sbi(PORTC,PC2);cbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=101//
+	else if(times>time_segment_4){  sbi(PORTC,PC2);cbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=100//
+	else if(times>time_segment_3){  cbi(PORTC,PC2);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=011//
+	else if(times>time_segment_2){  cbi(PORTC,PC2);sbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=010//
+	else if(times>time_segment_1){  cbi(PORTC,PC2);cbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=001//
+	else {			        cbi(PORTC,PC2);cbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=000//
 
 
 }
@@ -232,7 +232,7 @@ double final_distance(double angle0xz,double tf){
 	float theta=0.7156;
 	float t=2.544;
 	float g=9.8;
-	float a=-sin(2*theta)/(t*t); 
+	float a=-sin(2*theta)/(t*t);
 	float b=g;
 	float c=(-1/4)*g*g*t*t*sin(2*theta);
 	float r=(1/(2*a))*(-b+sqrt(b*b-4*a*c));
