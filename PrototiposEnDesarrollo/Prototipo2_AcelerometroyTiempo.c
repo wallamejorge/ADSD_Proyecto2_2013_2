@@ -57,7 +57,9 @@ void main(void)
 		angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
 		angle0yz=initial_angleyz(a[0],a[1],a[2]); // Genero angulo entre y y z en grados
 		print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD
-		x_total=final_distance(angle0xz,time); //
+		time=time+1;
+		_delay_ms(1);
+		x_total=final_distance(angle0xz,time); // Calcula la distancia final.
 
 		
 
