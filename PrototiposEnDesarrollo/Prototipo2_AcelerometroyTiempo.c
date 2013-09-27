@@ -51,7 +51,7 @@ void main(void)
 	int Reset=0;
 
 	while (1)
-	{  for(i=0;i<4;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-73;} // Cargar en el vector a[i] los valores ax ay az
+	{  for(i=0;i<4;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Cargar en el vector a[i] los valores ax ay az
 
 		angle0xy=initial_anglexy(a[0],a[1],a[2]); // Genero angulo entre x y y en grados
 		angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
