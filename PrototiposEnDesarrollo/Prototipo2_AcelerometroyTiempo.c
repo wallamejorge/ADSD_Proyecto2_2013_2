@@ -189,7 +189,7 @@ else if(angle>angle_segment_8){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(
 else if(angle>angle_segment_7){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0011//
 else if(angle>angle_segment_6){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=0100//
 else if(angle>angle_segment_5){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0101//
-else if(angle>angle_segment_4){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=0110// 
+else if(angle>angle_segment_4){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} 
 else if(angle>angle_segment_3){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0111// 
 else if(angle>angle_segment_2){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=1000// 
 else if(angle>angle_segment_1){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=1001// 
