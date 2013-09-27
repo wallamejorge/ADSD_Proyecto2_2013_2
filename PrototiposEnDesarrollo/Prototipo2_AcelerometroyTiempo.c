@@ -76,14 +76,14 @@ void main(void)
 //------------------------------------------------------//
 void init_ports(void){
 
-	DDRA=0x00;	//Defino Puerto A como Inputs
+	DDRA=0x00;		//Defino Puerto A como Inputs
 	PORTA=0xff;     //Habilito los puertos de A
 	DDRB = 0x00;    //Defino Puerto B como Inputs
 	PORTB=0xff;     //Habilito los puertos de B
 
-	DDRC=0xff;	//Defino Puerto C como Inputs
+	DDRC=0xff;		//Defino Puerto C como Outputs
 	PORTC=0x00;     //Habilito los puertos de C
-	DDRD = 0xff;    //Defino Puerto D como Inputs
+	DDRD = 0xff;    //Defino Puerto D como Outputs
 	PORTD=0x00;     //Habilito los puertos de D
 
 	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0); // Habilito preescaler para tener una buena resolucion de datos de ADC
@@ -150,7 +150,7 @@ int time_counter(int Reset,int count,int count0){
 
 
 //------------------------------------------------------//
-//---------------------Time_Counter---------------------//
+//----------------------Print Angle---------------------//
 //------------------------------------------------------//
 void print_Angle_Binary(int NoPortCD,double angle){
 	double angle_segment_1=10;
