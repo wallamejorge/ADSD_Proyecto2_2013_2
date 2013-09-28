@@ -1,4 +1,4 @@
-GAS LISTING /tmp/cchIUHRR.s 			page 1
+GAS LISTING /tmp/cczgOf3U.s 			page 1
 
 
    1               		.file	"main.c"
@@ -58,7 +58,7 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
   55               		.stabs	"int_fast32_t:t(5,23)=(5,5)",128,0,233,0
   56               		.stabs	"uint_fast32_t:t(5,24)=(5,6)",128,0,238,0
   57               		.stabs	"int_fast64_t:t(5,25)=(5,7)",128,0,246,0
-GAS LISTING /tmp/cchIUHRR.s 			page 2
+GAS LISTING /tmp/cczgOf3U.s 			page 2
 
 
   58               		.stabs	"uint_fast64_t:t(5,26)=(5,8)",128,0,253,0
@@ -74,7 +74,7 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
   68               		.stabs	"__fuse_t:t(6,1)=(6,2)=s2low:(0,11),0,8;high:(0,11),8,8;;",128,0,252,0
   69               		.stabn	162,0,0,0
   70               		.stabn	162,0,0,0
-  71               		.stabs	"init_ports:F(0,15)",36,0,98,init_ports
+  71               		.stabs	"init_ports:F(0,15)",36,0,114,init_ports
   72               	.global	init_ports
   73               		.type	init_ports, @function
   74               	init_ports:
@@ -89,232 +89,248 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
    8:main.c        **** //-------------------------------------------------//
    9:main.c        **** //-----------------LIBRERIAS-----------------------//
   10:main.c        **** //------------------------------------------------//
-  11:main.c        **** #include<avr/io.h>
-  12:main.c        **** #include<math.h>
-  13:main.c        **** #include<util/delay.h>
-  14:main.c        **** #include<stdbool.h>
-  15:main.c        **** //------------------------------------------------//
-  16:main.c        **** 
+  11:main.c        **** //#include<mega16.h>
+  12:main.c        **** #include<avr/io.h>
+  13:main.c        **** #include<math.h>
+  14:main.c        **** #include<util/delay.h>
+  15:main.c        **** #include<stdbool.h>
+  16:main.c        **** //------------------------------------------------//
   17:main.c        **** 
-  18:main.c        **** //------------------------------------------------//
-  19:main.c        **** //---------------DEFINIR FUNCIONES----------------//
-  20:main.c        **** //------------------------------------------------//
-  21:main.c        **** #define sbi(x,y) x |= _BV(y) //Hace set al yth bit del puerto X
-  22:main.c        **** #define cbi(x,y) x &= ~(_BV(y)) //Hace reset al yth bit del puerto X
-  23:main.c        **** #define tbi(x,y) x ^= _BV(y) //Cambia el estado logico del yth bit del puerto X
-  24:main.c        **** #define is_high(x,y) ((x & _BV(y)) == _BV(y))
-  25:main.c        **** #define is_low(x,y) ((x & (_BV(y))) == 0) //check if the input pin is low
-  26:main.c        **** double initial_anglexz(double ax, double ay, double az); // Calcula el angulo xz inicial de lanzami
-  27:main.c        **** double initial_anglexy(double ax, double ay, double az); // Calcula el angulo xy inicial de lanzami
-  28:main.c        **** double initial_angleyz(double ax, double ay, double az); // Calcula el angulo yz inicial de lanzami
-  29:main.c        **** double final_distance(double angle0xz,double tf); // Calcula la distancia del cohete en mts usando 
-  30:main.c        **** int time_counter(int Reset,int count,int count0); // Contador mientras que este activo count
-  31:main.c        **** void init_ports(void); //Inicializa los puertos
-  32:main.c        **** void select_ADC_port(int i);// Seleccion cual puerto de ADC leer
-  33:main.c        **** void print_Angle_Binary(int NoPortCD,double angle);// Imprime en PORTD el angulo medido en binario
-  34:main.c        **** void print_Time_Binary(int time);// Imprime en PORTC el tiempo medido en binario
-  35:main.c        **** //------------------------------------------------------//
-  36:main.c        **** 
+  18:main.c        **** 
+  19:main.c        **** //------------------------------------------------//
+  20:main.c        **** //---------------DEFINIR FUNCIONES----------------//
+  21:main.c        **** //------------------------------------------------//
+  22:main.c        **** #define sbi(x,y) x |= _BV(y) //Hace set al yth bit del puerto X
+  23:main.c        **** #define cbi(x,y) x &= ~(_BV(y)) //Hace reset al yth bit del puerto X
+  24:main.c        **** #define tbi(x,y) x ^= _BV(y) //Cambia el estado logico del yth bit del puerto X
+  25:main.c        **** #define is_high(x,y) ((x & _BV(y)) == _BV(y))
+  26:main.c        **** #define is_low(x,y) ((x & (_BV(y))) == 0) //check if the input pin is low
+  27:main.c        **** double initial_anglexz(double ax, double ay, double az); // Calcula el angulo xz inicial de lanzami
+  28:main.c        **** double initial_anglexy(double ax, double ay, double az); // Calcula el angulo xy inicial de lanzami
+  29:main.c        **** double initial_angleyz(double ax, double ay, double az); // Calcula el angulo yz inicial de lanzami
+  30:main.c        **** double final_distance(double angle0xz,double tf); // Calcula la distancia del cohete en mts usando 
+  31:main.c        **** int time_counter(int Reset,int count,int count0); // Contador mientras que este activo count
+  32:main.c        **** void init_ports(void); //Inicializa los puertos
+  33:main.c        **** void select_ADC_port(int i);// Seleccion cual puerto de ADC leer
+  34:main.c        **** void print_Angle_Binary(int NoPortCD,double angle);// Imprime en PORTD el angulo medido en binario
+  35:main.c        **** void print_Time_Binary(int time);// Imprime en PORTC el tiempo medido en binario
+  36:main.c        **** //------------------------------------------------------//
   37:main.c        **** 
-  38:main.c        **** //------------------------------------------------------//
-  39:main.c        **** //---------------------Main.c---------------------------//
-GAS LISTING /tmp/cchIUHRR.s 			page 3
+  38:main.c        **** 
+  39:main.c        **** //------------------------------------------------------//
+GAS LISTING /tmp/cczgOf3U.s 			page 3
 
 
-  40:main.c        **** //------------------------------------------------------//
-  41:main.c        **** void main(void)
-  42:main.c        **** {
-  43:main.c        **** 	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
-  44:main.c        **** 	int i=0;
-  45:main.c        **** 	double angle0xy=0.0;
-  46:main.c        **** 	double angle0yz=0.0;
-  47:main.c        **** 	double angle0xz=0.0;
-  48:main.c        **** 	double x_total=0.0;
-  49:main.c        **** 	double a[5];
-  50:main.c        **** 	int time=0;
-  51:main.c        **** 	double ms_time=0.0;
-  52:main.c        **** 	int count=0;
-  53:main.c        **** 	int rstanalogo=0;
-  54:main.c        **** 
-  55:main.c        **** 	while (1)
-  56:main.c        **** 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Ca
-  57:main.c        **** 	a[3]=a[3]+81;
-  58:main.c        **** 	a[4]=a[4]+81;
-  59:main.c        **** 	
-  60:main.c        **** 		angle0xy=initial_anglexy(a[0],a[1],a[2]); // Genero angulo entre x y y en grados
-  61:main.c        **** 		angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
-  62:main.c        **** 		angle0yz=initial_angleyz(a[0],a[1],a[2]); // Genero angulo entre y y z en grados
-  63:main.c        **** 		print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD
-  64:main.c        **** 		
-  65:main.c        **** 		// Conversión de entrada análoga
+  40:main.c        **** //---------------------Main.c---------------------------//
+  41:main.c        **** //------------------------------------------------------//
+  42:main.c        **** void main(void)
+  43:main.c        **** {
+  44:main.c        **** 	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
+  45:main.c        **** 	int i=0;
+  46:main.c        **** 	double angle0xy=0.0;
+  47:main.c        **** 	double angle0yz=0.0;
+  48:main.c        **** 	double angle0xz=0.0;
+  49:main.c        **** 	double x_total=0.0;
+  50:main.c        **** 	double a[5];
+  51:main.c        **** 	int time=0;
+  52:main.c        **** 	int rst;
+  53:main.c        **** 	double ms_time=0.0;
+  54:main.c        **** 	int count=0;
+  55:main.c        **** 	int rstanalogo=0;
+  56:main.c        **** 
+  57:main.c        **** 	while (1)
+  58:main.c        **** 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Ca
+  59:main.c        **** 	a[3]=a[3]+81;
+  60:main.c        **** 	a[4]=a[4]+81;
+  61:main.c        **** 				
+  62:main.c        **** 		//angle0xy=initial_anglexy(a[0],a[1],a[2]); // Genero angulo entre x y y en grados
+  63:main.c        **** 		//angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
+  64:main.c        **** 		//angle0yz=initial_angleyz(a[0],a[1],a[2]); // Genero angulo entre y y z en grados
+  65:main.c        **** 		//print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD
   66:main.c        **** 		
-  67:main.c        **** 		if(a[3]>132){count=1;}
-  68:main.c        **** 		else{count=0;}
-  69:main.c        **** 		if(a[4]>132){rstanalogo=1;}
-  70:main.c        **** 		else{rstanalogo=0;}
-  71:main.c        **** 		// Si reset (análogo) todas la señales a 0, sino los contadores de milisegundos y segundos func
-  72:main.c        **** 			
-  73:main.c        **** 			if (count==1)	{
-  74:main.c        **** 				if(ms_time==10){time=time+1;ms_time=0;}else{time=time+0;}
-  75:main.c        **** 				_delay_ms(100);
-  76:main.c        **** 				ms_time=ms_time+1;	
-  77:main.c        **** 				print_Time_Binary(time);}
-  78:main.c        **** 			else { ms_time=ms_time;time=time;}
-  79:main.c        **** 			
-  80:main.c        **** 
-  81:main.c        **** 		
-  82:main.c        **** 
-  83:main.c        **** 		x_total=final_distance(angle0xz,time); // Calcula la distancia final.
-  84:main.c        **** 
-  85:main.c        **** 		
-  86:main.c        **** 
-  87:main.c        **** 	}
-  88:main.c        **** }
-  89:main.c        **** //------------------------------------------------------//
-  90:main.c        **** 
-  91:main.c        **** 
-  92:main.c        **** 
-  93:main.c        **** 
-  94:main.c        **** 
-  95:main.c        **** //------------------------------------------------------//
-  96:main.c        **** //-------------------Init_Ports-------------------------//
-GAS LISTING /tmp/cchIUHRR.s 			page 4
+  67:main.c        **** 		// Conversión de entrada análoga
+  68:main.c        **** 
+  69:main.c        **** 		
+  70:main.c        **** 		if(a[3]>132){count=1;}
+  71:main.c        **** 		else{count=0;}
+  72:main.c        **** 
+  73:main.c        **** 		if(a[4]>132){rstanalogo=1;}
+  74:main.c        **** 		else{rstanalogo=0;}
+  75:main.c        **** 
+  76:main.c        **** 		// Si reset (análogo) todas la señales a 0, sino los contadores de milisegundos y segundos func
+  77:main.c        **** 		
+  78:main.c        **** 			
+  79:main.c        **** 			if (count==0)	{
+  80:main.c        **** 				if(ms_time==10){time=time+1;ms_time=0;}else{time=time+0;}
+  81:main.c        **** 				_delay_ms(100);
+  82:main.c        **** 				ms_time=ms_time+1;	
+  83:main.c        **** 				print_Time_Binary(time);
+  84:main.c        **** 				
+  85:main.c        **** 				angle0xy=angle0xy; angle0xz=angle0xz; angle0yz=angle0yz; //los ángulos se mantienen con el úl
+  86:main.c        **** 				print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD 
+  87:main.c        **** 				}
+  88:main.c        **** 				
+  89:main.c        **** 
+  90:main.c        **** 			else { ms_time=ms_time;time=time;
+  91:main.c        **** 				angle0xy=initial_anglexy(a[0],a[1],a[2]); // Genero angulo entre x y y en grados
+  92:main.c        **** 				angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
+  93:main.c        **** 				angle0yz=initial_angleyz(a[0],a[1],a[2]); // Genero angulo entre y y z en grados
+  94:main.c        **** 				print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD  
+  95:main.c        **** 			     }
+  96:main.c        **** 			
+GAS LISTING /tmp/cczgOf3U.s 			page 4
 
 
-  97:main.c        **** //------------------------------------------------------//
-  98:main.c        **** void init_ports(void){
-  76               		.stabn	68,0,98,.LM0-.LFBB1
+  97:main.c        **** 		
+  98:main.c        **** 
+  99:main.c        **** 		x_total=final_distance(angle0xz,(time+(ms_time/10))); // Calcula la distancia final.
+ 100:main.c        **** 
+ 101:main.c        **** 		
+ 102:main.c        **** 
+ 103:main.c        **** 	}
+ 104:main.c        **** }
+ 105:main.c        **** //------------------------------------------------------//
+ 106:main.c        **** 
+ 107:main.c        **** 
+ 108:main.c        **** 
+ 109:main.c        **** 
+ 110:main.c        **** 
+ 111:main.c        **** //------------------------------------------------------//
+ 112:main.c        **** //-------------------Init_Ports-------------------------//
+ 113:main.c        **** //------------------------------------------------------//
+ 114:main.c        **** void init_ports(void){
+  76               		.stabn	68,0,114,.LM0-.LFBB1
   77               	.LM0:
   78               	.LFBB1:
   79               	/* prologue: function */
   80               	/* frame size = 0 */
   81               	/* stack size = 0 */
   82               	.L__stack_usage = 0
-  99:main.c        **** 
- 100:main.c        **** 	DDRA=0x00;		//Defino Puerto A como Inputs
-  83               		.stabn	68,0,100,.LM1-.LFBB1
+ 115:main.c        **** 
+ 116:main.c        **** 	DDRA=0x00;		//Defino Puerto A como Inputs
+  83               		.stabn	68,0,116,.LM1-.LFBB1
   84               	.LM1:
   85 0000 1ABA      		out 58-32,__zero_reg__
- 101:main.c        **** 	PORTA=0x00;     //Habilito los puertos de A
-  86               		.stabn	68,0,101,.LM2-.LFBB1
+ 117:main.c        **** 	PORTA=0x00;     //Habilito los puertos de A
+  86               		.stabn	68,0,117,.LM2-.LFBB1
   87               	.LM2:
   88 0002 1BBA      		out 59-32,__zero_reg__
- 102:main.c        **** 	DDRB = 0x00;    //Defino Puerto B como Inputs
-  89               		.stabn	68,0,102,.LM3-.LFBB1
+ 118:main.c        **** 	DDRB = 0x00;    //Defino Puerto B como Inputs
+  89               		.stabn	68,0,118,.LM3-.LFBB1
   90               	.LM3:
   91 0004 17BA      		out 55-32,__zero_reg__
- 103:main.c        **** 	PORTB=0x00;     //Habilito los puertos de B
-  92               		.stabn	68,0,103,.LM4-.LFBB1
+ 119:main.c        **** 	PORTB=0x00;     //Habilito los puertos de B
+  92               		.stabn	68,0,119,.LM4-.LFBB1
   93               	.LM4:
   94 0006 18BA      		out 56-32,__zero_reg__
- 104:main.c        **** 
- 105:main.c        **** 	DDRC=0xff;		//Defino Puerto C como Outputs
-  95               		.stabn	68,0,105,.LM5-.LFBB1
+ 120:main.c        **** 
+ 121:main.c        **** 	DDRC=0xff;		//Defino Puerto C como Outputs
+  95               		.stabn	68,0,121,.LM5-.LFBB1
   96               	.LM5:
   97 0008 8FEF      		ldi r24,lo8(-1)
   98 000a 84BB      		out 52-32,r24
- 106:main.c        **** 	PORTC=0x00;     //Habilito los puertos de C
-  99               		.stabn	68,0,106,.LM6-.LFBB1
+ 122:main.c        **** 	PORTC=0x00;     //Habilito los puertos de C
+  99               		.stabn	68,0,122,.LM6-.LFBB1
  100               	.LM6:
  101 000c 15BA      		out 53-32,__zero_reg__
- 107:main.c        **** 	DDRD = 0xff;    //Defino Puerto D como Outputs
- 102               		.stabn	68,0,107,.LM7-.LFBB1
+ 123:main.c        **** 	DDRD = 0xff;    //Defino Puerto D como Outputs
+ 102               		.stabn	68,0,123,.LM7-.LFBB1
  103               	.LM7:
  104 000e 81BB      		out 49-32,r24
- 108:main.c        **** 	PORTD=0x00;     //Habilito los puertos de D
- 105               		.stabn	68,0,108,.LM8-.LFBB1
+ 124:main.c        **** 	PORTD=0x00;     //Habilito los puertos de D
+GAS LISTING /tmp/cczgOf3U.s 			page 5
+
+
+ 105               		.stabn	68,0,124,.LM8-.LFBB1
  106               	.LM8:
  107 0010 12BA      		out 50-32,__zero_reg__
- 109:main.c        **** 
- 110:main.c        **** 	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0); // Habilito preescaler para tener una b
- 108               		.stabn	68,0,110,.LM9-.LFBB1
+ 125:main.c        **** 
+ 126:main.c        **** 	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0); // Habilito preescaler para tener una b
+ 108               		.stabn	68,0,126,.LM9-.LFBB1
  109               	.LM9:
  110 0012 87E8      		ldi r24,lo8(-121)
  111 0014 86B9      		out 38-32,r24
  112               	/* epilogue start */
- 111:main.c        **** 
- 112:main.c        **** }
- 113               		.stabn	68,0,112,.LM10-.LFBB1
+ 127:main.c        **** 
+ 128:main.c        **** }
+ 113               		.stabn	68,0,128,.LM10-.LFBB1
  114               	.LM10:
  115 0016 0895      		ret
  116               		.size	init_ports, .-init_ports
-GAS LISTING /tmp/cchIUHRR.s 			page 5
-
-
  117               	.Lscope1:
  118               		.stabs	"",36,0,0,.Lscope1-.LFBB1
  119               		.stabd	78,0,0
- 120               		.stabs	"select_ADC_port:F(0,15)",36,0,119,select_ADC_port
+ 120               		.stabs	"select_ADC_port:F(0,15)",36,0,135,select_ADC_port
  121               	.global	select_ADC_port
  122               		.type	select_ADC_port, @function
  123               	select_ADC_port:
  124               		.stabd	46,0,0
- 113:main.c        **** //------------------------------------------------------//
- 114:main.c        **** 
- 115:main.c        **** 
- 116:main.c        **** //------------------------------------------------------//
- 117:main.c        **** //----------------Select_ADC_port-----------------------//
- 118:main.c        **** //------------------------------------------------------//
- 119:main.c        **** void select_ADC_port(int i){
- 125               		.stabn	68,0,119,.LM11-.LFBB2
+ 129:main.c        **** //------------------------------------------------------//
+ 130:main.c        **** 
+ 131:main.c        **** 
+ 132:main.c        **** //------------------------------------------------------//
+ 133:main.c        **** //----------------Select_ADC_port-----------------------//
+ 134:main.c        **** //------------------------------------------------------//
+ 135:main.c        **** void select_ADC_port(int i){
+ 125               		.stabn	68,0,135,.LM11-.LFBB2
  126               	.LM11:
  127               	.LFBB2:
  128               	/* prologue: function */
  129               	/* frame size = 0 */
  130               	/* stack size = 0 */
  131               	.L__stack_usage = 0
- 120:main.c        **** 	ADMUX = _BV(ADLAR) + i; // Selecciona un pin de las entradas analogas ADC[i]
- 132               		.stabn	68,0,120,.LM12-.LFBB2
+ 136:main.c        **** 	ADMUX = _BV(ADLAR) + i; // Selecciona un pin de las entradas analogas ADC[i]
+ 132               		.stabn	68,0,136,.LM12-.LFBB2
  133               	.LM12:
  134 0018 805E      		subi r24,lo8(-(32))
  135 001a 87B9      		out 39-32,r24
- 121:main.c        **** 	ADCSRA |= _BV(ADSC); //Comienza conversion
- 136               		.stabn	68,0,121,.LM13-.LFBB2
+ 137:main.c        **** 	ADCSRA |= _BV(ADSC); //Comienza conversion
+ 136               		.stabn	68,0,137,.LM13-.LFBB2
  137               	.LM13:
  138 001c 369A      		sbi 38-32,6
  139               	.L3:
- 122:main.c        **** 	while (ADCSRA & _BV(ADSC) ) {}  // Esperar la conversion
- 140               		.stabn	68,0,122,.LM14-.LFBB2
+ 138:main.c        **** 	while (ADCSRA & _BV(ADSC) ) {}  // Esperar la conversion
+ 140               		.stabn	68,0,138,.LM14-.LFBB2
  141               	.LM14:
  142 001e 3699      		sbic 38-32,6
  143 0020 00C0      		rjmp .L3
  144               	/* epilogue start */
- 123:main.c        **** 
- 124:main.c        **** }
- 145               		.stabn	68,0,124,.LM15-.LFBB2
+ 139:main.c        **** 
+ 140:main.c        **** }
+ 145               		.stabn	68,0,140,.LM15-.LFBB2
+GAS LISTING /tmp/cczgOf3U.s 			page 6
+
+
  146               	.LM15:
  147 0022 0895      		ret
  148               		.size	select_ADC_port, .-select_ADC_port
  149               	.Lscope2:
  150               		.stabs	"",36,0,0,.Lscope2-.LFBB2
  151               		.stabd	78,0,0
- 152               		.stabs	"initial_anglexy:F(0,13)",36,0,131,initial_anglexy
- 153               		.stabs	"ax:P(0,13)",64,0,131,22
- 154               		.stabs	"ay:P(0,13)",64,0,131,18
- 155               		.stabs	"az:P(0,13)",64,0,131,14
+ 152               		.stabs	"initial_anglexy:F(0,13)",36,0,147,initial_anglexy
+ 153               		.stabs	"ax:P(0,13)",64,0,147,22
+ 154               		.stabs	"ay:P(0,13)",64,0,147,18
+ 155               		.stabs	"az:P(0,13)",64,0,147,14
  156               	.global	initial_anglexy
  157               		.type	initial_anglexy, @function
  158               	initial_anglexy:
  159               		.stabd	46,0,0
- 125:main.c        **** //------------------------------------------------------//
- 126:main.c        **** 
-GAS LISTING /tmp/cchIUHRR.s 			page 6
-
-
- 127:main.c        **** 
- 128:main.c        **** //------------------------------------------------------//
- 129:main.c        **** //----------------Initial_Angle_XY----------------------//
- 130:main.c        **** //------------------------------------------------------//
- 131:main.c        **** double initial_anglexy(double ax, double ay, double az){
- 160               		.stabn	68,0,131,.LM16-.LFBB3
+ 141:main.c        **** //------------------------------------------------------//
+ 142:main.c        **** 
+ 143:main.c        **** 
+ 144:main.c        **** //------------------------------------------------------//
+ 145:main.c        **** //----------------Initial_Angle_XY----------------------//
+ 146:main.c        **** //------------------------------------------------------//
+ 147:main.c        **** double initial_anglexy(double ax, double ay, double az){
+ 160               		.stabn	68,0,147,.LM16-.LFBB3
  161               	.LM16:
  162               	.LFBB3:
  163               	/* prologue: function */
  164               	/* frame size = 0 */
  165               	/* stack size = 0 */
  166               	.L__stack_usage = 0
- 132:main.c        **** 	return atan(ax/ay)*(57.2958);
- 167               		.stabn	68,0,132,.LM17-.LFBB3
+ 148:main.c        **** 	return atan(ax/ay)*(57.2958);
+ 167               		.stabn	68,0,148,.LM17-.LFBB3
  168               	.LM17:
  169 0024 0E94 0000 		call __divsf3
  170 0028 0E94 0000 		call atan
@@ -324,30 +340,33 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
  174 0032 52E4      		ldi r21,hhi8(0x42652ee6)
  175 0034 0E94 0000 		call __mulsf3
  176               	/* epilogue start */
- 133:main.c        **** }
- 177               		.stabn	68,0,133,.LM18-.LFBB3
+ 149:main.c        **** }
+ 177               		.stabn	68,0,149,.LM18-.LFBB3
  178               	.LM18:
  179 0038 0895      		ret
  180               		.size	initial_anglexy, .-initial_anglexy
  181               	.Lscope3:
  182               		.stabs	"",36,0,0,.Lscope3-.LFBB3
  183               		.stabd	78,0,0
- 184               		.stabs	"initial_anglexz:F(0,13)",36,0,140,initial_anglexz
- 185               		.stabs	"ax:P(0,13)",64,0,140,18
- 186               		.stabs	"ay:P(0,13)",64,0,140,18
- 187               		.stabs	"az:P(0,13)",64,0,140,22
+ 184               		.stabs	"initial_anglexz:F(0,13)",36,0,156,initial_anglexz
+ 185               		.stabs	"ax:P(0,13)",64,0,156,18
+ 186               		.stabs	"ay:P(0,13)",64,0,156,18
+ 187               		.stabs	"az:P(0,13)",64,0,156,22
  188               	.global	initial_anglexz
  189               		.type	initial_anglexz, @function
  190               	initial_anglexz:
  191               		.stabd	46,0,0
- 134:main.c        **** //------------------------------------------------------//
- 135:main.c        **** 
- 136:main.c        **** 
- 137:main.c        **** //------------------------------------------------------//
- 138:main.c        **** //----------------Initial_Angle_XZ----------------------//
- 139:main.c        **** //------------------------------------------------------//
- 140:main.c        **** double initial_anglexz(double ax, double ay, double az){
- 192               		.stabn	68,0,140,.LM19-.LFBB4
+ 150:main.c        **** //------------------------------------------------------//
+ 151:main.c        **** 
+GAS LISTING /tmp/cczgOf3U.s 			page 7
+
+
+ 152:main.c        **** 
+ 153:main.c        **** //------------------------------------------------------//
+ 154:main.c        **** //----------------Initial_Angle_XZ----------------------//
+ 155:main.c        **** //------------------------------------------------------//
+ 156:main.c        **** double initial_anglexz(double ax, double ay, double az){
+ 192               		.stabn	68,0,156,.LM19-.LFBB4
  193               	.LM19:
  194               	.LFBB4:
  195 003a EF92      		push r14
@@ -358,15 +377,12 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
  200               	/* frame size = 0 */
  201               	/* stack size = 4 */
  202               	.L__stack_usage = 4
-GAS LISTING /tmp/cchIUHRR.s 			page 7
-
-
  203 0042 9B01      		movw r18,r22
  204 0044 AC01      		movw r20,r24
  205 0046 C801      		movw r24,r16
  206 0048 B701      		movw r22,r14
- 141:main.c        **** 	return atan(az/ax)*(57.2958);
- 207               		.stabn	68,0,141,.LM20-.LFBB4
+ 157:main.c        **** 	return atan(az/ax)*(57.2958);
+ 207               		.stabn	68,0,157,.LM20-.LFBB4
  208               	.LM20:
  209 004a 0E94 0000 		call __divsf3
  210 004e 0E94 0000 		call atan
@@ -376,8 +392,8 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
  214 0058 52E4      		ldi r21,hhi8(0x42652ee6)
  215 005a 0E94 0000 		call __mulsf3
  216               	/* epilogue start */
- 142:main.c        **** }
- 217               		.stabn	68,0,142,.LM21-.LFBB4
+ 158:main.c        **** }
+ 217               		.stabn	68,0,158,.LM21-.LFBB4
  218               	.LM21:
  219 005e 1F91      		pop r17
  220 0060 0F91      		pop r16
@@ -388,22 +404,25 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
  225               	.Lscope4:
  226               		.stabs	"",36,0,0,.Lscope4-.LFBB4
  227               		.stabd	78,0,0
- 228               		.stabs	"initial_angleyz:F(0,13)",36,0,149,initial_angleyz
- 229               		.stabs	"ax:P(0,13)",64,0,149,22
- 230               		.stabs	"ay:P(0,13)",64,0,149,22
- 231               		.stabs	"az:P(0,13)",64,0,149,18
+ 228               		.stabs	"initial_angleyz:F(0,13)",36,0,165,initial_angleyz
+ 229               		.stabs	"ax:P(0,13)",64,0,165,22
+ 230               		.stabs	"ay:P(0,13)",64,0,165,22
+ 231               		.stabs	"az:P(0,13)",64,0,165,18
  232               	.global	initial_angleyz
  233               		.type	initial_angleyz, @function
  234               	initial_angleyz:
  235               		.stabd	46,0,0
- 143:main.c        **** //------------------------------------------------------//
- 144:main.c        **** 
- 145:main.c        **** 
- 146:main.c        **** //------------------------------------------------------//
- 147:main.c        **** //----------------Initial_Angle_YZ----------------------//
- 148:main.c        **** //------------------------------------------------------//
- 149:main.c        **** double initial_angleyz(double ax, double ay, double az){
- 236               		.stabn	68,0,149,.LM22-.LFBB5
+ 159:main.c        **** //------------------------------------------------------//
+ 160:main.c        **** 
+ 161:main.c        **** 
+ 162:main.c        **** //------------------------------------------------------//
+ 163:main.c        **** //----------------Initial_Angle_YZ----------------------//
+ 164:main.c        **** //------------------------------------------------------//
+GAS LISTING /tmp/cczgOf3U.s 			page 8
+
+
+ 165:main.c        **** double initial_angleyz(double ax, double ay, double az){
+ 236               		.stabn	68,0,165,.LM22-.LFBB5
  237               	.LM22:
  238               	.LFBB5:
  239 0068 EF92      		push r14
@@ -418,11 +437,8 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
  248 0072 B901      		movw r22,r18
  249 0074 A801      		movw r20,r16
  250 0076 9701      		movw r18,r14
-GAS LISTING /tmp/cchIUHRR.s 			page 8
-
-
- 150:main.c        **** 	return atan(ay/az)*(57.2958);
- 251               		.stabn	68,0,150,.LM23-.LFBB5
+ 166:main.c        **** 	return atan(ay/az)*(57.2958);
+ 251               		.stabn	68,0,166,.LM23-.LFBB5
  252               	.LM23:
  253 0078 0E94 0000 		call __divsf3
  254 007c 0E94 0000 		call atan
@@ -432,8 +448,8 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
  258 0086 52E4      		ldi r21,hhi8(0x42652ee6)
  259 0088 0E94 0000 		call __mulsf3
  260               	/* epilogue start */
- 151:main.c        **** }
- 261               		.stabn	68,0,151,.LM24-.LFBB5
+ 167:main.c        **** }
+ 261               		.stabn	68,0,167,.LM24-.LFBB5
  262               	.LM24:
  263 008c 1F91      		pop r17
  264 008e 0F91      		pop r16
@@ -444,662 +460,579 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
  269               	.Lscope5:
  270               		.stabs	"",36,0,0,.Lscope5-.LFBB5
  271               		.stabd	78,0,0
- 272               		.stabs	"time_counter:F(0,1)",36,0,158,time_counter
- 273               		.stabs	"Reset:P(0,1)",64,0,158,24
- 274               		.stabs	"count:P(0,1)",64,0,158,22
- 275               		.stabs	"count0:P(0,1)",64,0,158,20
- 276               	.global	time_counter
- 277               		.type	time_counter, @function
- 278               	time_counter:
- 279               		.stabd	46,0,0
- 152:main.c        **** //------------------------------------------------------//
- 153:main.c        **** 
- 154:main.c        **** 
- 155:main.c        **** //------------------------------------------------------//
- 156:main.c        **** //---------------------Time_Counter---------------------//
- 157:main.c        **** //------------------------------------------------------//
- 158:main.c        **** int time_counter(int Reset,int count,int count0){
- 280               		.stabn	68,0,158,.LM25-.LFBB6
- 281               	.LM25:
- 282               	.LFBB6:
- 283               	/* prologue: function */
- 284               	/* frame size = 0 */
- 285               	/* stack size = 0 */
- 286               	.L__stack_usage = 0
- 159:main.c        **** 	int salida=0;
- 160:main.c        **** 	if(Reset==0)
- 287               		.stabn	68,0,160,.LM26-.LFBB6
- 288               	.LM26:
- 289 0096 0097      		sbiw r24,0
- 290 0098 01F4      		brne .L10
- 161:main.c        **** 	{
- 162:main.c        **** 		if(count==1){salida=count0+count;}else{salida=count0;}
- 291               		.stabn	68,0,162,.LM27-.LFBB6
- 292               	.LM27:
- 293 009a 6130      		cpi r22,1
- 294 009c 7105      		cpc r23,__zero_reg__
-GAS LISTING /tmp/cchIUHRR.s 			page 9
-
-
- 295 009e 01F4      		brne .L9
- 296               		.stabn	68,0,162,.LM28-.LFBB6
- 297               	.LM28:
- 298 00a0 4F5F      		subi r20,lo8(-(1))
- 299 00a2 5F4F      		sbci r21,hi8(-(1))
- 300 00a4 00C0      		rjmp .L9
- 301               	.L10:
- 163:main.c        **** 	}
- 164:main.c        **** 	else
- 165:main.c        **** 	{
- 166:main.c        **** 		salida=0;
- 302               		.stabn	68,0,166,.LM29-.LFBB6
- 303               	.LM29:
- 304 00a6 40E0      		ldi r20,lo8(0)
- 305 00a8 50E0      		ldi r21,hi8(0)
- 306               	.L9:
- 167:main.c        **** 	}
- 168:main.c        **** 	return salida;
- 169:main.c        **** }
- 307               		.stabn	68,0,169,.LM30-.LFBB6
- 308               	.LM30:
- 309 00aa CA01      		movw r24,r20
- 310               	/* epilogue start */
- 311 00ac 0895      		ret
- 312               		.size	time_counter, .-time_counter
- 313               		.stabs	"salida:r(0,1)",64,0,159,20
- 314               		.stabn	192,0,0,.LFBB6-.LFBB6
- 315               		.stabn	224,0,0,.Lscope6-.LFBB6
- 316               	.Lscope6:
- 317               		.stabs	"",36,0,0,.Lscope6-.LFBB6
- 318               		.stabd	78,0,0
- 319               		.stabs	"print_Angle_Binary:F(0,15)",36,0,176,print_Angle_Binary
- 320               		.stabs	"NoPortCD:P(0,1)",64,0,176,24
- 321               		.stabs	"angle:P(0,13)",64,0,176,14
- 322               	.global	print_Angle_Binary
- 323               		.type	print_Angle_Binary, @function
- 324               	print_Angle_Binary:
- 325               		.stabd	46,0,0
+ 272               		.stabs	"print_Angle_Binary:F(0,15)",36,0,173,print_Angle_Binary
+ 273               		.stabs	"NoPortCD:P(0,1)",64,0,173,24
+ 274               		.stabs	"angle:P(0,13)",64,0,173,14
+ 275               	.global	print_Angle_Binary
+ 276               		.type	print_Angle_Binary, @function
+ 277               	print_Angle_Binary:
+ 278               		.stabd	46,0,0
+ 168:main.c        **** //------------------------------------------------------//
+ 169:main.c        **** 
  170:main.c        **** //------------------------------------------------------//
- 171:main.c        **** 
- 172:main.c        **** 
- 173:main.c        **** //------------------------------------------------------//
- 174:main.c        **** //----------------------Print Angle---------------------//
- 175:main.c        **** //------------------------------------------------------//
- 176:main.c        **** void print_Angle_Binary(int NoPortCD,double angle){
- 326               		.stabn	68,0,176,.LM31-.LFBB7
- 327               	.LM31:
- 328               	.LFBB7:
- 329 00ae EF92      		push r14
- 330 00b0 FF92      		push r15
- 331 00b2 0F93      		push r16
- 332 00b4 1F93      		push r17
- 333               	/* prologue: function */
- 334               	/* frame size = 0 */
- 335               	/* stack size = 4 */
- 336               	.L__stack_usage = 4
- 337 00b6 7A01      		movw r14,r20
-GAS LISTING /tmp/cchIUHRR.s 			page 10
+ 171:main.c        **** //----------------------Print Angle---------------------//
+ 172:main.c        **** //------------------------------------------------------//
+ 173:main.c        **** void print_Angle_Binary(int NoPortCD,double angle){
+ 279               		.stabn	68,0,173,.LM25-.LFBB6
+ 280               	.LM25:
+ 281               	.LFBB6:
+ 282 0096 EF92      		push r14
+ 283 0098 FF92      		push r15
+GAS LISTING /tmp/cczgOf3U.s 			page 9
 
 
- 338 00b8 8B01      		movw r16,r22
- 177:main.c        **** 	double angle_segment_1=10;
- 178:main.c        **** 	double angle_segment_2=20;
- 179:main.c        **** 	double angle_segment_3=30;
- 180:main.c        **** 	double angle_segment_4=40;
- 181:main.c        **** 	double angle_segment_5=50;
- 182:main.c        **** 	double angle_segment_6=60;
- 183:main.c        **** 	double angle_segment_7=70;
- 184:main.c        **** 	double angle_segment_8=80;
- 185:main.c        **** 	double angle_segment_9=90;
- 186:main.c        **** 	
- 187:main.c        **** if(angle>angle_segment_9){     cbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD
- 339               		.stabn	68,0,187,.LM32-.LFBB7
- 340               	.LM32:
- 341 00ba CB01      		movw r24,r22
- 342 00bc BA01      		movw r22,r20
- 343 00be 20E0      		ldi r18,lo8(0x42b40000)
- 344 00c0 30E0      		ldi r19,hi8(0x42b40000)
- 345 00c2 44EB      		ldi r20,hlo8(0x42b40000)
- 346 00c4 52E4      		ldi r21,hhi8(0x42b40000)
- 347 00c6 0E94 0000 		call __gtsf2
- 348 00ca 1816      		cp __zero_reg__,r24
- 349 00cc 04F4      		brge .L43
- 350               		.stabn	68,0,187,.LM33-.LFBB7
- 351               	.LM33:
- 352 00ce 9398      		cbi 50-32,3
- 353 00d0 00C0      		rjmp .L54
- 354               	.L43:
- 188:main.c        **** else if(angle>angle_segment_8){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD
- 355               		.stabn	68,0,188,.LM34-.LFBB7
- 356               	.LM34:
- 357 00d2 C801      		movw r24,r16
- 358 00d4 B701      		movw r22,r14
- 359 00d6 20E0      		ldi r18,lo8(0x42a00000)
- 360 00d8 30E0      		ldi r19,hi8(0x42a00000)
- 361 00da 40EA      		ldi r20,hlo8(0x42a00000)
- 362 00dc 52E4      		ldi r21,hhi8(0x42a00000)
- 363 00de 0E94 0000 		call __gtsf2
- 364 00e2 1816      		cp __zero_reg__,r24
- 365 00e4 04F4      		brge .L44
- 366               		.stabn	68,0,188,.LM35-.LFBB7
- 367               	.LM35:
- 368 00e6 9398      		cbi 50-32,3
- 369 00e8 00C0      		rjmp .L59
- 370               	.L44:
- 189:main.c        **** else if(angle>angle_segment_7){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD
- 371               		.stabn	68,0,189,.LM36-.LFBB7
- 372               	.LM36:
- 373 00ea C801      		movw r24,r16
- 374 00ec B701      		movw r22,r14
- 375 00ee 20E0      		ldi r18,lo8(0x428c0000)
- 376 00f0 30E0      		ldi r19,hi8(0x428c0000)
- 377 00f2 4CE8      		ldi r20,hlo8(0x428c0000)
- 378 00f4 52E4      		ldi r21,hhi8(0x428c0000)
- 379 00f6 0E94 0000 		call __gtsf2
- 380 00fa 1816      		cp __zero_reg__,r24
- 381 00fc 04F4      		brge .L45
-GAS LISTING /tmp/cchIUHRR.s 			page 11
+ 284 009a 0F93      		push r16
+ 285 009c 1F93      		push r17
+ 286               	/* prologue: function */
+ 287               	/* frame size = 0 */
+ 288               	/* stack size = 4 */
+ 289               	.L__stack_usage = 4
+ 290 009e 7A01      		movw r14,r20
+ 291 00a0 8B01      		movw r16,r22
+ 174:main.c        **** 	double angle_segment_1=10;
+ 175:main.c        **** 	double angle_segment_2=20;
+ 176:main.c        **** 	double angle_segment_3=30;
+ 177:main.c        **** 	double angle_segment_4=40;
+ 178:main.c        **** 	double angle_segment_5=50;
+ 179:main.c        **** 	double angle_segment_6=60;
+ 180:main.c        **** 	double angle_segment_7=70;
+ 181:main.c        **** 	double angle_segment_8=80;
+ 182:main.c        **** 	double angle_segment_9=90;
+ 183:main.c        **** 	
+ 184:main.c        **** if(angle>angle_segment_9){     cbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD
+ 292               		.stabn	68,0,184,.LM26-.LFBB6
+ 293               	.LM26:
+ 294 00a2 CB01      		movw r24,r22
+ 295 00a4 BA01      		movw r22,r20
+ 296 00a6 20E0      		ldi r18,lo8(0x42b40000)
+ 297 00a8 30E0      		ldi r19,hi8(0x42b40000)
+ 298 00aa 44EB      		ldi r20,hlo8(0x42b40000)
+ 299 00ac 52E4      		ldi r21,hhi8(0x42b40000)
+ 300 00ae 0E94 0000 		call __gtsf2
+ 301 00b2 1816      		cp __zero_reg__,r24
+ 302 00b4 04F4      		brge .L39
+ 303               		.stabn	68,0,184,.LM27-.LFBB6
+ 304               	.LM27:
+ 305 00b6 9398      		cbi 50-32,3
+ 306 00b8 00C0      		rjmp .L50
+ 307               	.L39:
+ 185:main.c        **** else if(angle>angle_segment_8){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD
+ 308               		.stabn	68,0,185,.LM28-.LFBB6
+ 309               	.LM28:
+ 310 00ba C801      		movw r24,r16
+ 311 00bc B701      		movw r22,r14
+ 312 00be 20E0      		ldi r18,lo8(0x42a00000)
+ 313 00c0 30E0      		ldi r19,hi8(0x42a00000)
+ 314 00c2 40EA      		ldi r20,hlo8(0x42a00000)
+ 315 00c4 52E4      		ldi r21,hhi8(0x42a00000)
+ 316 00c6 0E94 0000 		call __gtsf2
+ 317 00ca 1816      		cp __zero_reg__,r24
+ 318 00cc 04F4      		brge .L40
+ 319               		.stabn	68,0,185,.LM29-.LFBB6
+ 320               	.LM29:
+ 321 00ce 9398      		cbi 50-32,3
+ 322 00d0 00C0      		rjmp .L55
+ 323               	.L40:
+ 186:main.c        **** else if(angle>angle_segment_7){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD
+ 324               		.stabn	68,0,186,.LM30-.LFBB6
+ 325               	.LM30:
+ 326 00d2 C801      		movw r24,r16
+ 327 00d4 B701      		movw r22,r14
+GAS LISTING /tmp/cczgOf3U.s 			page 10
 
 
- 382               		.stabn	68,0,189,.LM37-.LFBB7
- 383               	.LM37:
- 384 00fe 9398      		cbi 50-32,3
- 385 0100 9298      		cbi 50-32,2
- 386               	.L56:
- 387 0102 919A      		sbi 50-32,1
- 388               	.L52:
- 389 0104 909A      		sbi 50-32,0
- 390 0106 00C0      		rjmp .L12
- 391               	.L45:
- 190:main.c        **** else if(angle>angle_segment_6){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD
- 392               		.stabn	68,0,190,.LM38-.LFBB7
- 393               	.LM38:
- 394 0108 C801      		movw r24,r16
- 395 010a B701      		movw r22,r14
- 396 010c 20E0      		ldi r18,lo8(0x42700000)
- 397 010e 30E0      		ldi r19,hi8(0x42700000)
- 398 0110 40E7      		ldi r20,hlo8(0x42700000)
- 399 0112 52E4      		ldi r21,hhi8(0x42700000)
- 400 0114 0E94 0000 		call __gtsf2
- 401 0118 1816      		cp __zero_reg__,r24
- 402 011a 04F4      		brge .L46
- 403               		.stabn	68,0,190,.LM39-.LFBB7
- 404               	.LM39:
- 405 011c 9398      		cbi 50-32,3
- 406 011e 929A      		sbi 50-32,2
- 407 0120 00C0      		rjmp .L58
- 408               	.L46:
- 191:main.c        **** else if(angle>angle_segment_5){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD
- 409               		.stabn	68,0,191,.LM40-.LFBB7
- 410               	.LM40:
- 411 0122 C801      		movw r24,r16
- 412 0124 B701      		movw r22,r14
- 413 0126 20E0      		ldi r18,lo8(0x42480000)
- 414 0128 30E0      		ldi r19,hi8(0x42480000)
- 415 012a 48E4      		ldi r20,hlo8(0x42480000)
- 416 012c 52E4      		ldi r21,hhi8(0x42480000)
- 417 012e 0E94 0000 		call __gtsf2
- 418 0132 1816      		cp __zero_reg__,r24
- 419 0134 04F4      		brge .L47
- 420               		.stabn	68,0,191,.LM41-.LFBB7
- 421               	.LM41:
- 422 0136 9398      		cbi 50-32,3
- 423 0138 929A      		sbi 50-32,2
- 424 013a 00C0      		rjmp .L55
- 425               	.L47:
- 192:main.c        **** else if(angle>angle_segment_4){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD
- 426               		.stabn	68,0,192,.LM42-.LFBB7
- 427               	.LM42:
- 428 013c C801      		movw r24,r16
- 429 013e B701      		movw r22,r14
- 430 0140 20E0      		ldi r18,lo8(0x42200000)
- 431 0142 30E0      		ldi r19,hi8(0x42200000)
- 432 0144 40E2      		ldi r20,hlo8(0x42200000)
- 433 0146 52E4      		ldi r21,hhi8(0x42200000)
- 434 0148 0E94 0000 		call __gtsf2
- 435 014c 1816      		cp __zero_reg__,r24
-GAS LISTING /tmp/cchIUHRR.s 			page 12
+ 328 00d6 20E0      		ldi r18,lo8(0x428c0000)
+ 329 00d8 30E0      		ldi r19,hi8(0x428c0000)
+ 330 00da 4CE8      		ldi r20,hlo8(0x428c0000)
+ 331 00dc 52E4      		ldi r21,hhi8(0x428c0000)
+ 332 00de 0E94 0000 		call __gtsf2
+ 333 00e2 1816      		cp __zero_reg__,r24
+ 334 00e4 04F4      		brge .L41
+ 335               		.stabn	68,0,186,.LM31-.LFBB6
+ 336               	.LM31:
+ 337 00e6 9398      		cbi 50-32,3
+ 338 00e8 9298      		cbi 50-32,2
+ 339               	.L52:
+ 340 00ea 919A      		sbi 50-32,1
+ 341               	.L48:
+ 342 00ec 909A      		sbi 50-32,0
+ 343 00ee 00C0      		rjmp .L8
+ 344               	.L41:
+ 187:main.c        **** else if(angle>angle_segment_6){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD
+ 345               		.stabn	68,0,187,.LM32-.LFBB6
+ 346               	.LM32:
+ 347 00f0 C801      		movw r24,r16
+ 348 00f2 B701      		movw r22,r14
+ 349 00f4 20E0      		ldi r18,lo8(0x42700000)
+ 350 00f6 30E0      		ldi r19,hi8(0x42700000)
+ 351 00f8 40E7      		ldi r20,hlo8(0x42700000)
+ 352 00fa 52E4      		ldi r21,hhi8(0x42700000)
+ 353 00fc 0E94 0000 		call __gtsf2
+ 354 0100 1816      		cp __zero_reg__,r24
+ 355 0102 04F4      		brge .L42
+ 356               		.stabn	68,0,187,.LM33-.LFBB6
+ 357               	.LM33:
+ 358 0104 9398      		cbi 50-32,3
+ 359 0106 929A      		sbi 50-32,2
+ 360 0108 00C0      		rjmp .L54
+ 361               	.L42:
+ 188:main.c        **** else if(angle>angle_segment_5){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD
+ 362               		.stabn	68,0,188,.LM34-.LFBB6
+ 363               	.LM34:
+ 364 010a C801      		movw r24,r16
+ 365 010c B701      		movw r22,r14
+ 366 010e 20E0      		ldi r18,lo8(0x42480000)
+ 367 0110 30E0      		ldi r19,hi8(0x42480000)
+ 368 0112 48E4      		ldi r20,hlo8(0x42480000)
+ 369 0114 52E4      		ldi r21,hhi8(0x42480000)
+ 370 0116 0E94 0000 		call __gtsf2
+ 371 011a 1816      		cp __zero_reg__,r24
+ 372 011c 04F4      		brge .L43
+ 373               		.stabn	68,0,188,.LM35-.LFBB6
+ 374               	.LM35:
+ 375 011e 9398      		cbi 50-32,3
+ 376 0120 929A      		sbi 50-32,2
+ 377 0122 00C0      		rjmp .L51
+ 378               	.L43:
+ 189:main.c        **** else if(angle>angle_segment_4){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD
+ 379               		.stabn	68,0,189,.LM36-.LFBB6
+ 380               	.LM36:
+ 381 0124 C801      		movw r24,r16
+GAS LISTING /tmp/cczgOf3U.s 			page 11
 
 
- 436 014e 04F4      		brge .L48
- 437               		.stabn	68,0,192,.LM43-.LFBB7
- 438               	.LM43:
- 439 0150 9398      		cbi 50-32,3
- 440 0152 929A      		sbi 50-32,2
- 441 0154 00C0      		rjmp .L57
- 442               	.L48:
- 193:main.c        **** else if(angle>angle_segment_3){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD
- 443               		.stabn	68,0,193,.LM44-.LFBB7
- 444               	.LM44:
- 445 0156 C801      		movw r24,r16
- 446 0158 B701      		movw r22,r14
- 447 015a 20E0      		ldi r18,lo8(0x41f00000)
- 448 015c 30E0      		ldi r19,hi8(0x41f00000)
- 449 015e 40EF      		ldi r20,hlo8(0x41f00000)
- 450 0160 51E4      		ldi r21,hhi8(0x41f00000)
- 451 0162 0E94 0000 		call __gtsf2
- 452 0166 1816      		cp __zero_reg__,r24
- 453 0168 04F4      		brge .L49
- 454               		.stabn	68,0,193,.LM45-.LFBB7
- 455               	.LM45:
- 456 016a 9398      		cbi 50-32,3
- 457 016c 929A      		sbi 50-32,2
- 458 016e 00C0      		rjmp .L56
- 459               	.L49:
- 194:main.c        **** else if(angle>angle_segment_2){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD
- 460               		.stabn	68,0,194,.LM46-.LFBB7
- 461               	.LM46:
- 462 0170 C801      		movw r24,r16
- 463 0172 B701      		movw r22,r14
- 464 0174 20E0      		ldi r18,lo8(0x41a00000)
- 465 0176 30E0      		ldi r19,hi8(0x41a00000)
- 466 0178 40EA      		ldi r20,hlo8(0x41a00000)
- 467 017a 51E4      		ldi r21,hhi8(0x41a00000)
- 468 017c 0E94 0000 		call __gtsf2
- 469 0180 1816      		cp __zero_reg__,r24
- 470 0182 04F4      		brge .L50
- 471               		.stabn	68,0,194,.LM47-.LFBB7
- 472               	.LM47:
- 473 0184 939A      		sbi 50-32,3
- 474 0186 9298      		cbi 50-32,2
- 475               	.L58:
- 476 0188 9198      		cbi 50-32,1
- 477 018a 00C0      		rjmp .L53
- 478               	.L50:
- 195:main.c        **** else if(angle>angle_segment_1){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD
- 479               		.stabn	68,0,195,.LM48-.LFBB7
- 480               	.LM48:
- 481 018c C801      		movw r24,r16
- 482 018e B701      		movw r22,r14
- 483 0190 20E0      		ldi r18,lo8(0x41200000)
- 484 0192 30E0      		ldi r19,hi8(0x41200000)
- 485 0194 40E2      		ldi r20,hlo8(0x41200000)
- 486 0196 51E4      		ldi r21,hhi8(0x41200000)
- 487 0198 0E94 0000 		call __gtsf2
- 488 019c 1816      		cp __zero_reg__,r24
- 489 019e 04F4      		brge .L51
-GAS LISTING /tmp/cchIUHRR.s 			page 13
+ 382 0126 B701      		movw r22,r14
+ 383 0128 20E0      		ldi r18,lo8(0x42200000)
+ 384 012a 30E0      		ldi r19,hi8(0x42200000)
+ 385 012c 40E2      		ldi r20,hlo8(0x42200000)
+ 386 012e 52E4      		ldi r21,hhi8(0x42200000)
+ 387 0130 0E94 0000 		call __gtsf2
+ 388 0134 1816      		cp __zero_reg__,r24
+ 389 0136 04F4      		brge .L44
+ 390               		.stabn	68,0,189,.LM37-.LFBB6
+ 391               	.LM37:
+ 392 0138 9398      		cbi 50-32,3
+ 393 013a 929A      		sbi 50-32,2
+ 394 013c 00C0      		rjmp .L53
+ 395               	.L44:
+ 190:main.c        **** else if(angle>angle_segment_3){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD
+ 396               		.stabn	68,0,190,.LM38-.LFBB6
+ 397               	.LM38:
+ 398 013e C801      		movw r24,r16
+ 399 0140 B701      		movw r22,r14
+ 400 0142 20E0      		ldi r18,lo8(0x41f00000)
+ 401 0144 30E0      		ldi r19,hi8(0x41f00000)
+ 402 0146 40EF      		ldi r20,hlo8(0x41f00000)
+ 403 0148 51E4      		ldi r21,hhi8(0x41f00000)
+ 404 014a 0E94 0000 		call __gtsf2
+ 405 014e 1816      		cp __zero_reg__,r24
+ 406 0150 04F4      		brge .L45
+ 407               		.stabn	68,0,190,.LM39-.LFBB6
+ 408               	.LM39:
+ 409 0152 9398      		cbi 50-32,3
+ 410 0154 929A      		sbi 50-32,2
+ 411 0156 00C0      		rjmp .L52
+ 412               	.L45:
+ 191:main.c        **** else if(angle>angle_segment_2){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD
+ 413               		.stabn	68,0,191,.LM40-.LFBB6
+ 414               	.LM40:
+ 415 0158 C801      		movw r24,r16
+ 416 015a B701      		movw r22,r14
+ 417 015c 20E0      		ldi r18,lo8(0x41a00000)
+ 418 015e 30E0      		ldi r19,hi8(0x41a00000)
+ 419 0160 40EA      		ldi r20,hlo8(0x41a00000)
+ 420 0162 51E4      		ldi r21,hhi8(0x41a00000)
+ 421 0164 0E94 0000 		call __gtsf2
+ 422 0168 1816      		cp __zero_reg__,r24
+ 423 016a 04F4      		brge .L46
+ 424               		.stabn	68,0,191,.LM41-.LFBB6
+ 425               	.LM41:
+ 426 016c 939A      		sbi 50-32,3
+ 427 016e 9298      		cbi 50-32,2
+ 428               	.L54:
+ 429 0170 9198      		cbi 50-32,1
+ 430 0172 00C0      		rjmp .L49
+ 431               	.L46:
+ 192:main.c        **** else if(angle>angle_segment_1){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD
+ 432               		.stabn	68,0,192,.LM42-.LFBB6
+ 433               	.LM42:
+ 434 0174 C801      		movw r24,r16
+ 435 0176 B701      		movw r22,r14
+GAS LISTING /tmp/cczgOf3U.s 			page 12
 
 
- 490               		.stabn	68,0,195,.LM49-.LFBB7
- 491               	.LM49:
- 492 01a0 939A      		sbi 50-32,3
- 493               	.L54:
- 494 01a2 9298      		cbi 50-32,2
- 495               	.L55:
- 496 01a4 9198      		cbi 50-32,1
- 497 01a6 00C0      		rjmp .L52
- 498               	.L51:
- 196:main.c        **** else if(angle>0){              sbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD
- 499               		.stabn	68,0,196,.LM50-.LFBB7
- 500               	.LM50:
- 501 01a8 C801      		movw r24,r16
- 502 01aa B701      		movw r22,r14
- 503 01ac 20E0      		ldi r18,lo8(0x0)
- 504 01ae 30E0      		ldi r19,hi8(0x0)
- 505 01b0 A901      		movw r20,r18
- 506 01b2 0E94 0000 		call __gtsf2
- 507 01b6 1816      		cp __zero_reg__,r24
- 508 01b8 04F4      		brge .L12
- 509               		.stabn	68,0,196,.LM51-.LFBB7
- 510               	.LM51:
- 511 01ba 939A      		sbi 50-32,3
- 512               	.L59:
- 513 01bc 9298      		cbi 50-32,2
- 514               	.L57:
- 515 01be 919A      		sbi 50-32,1
- 516               	.L53:
- 517 01c0 9098      		cbi 50-32,0
- 518               	.L12:
- 519               	/* epilogue start */
- 197:main.c        **** 		
- 198:main.c        **** }
- 520               		.stabn	68,0,198,.LM52-.LFBB7
- 521               	.LM52:
- 522 01c2 1F91      		pop r17
- 523 01c4 0F91      		pop r16
- 524 01c6 FF90      		pop r15
- 525 01c8 EF90      		pop r14
- 526 01ca 0895      		ret
- 527               		.size	print_Angle_Binary, .-print_Angle_Binary
- 528               	.Lscope7:
- 529               		.stabs	"",36,0,0,.Lscope7-.LFBB7
- 530               		.stabd	78,0,0
- 531               		.stabs	"print_Time_Binary:F(0,15)",36,0,206,print_Time_Binary
- 532               		.stabs	"time:P(0,1)",64,0,206,24
- 533               	.global	print_Time_Binary
- 534               		.type	print_Time_Binary, @function
- 535               	print_Time_Binary:
- 536               		.stabd	46,0,0
- 199:main.c        **** //------------------------------------------------------//
- 200:main.c        **** 
- 201:main.c        **** 
- 202:main.c        **** 
- 203:main.c        **** //------------------------------------------------------//
- 204:main.c        **** //----------------------Print Angle---------------------//
- 205:main.c        **** //------------------------------------------------------//
-GAS LISTING /tmp/cchIUHRR.s 			page 14
+ 436 0178 20E0      		ldi r18,lo8(0x41200000)
+ 437 017a 30E0      		ldi r19,hi8(0x41200000)
+ 438 017c 40E2      		ldi r20,hlo8(0x41200000)
+ 439 017e 51E4      		ldi r21,hhi8(0x41200000)
+ 440 0180 0E94 0000 		call __gtsf2
+ 441 0184 1816      		cp __zero_reg__,r24
+ 442 0186 04F4      		brge .L47
+ 443               		.stabn	68,0,192,.LM43-.LFBB6
+ 444               	.LM43:
+ 445 0188 939A      		sbi 50-32,3
+ 446               	.L50:
+ 447 018a 9298      		cbi 50-32,2
+ 448               	.L51:
+ 449 018c 9198      		cbi 50-32,1
+ 450 018e 00C0      		rjmp .L48
+ 451               	.L47:
+ 193:main.c        **** else if(angle>0){              sbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD
+ 452               		.stabn	68,0,193,.LM44-.LFBB6
+ 453               	.LM44:
+ 454 0190 C801      		movw r24,r16
+ 455 0192 B701      		movw r22,r14
+ 456 0194 20E0      		ldi r18,lo8(0x0)
+ 457 0196 30E0      		ldi r19,hi8(0x0)
+ 458 0198 A901      		movw r20,r18
+ 459 019a 0E94 0000 		call __gtsf2
+ 460 019e 1816      		cp __zero_reg__,r24
+ 461 01a0 04F4      		brge .L8
+ 462               		.stabn	68,0,193,.LM45-.LFBB6
+ 463               	.LM45:
+ 464 01a2 939A      		sbi 50-32,3
+ 465               	.L55:
+ 466 01a4 9298      		cbi 50-32,2
+ 467               	.L53:
+ 468 01a6 919A      		sbi 50-32,1
+ 469               	.L49:
+ 470 01a8 9098      		cbi 50-32,0
+ 471               	.L8:
+ 472               	/* epilogue start */
+ 194:main.c        **** 		
+ 195:main.c        **** }
+ 473               		.stabn	68,0,195,.LM46-.LFBB6
+ 474               	.LM46:
+ 475 01aa 1F91      		pop r17
+ 476 01ac 0F91      		pop r16
+ 477 01ae FF90      		pop r15
+ 478 01b0 EF90      		pop r14
+ 479 01b2 0895      		ret
+ 480               		.size	print_Angle_Binary, .-print_Angle_Binary
+ 481               	.Lscope6:
+ 482               		.stabs	"",36,0,0,.Lscope6-.LFBB6
+ 483               		.stabd	78,0,0
+ 484               		.stabs	"print_Time_Binary:F(0,15)",36,0,203,print_Time_Binary
+ 485               		.stabs	"time:P(0,1)",64,0,203,24
+ 486               	.global	print_Time_Binary
+ 487               		.type	print_Time_Binary, @function
+ 488               	print_Time_Binary:
+ 489               		.stabd	46,0,0
+GAS LISTING /tmp/cczgOf3U.s 			page 13
 
 
- 206:main.c        **** void print_Time_Binary(int time){
- 537               		.stabn	68,0,206,.LM53-.LFBB8
- 538               	.LM53:
- 539               	.LFBB8:
- 540               	/* prologue: function */
- 541               	/* frame size = 0 */
- 542               	/* stack size = 0 */
- 543               	.L__stack_usage = 0
- 207:main.c        **** int time_segment_1=1;
- 208:main.c        **** int time_segment_2=2;
- 209:main.c        **** int time_segment_3=3;
- 210:main.c        **** int time_segment_4=4;
- 211:main.c        **** int time_segment_5=5;
- 212:main.c        **** int time_segment_6=6;
- 213:main.c        **** int time_segment_7=7;
- 214:main.c        **** int times=time;
- 215:main.c        **** if(times>time_segment_7){	sbi(PORTC,PC2);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORC=111//
- 544               		.stabn	68,0,215,.LM54-.LFBB8
- 545               	.LM54:
- 546 01cc 8830      		cpi r24,8
- 547 01ce 9105      		cpc r25,__zero_reg__
- 548 01d0 04F0      		brlt .L61
- 549               		.stabn	68,0,215,.LM55-.LFBB8
- 550               	.LM55:
- 551 01d2 AA9A      		sbi 53-32,2
- 552 01d4 00C0      		rjmp .L71
- 553               	.L61:
- 216:main.c        **** else if(times>time_segment_6){  sbi(PORTC,PC2);sbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=110//
- 554               		.stabn	68,0,216,.LM56-.LFBB8
- 555               	.LM56:
- 556 01d6 8730      		cpi r24,7
- 557 01d8 9105      		cpc r25,__zero_reg__
- 558 01da 01F4      		brne .L63
- 559               		.stabn	68,0,216,.LM57-.LFBB8
- 560               	.LM57:
- 561 01dc AA9A      		sbi 53-32,2
- 562 01de 00C0      		rjmp .L73
- 563               	.L63:
- 217:main.c        **** else if(times>time_segment_5){  sbi(PORTC,PC2);cbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=101//
- 564               		.stabn	68,0,217,.LM58-.LFBB8
- 565               	.LM58:
- 566 01e0 8630      		cpi r24,6
- 567 01e2 9105      		cpc r25,__zero_reg__
- 568 01e4 01F4      		brne .L64
- 569               		.stabn	68,0,217,.LM59-.LFBB8
- 570               	.LM59:
- 571 01e6 AA9A      		sbi 53-32,2
- 572 01e8 00C0      		rjmp .L72
- 573               	.L64:
- 218:main.c        **** else if(times>time_segment_4){  sbi(PORTC,PC2);cbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=100//
- 574               		.stabn	68,0,218,.LM60-.LFBB8
- 575               	.LM60:
- 576 01ea 8530      		cpi r24,5
- 577 01ec 9105      		cpc r25,__zero_reg__
- 578 01ee 01F4      		brne .L65
- 579               		.stabn	68,0,218,.LM61-.LFBB8
- 580               	.LM61:
-GAS LISTING /tmp/cchIUHRR.s 			page 15
+ 196:main.c        **** //------------------------------------------------------//
+ 197:main.c        **** 
+ 198:main.c        **** 
+ 199:main.c        **** 
+ 200:main.c        **** //------------------------------------------------------//
+ 201:main.c        **** //----------------------Print Angle---------------------//
+ 202:main.c        **** //------------------------------------------------------//
+ 203:main.c        **** void print_Time_Binary(int time){
+ 490               		.stabn	68,0,203,.LM47-.LFBB7
+ 491               	.LM47:
+ 492               	.LFBB7:
+ 493               	/* prologue: function */
+ 494               	/* frame size = 0 */
+ 495               	/* stack size = 0 */
+ 496               	.L__stack_usage = 0
+ 204:main.c        **** int time_segment_1=1;
+ 205:main.c        **** int time_segment_2=2;
+ 206:main.c        **** int time_segment_3=3;
+ 207:main.c        **** int time_segment_4=4;
+ 208:main.c        **** int time_segment_5=5;
+ 209:main.c        **** int time_segment_6=6;
+ 210:main.c        **** int time_segment_7=7;
+ 211:main.c        **** int times=time;
+ 212:main.c        **** if(times>time_segment_7){	sbi(PORTC,PC2);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORC=111//
+ 497               		.stabn	68,0,212,.LM48-.LFBB7
+ 498               	.LM48:
+ 499 01b4 8830      		cpi r24,8
+ 500 01b6 9105      		cpc r25,__zero_reg__
+ 501 01b8 04F0      		brlt .L57
+ 502               		.stabn	68,0,212,.LM49-.LFBB7
+ 503               	.LM49:
+ 504 01ba AA9A      		sbi 53-32,2
+ 505 01bc 00C0      		rjmp .L67
+ 506               	.L57:
+ 213:main.c        **** else if(times>time_segment_6){  sbi(PORTC,PC2);sbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=110//
+ 507               		.stabn	68,0,213,.LM50-.LFBB7
+ 508               	.LM50:
+ 509 01be 8730      		cpi r24,7
+ 510 01c0 9105      		cpc r25,__zero_reg__
+ 511 01c2 01F4      		brne .L59
+ 512               		.stabn	68,0,213,.LM51-.LFBB7
+ 513               	.LM51:
+ 514 01c4 AA9A      		sbi 53-32,2
+ 515 01c6 00C0      		rjmp .L69
+ 516               	.L59:
+ 214:main.c        **** else if(times>time_segment_5){  sbi(PORTC,PC2);cbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=101//
+ 517               		.stabn	68,0,214,.LM52-.LFBB7
+ 518               	.LM52:
+ 519 01c8 8630      		cpi r24,6
+ 520 01ca 9105      		cpc r25,__zero_reg__
+ 521 01cc 01F4      		brne .L60
+ 522               		.stabn	68,0,214,.LM53-.LFBB7
+ 523               	.LM53:
+ 524 01ce AA9A      		sbi 53-32,2
+ 525 01d0 00C0      		rjmp .L68
+ 526               	.L60:
+ 215:main.c        **** else if(times>time_segment_4){  sbi(PORTC,PC2);cbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=100//
+GAS LISTING /tmp/cczgOf3U.s 			page 14
 
 
- 581 01f0 AA9A      		sbi 53-32,2
- 582 01f2 00C0      		rjmp .L74
- 583               	.L65:
- 219:main.c        **** else if(times>time_segment_3){  cbi(PORTC,PC2);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=011//
- 584               		.stabn	68,0,219,.LM62-.LFBB8
- 585               	.LM62:
- 586 01f4 8430      		cpi r24,4
- 587 01f6 9105      		cpc r25,__zero_reg__
- 588 01f8 01F4      		brne .L66
- 589               		.stabn	68,0,219,.LM63-.LFBB8
- 590               	.LM63:
- 591 01fa AA98      		cbi 53-32,2
- 592               	.L71:
- 593 01fc A99A      		sbi 53-32,1
- 594 01fe 00C0      		rjmp .L70
- 595               	.L66:
- 220:main.c        **** else if(times>time_segment_2){  cbi(PORTC,PC2);sbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=010//
- 596               		.stabn	68,0,220,.LM64-.LFBB8
- 597               	.LM64:
- 598 0200 8330      		cpi r24,3
- 599 0202 9105      		cpc r25,__zero_reg__
- 600 0204 01F4      		brne .L67
- 601               		.stabn	68,0,220,.LM65-.LFBB8
- 602               	.LM65:
- 603 0206 AA98      		cbi 53-32,2
- 604               	.L73:
- 605 0208 A99A      		sbi 53-32,1
- 606 020a 00C0      		rjmp .L69
- 607               	.L67:
- 221:main.c        **** else if(times>time_segment_1){  cbi(PORTC,PC2);cbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=001//
- 608               		.stabn	68,0,221,.LM66-.LFBB8
- 609               	.LM66:
- 610 020c 8230      		cpi r24,2
- 611 020e 9105      		cpc r25,__zero_reg__
- 612 0210 01F4      		brne .L68
- 613               		.stabn	68,0,221,.LM67-.LFBB8
- 614               	.LM67:
- 615 0212 AA98      		cbi 53-32,2
- 616               	.L72:
- 617 0214 A998      		cbi 53-32,1
- 618               	.L70:
- 619 0216 A89A      		sbi 53-32,0
- 620 0218 0895      		ret
- 621               	.L68:
- 222:main.c        **** else {			        cbi(PORTC,PC2);cbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=000//
- 622               		.stabn	68,0,222,.LM68-.LFBB8
- 623               	.LM68:
- 624 021a AA98      		cbi 53-32,2
- 625               	.L74:
- 626 021c A998      		cbi 53-32,1
- 627               	.L69:
- 628 021e A898      		cbi 53-32,0
- 629 0220 0895      		ret
- 630               		.size	print_Time_Binary, .-print_Time_Binary
- 631               	.Lscope8:
- 632               		.stabs	"",36,0,0,.Lscope8-.LFBB8
- 633               		.stabd	78,0,0
-GAS LISTING /tmp/cchIUHRR.s 			page 16
+ 527               		.stabn	68,0,215,.LM54-.LFBB7
+ 528               	.LM54:
+ 529 01d2 8530      		cpi r24,5
+ 530 01d4 9105      		cpc r25,__zero_reg__
+ 531 01d6 01F4      		brne .L61
+ 532               		.stabn	68,0,215,.LM55-.LFBB7
+ 533               	.LM55:
+ 534 01d8 AA9A      		sbi 53-32,2
+ 535 01da 00C0      		rjmp .L70
+ 536               	.L61:
+ 216:main.c        **** else if(times>time_segment_3){  cbi(PORTC,PC2);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=011//
+ 537               		.stabn	68,0,216,.LM56-.LFBB7
+ 538               	.LM56:
+ 539 01dc 8430      		cpi r24,4
+ 540 01de 9105      		cpc r25,__zero_reg__
+ 541 01e0 01F4      		brne .L62
+ 542               		.stabn	68,0,216,.LM57-.LFBB7
+ 543               	.LM57:
+ 544 01e2 AA98      		cbi 53-32,2
+ 545               	.L67:
+ 546 01e4 A99A      		sbi 53-32,1
+ 547 01e6 00C0      		rjmp .L66
+ 548               	.L62:
+ 217:main.c        **** else if(times>time_segment_2){  cbi(PORTC,PC2);sbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=010//
+ 549               		.stabn	68,0,217,.LM58-.LFBB7
+ 550               	.LM58:
+ 551 01e8 8330      		cpi r24,3
+ 552 01ea 9105      		cpc r25,__zero_reg__
+ 553 01ec 01F4      		brne .L63
+ 554               		.stabn	68,0,217,.LM59-.LFBB7
+ 555               	.LM59:
+ 556 01ee AA98      		cbi 53-32,2
+ 557               	.L69:
+ 558 01f0 A99A      		sbi 53-32,1
+ 559 01f2 00C0      		rjmp .L65
+ 560               	.L63:
+ 218:main.c        **** else if(times>time_segment_1){  cbi(PORTC,PC2);cbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=001//
+ 561               		.stabn	68,0,218,.LM60-.LFBB7
+ 562               	.LM60:
+ 563 01f4 8230      		cpi r24,2
+ 564 01f6 9105      		cpc r25,__zero_reg__
+ 565 01f8 01F4      		brne .L64
+ 566               		.stabn	68,0,218,.LM61-.LFBB7
+ 567               	.LM61:
+ 568 01fa AA98      		cbi 53-32,2
+ 569               	.L68:
+ 570 01fc A998      		cbi 53-32,1
+ 571               	.L66:
+ 572 01fe A89A      		sbi 53-32,0
+ 573 0200 0895      		ret
+ 574               	.L64:
+ 219:main.c        **** else {			        cbi(PORTC,PC2);cbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=000//
+ 575               		.stabn	68,0,219,.LM62-.LFBB7
+ 576               	.LM62:
+ 577 0202 AA98      		cbi 53-32,2
+ 578               	.L70:
+ 579 0204 A998      		cbi 53-32,1
+GAS LISTING /tmp/cczgOf3U.s 			page 15
 
 
- 634               		.stabs	"main:F(0,15)",36,0,41,main
- 635               	.global	main
- 636               		.type	main, @function
- 637               	main:
- 638               		.stabd	46,0,0
-  42:main.c        **** {
- 639               		.stabn	68,0,42,.LM69-.LFBB9
- 640               	.LM69:
- 641               	.LFBB9:
- 642 0222 6F92      		push r6
- 643 0224 7F92      		push r7
- 644 0226 8F92      		push r8
- 645 0228 9F92      		push r9
- 646 022a AF92      		push r10
- 647 022c BF92      		push r11
- 648 022e CF92      		push r12
- 649 0230 DF92      		push r13
- 650 0232 EF92      		push r14
- 651 0234 FF92      		push r15
- 652 0236 0F93      		push r16
- 653 0238 1F93      		push r17
- 654 023a DF93      		push r29
- 655 023c CF93      		push r28
- 656 023e CDB7      		in r28,__SP_L__
- 657 0240 DEB7      		in r29,__SP_H__
- 658 0242 6497      		sbiw r28,20
- 659 0244 0FB6      		in __tmp_reg__,__SREG__
- 660 0246 F894      		cli
- 661 0248 DEBF      		out __SP_H__,r29
- 662 024a 0FBE      		out __SREG__,__tmp_reg__
- 663 024c CDBF      		out __SP_L__,r28
- 664               	/* prologue: function */
- 665               	/* frame size = 20 */
- 666               	/* stack size = 34 */
- 667               	.L__stack_usage = 34
-  43:main.c        **** 	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
- 668               		.stabn	68,0,43,.LM70-.LFBB9
- 669               	.LM70:
- 670 024e 0E94 0000 		call init_ports
-  51:main.c        **** 	double ms_time=0.0;
- 671               		.stabn	68,0,51,.LM71-.LFBB9
- 672               	.LM71:
- 673 0252 EE24      		clr r14
- 674 0254 FF24      		clr r15
- 675 0256 DD24      		clr r13
- 676 0258 CC24      		clr r12
-  50:main.c        **** 	int time=0;
- 677               		.stabn	68,0,50,.LM72-.LFBB9
- 678               	.LM72:
- 679 025a 8824      		clr r8
- 680 025c 9924      		clr r9
-  43:main.c        **** 	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
- 681               		.stabn	68,0,43,.LM73-.LFBB9
- 682               	.LM73:
- 683 025e 3E01      		movw r6,r28
- 684 0260 0894      		sec
- 685 0262 611C      		adc r6,__zero_reg__
-GAS LISTING /tmp/cchIUHRR.s 			page 17
+ 580               	.L65:
+ 581 0206 A898      		cbi 53-32,0
+ 582 0208 0895      		ret
+ 583               		.size	print_Time_Binary, .-print_Time_Binary
+ 584               	.Lscope7:
+ 585               		.stabs	"",36,0,0,.Lscope7-.LFBB7
+ 586               		.stabd	78,0,0
+ 587               		.stabs	"main:F(0,15)",36,0,42,main
+ 588               	.global	main
+ 589               		.type	main, @function
+ 590               	main:
+ 591               		.stabd	46,0,0
+  43:main.c        **** {
+ 592               		.stabn	68,0,43,.LM63-.LFBB8
+ 593               	.LM63:
+ 594               	.LFBB8:
+ 595 020a 2F92      		push r2
+ 596 020c 3F92      		push r3
+ 597 020e 4F92      		push r4
+ 598 0210 5F92      		push r5
+ 599 0212 6F92      		push r6
+ 600 0214 7F92      		push r7
+ 601 0216 8F92      		push r8
+ 602 0218 9F92      		push r9
+ 603 021a AF92      		push r10
+ 604 021c BF92      		push r11
+ 605 021e CF92      		push r12
+ 606 0220 DF92      		push r13
+ 607 0222 EF92      		push r14
+ 608 0224 FF92      		push r15
+ 609 0226 0F93      		push r16
+ 610 0228 1F93      		push r17
+ 611 022a DF93      		push r29
+ 612 022c CF93      		push r28
+ 613 022e CDB7      		in r28,__SP_L__
+ 614 0230 DEB7      		in r29,__SP_H__
+ 615 0232 6497      		sbiw r28,20
+ 616 0234 0FB6      		in __tmp_reg__,__SREG__
+ 617 0236 F894      		cli
+ 618 0238 DEBF      		out __SP_H__,r29
+ 619 023a 0FBE      		out __SREG__,__tmp_reg__
+ 620 023c CDBF      		out __SP_L__,r28
+ 621               	/* prologue: function */
+ 622               	/* frame size = 20 */
+ 623               	/* stack size = 38 */
+ 624               	.L__stack_usage = 38
+  44:main.c        **** 	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
+ 625               		.stabn	68,0,44,.LM64-.LFBB8
+ 626               	.LM64:
+ 627 023e 0E94 0000 		call init_ports
+  53:main.c        **** 	double ms_time=0.0;
+ 628               		.stabn	68,0,53,.LM65-.LFBB8
+ 629               	.LM65:
+ 630 0242 EE24      		clr r14
+ 631 0244 FF24      		clr r15
+ 632 0246 DD24      		clr r13
+ 633 0248 CC24      		clr r12
+GAS LISTING /tmp/cczgOf3U.s 			page 16
 
 
- 686 0264 711C      		adc r7,__zero_reg__
- 687               	.L85:
- 688 0266 5301      		movw r10,r6
-  56:main.c        **** 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Ca
- 689               		.stabn	68,0,56,.LM74-.LFBB9
- 690               	.LM74:
- 691 0268 00E0      		ldi r16,lo8(0)
- 692 026a 10E0      		ldi r17,hi8(0)
- 693               	.L76:
-  56:main.c        **** 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Ca
- 694               		.stabn	68,0,56,.LM75-.LFBB9
- 695               	.LM75:
- 696 026c C801      		movw r24,r16
- 697 026e 0E94 0000 		call select_ADC_port
- 698 0272 65B1      		in r22,37-32
- 699 0274 70E0      		ldi r23,lo8(0)
- 700 0276 6155      		subi r22,lo8(-(-81))
- 701 0278 7040      		sbci r23,hi8(-(-81))
- 702 027a 8827      		clr r24
- 703 027c 77FD      		sbrc r23,7
- 704 027e 8095      		com r24
- 705 0280 982F      		mov r25,r24
- 706 0282 0E94 0000 		call __floatsisf
- 707 0286 F501      		movw r30,r10
- 708 0288 6193      		st Z+,r22
- 709 028a 7193      		st Z+,r23
- 710 028c 8193      		st Z+,r24
- 711 028e 9193      		st Z+,r25
- 712 0290 5F01      		movw r10,r30
- 713 0292 0F5F      		subi r16,lo8(-(1))
- 714 0294 1F4F      		sbci r17,hi8(-(1))
- 715 0296 0630      		cpi r16,6
- 716 0298 1105      		cpc r17,__zero_reg__
- 717 029a 01F4      		brne .L76
-  57:main.c        **** 	a[3]=a[3]+81;
- 718               		.stabn	68,0,57,.LM76-.LFBB9
- 719               	.LM76:
- 720 029c 6D85      		ldd r22,Y+13
- 721 029e 7E85      		ldd r23,Y+14
- 722 02a0 8F85      		ldd r24,Y+15
- 723 02a2 9889      		ldd r25,Y+16
- 724 02a4 20E0      		ldi r18,lo8(0x42a20000)
- 725 02a6 30E0      		ldi r19,hi8(0x42a20000)
- 726 02a8 42EA      		ldi r20,hlo8(0x42a20000)
- 727 02aa 52E4      		ldi r21,hhi8(0x42a20000)
- 728 02ac 0E94 0000 		call __addsf3
- 729 02b0 062F      		mov r16,r22
- 730 02b2 A72E      		mov r10,r23
- 731 02b4 182F      		mov r17,r24
- 732 02b6 B92E      		mov r11,r25
- 733 02b8 862F      		mov r24,r22
- 734 02ba 9A2D      		mov r25,r10
- 735 02bc A12F      		mov r26,r17
- 736 02be BB2D      		mov r27,r11
- 737 02c0 8D87      		std Y+13,r24
- 738 02c2 9E87      		std Y+14,r25
- 739 02c4 AF87      		std Y+15,r26
-GAS LISTING /tmp/cchIUHRR.s 			page 18
+  51:main.c        **** 	int time=0;
+ 634               		.stabn	68,0,51,.LM66-.LFBB8
+ 635               	.LM66:
+ 636 024a AA24      		clr r10
+ 637 024c BB24      		clr r11
+  48:main.c        **** 	double angle0xz=0.0;
+ 638               		.stabn	68,0,48,.LM67-.LFBB8
+ 639               	.LM67:
+ 640 024e 7724      		clr r7
+ 641 0250 6624      		clr r6
+ 642 0252 5524      		clr r5
+ 643 0254 4424      		clr r4
+  44:main.c        **** 	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
+ 644               		.stabn	68,0,44,.LM68-.LFBB8
+ 645               	.LM68:
+ 646 0256 1E01      		movw r2,r28
+ 647 0258 0894      		sec
+ 648 025a 211C      		adc r2,__zero_reg__
+ 649 025c 311C      		adc r3,__zero_reg__
+ 650               	.L82:
+ 651 025e 4101      		movw r8,r2
+  58:main.c        **** 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Ca
+ 652               		.stabn	68,0,58,.LM69-.LFBB8
+ 653               	.LM69:
+ 654 0260 00E0      		ldi r16,lo8(0)
+ 655 0262 10E0      		ldi r17,hi8(0)
+ 656               	.L73:
+  58:main.c        **** 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Ca
+ 657               		.stabn	68,0,58,.LM70-.LFBB8
+ 658               	.LM70:
+ 659 0264 C801      		movw r24,r16
+ 660 0266 0E94 0000 		call select_ADC_port
+ 661 026a 65B1      		in r22,37-32
+ 662 026c 70E0      		ldi r23,lo8(0)
+ 663 026e 6155      		subi r22,lo8(-(-81))
+ 664 0270 7040      		sbci r23,hi8(-(-81))
+ 665 0272 8827      		clr r24
+ 666 0274 77FD      		sbrc r23,7
+ 667 0276 8095      		com r24
+ 668 0278 982F      		mov r25,r24
+ 669 027a 0E94 0000 		call __floatsisf
+ 670 027e F401      		movw r30,r8
+ 671 0280 6193      		st Z+,r22
+ 672 0282 7193      		st Z+,r23
+ 673 0284 8193      		st Z+,r24
+ 674 0286 9193      		st Z+,r25
+ 675 0288 4F01      		movw r8,r30
+ 676 028a 0F5F      		subi r16,lo8(-(1))
+ 677 028c 1F4F      		sbci r17,hi8(-(1))
+ 678 028e 0630      		cpi r16,6
+ 679 0290 1105      		cpc r17,__zero_reg__
+ 680 0292 01F4      		brne .L73
+  59:main.c        **** 	a[3]=a[3]+81;
+ 681               		.stabn	68,0,59,.LM71-.LFBB8
+ 682               	.LM71:
+ 683 0294 6D85      		ldd r22,Y+13
+ 684 0296 7E85      		ldd r23,Y+14
+GAS LISTING /tmp/cczgOf3U.s 			page 17
 
 
- 740 02c6 B88B      		std Y+16,r27
- 741               	.LBB12:
- 742               	.LBB13:
- 141:main.c        **** 	return atan(az/ax)*(57.2958);
- 743               		.stabn	68,0,141,.LM77-.LFBB9
- 744               	.LM77:
- 745 02c8 6985      		ldd r22,Y+9
- 746 02ca 7A85      		ldd r23,Y+10
- 747 02cc 8B85      		ldd r24,Y+11
- 748 02ce 9C85      		ldd r25,Y+12
- 749 02d0 2981      		ldd r18,Y+1
- 750 02d2 3A81      		ldd r19,Y+2
- 751 02d4 4B81      		ldd r20,Y+3
- 752 02d6 5C81      		ldd r21,Y+4
- 753 02d8 0E94 0000 		call __divsf3
- 754 02dc 0E94 0000 		call atan
- 755 02e0 26EE      		ldi r18,lo8(0x42652ee6)
- 756 02e2 3EE2      		ldi r19,hi8(0x42652ee6)
- 757 02e4 45E6      		ldi r20,hlo8(0x42652ee6)
- 758 02e6 52E4      		ldi r21,hhi8(0x42652ee6)
- 759 02e8 0E94 0000 		call __mulsf3
- 760 02ec AB01      		movw r20,r22
- 761 02ee BC01      		movw r22,r24
- 762               	.LBE13:
- 763               	.LBE12:
-  63:main.c        **** 		print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD
- 764               		.stabn	68,0,63,.LM78-.LFBB9
- 765               	.LM78:
- 766 02f0 81E0      		ldi r24,lo8(1)
- 767 02f2 90E0      		ldi r25,hi8(1)
- 768 02f4 0E94 0000 		call print_Angle_Binary
-  67:main.c        **** 		if(a[3]>132){count=1;}
- 769               		.stabn	68,0,67,.LM79-.LFBB9
- 770               	.LM79:
- 771 02f8 602F      		mov r22,r16
- 772 02fa 7A2D      		mov r23,r10
- 773 02fc 812F      		mov r24,r17
- 774 02fe 9B2D      		mov r25,r11
- 775 0300 20E0      		ldi r18,lo8(0x43040000)
- 776 0302 30E0      		ldi r19,hi8(0x43040000)
- 777 0304 44E0      		ldi r20,hlo8(0x43040000)
- 778 0306 53E4      		ldi r21,hhi8(0x43040000)
- 779 0308 0E94 0000 		call __gtsf2
- 780 030c 1816      		cp __zero_reg__,r24
- 781 030e 04F0      		brlt .+2
- 782 0310 00C0      		rjmp .L85
-  74:main.c        **** 				if(ms_time==10){time=time+1;ms_time=0;}else{time=time+0;}
- 783               		.stabn	68,0,74,.LM80-.LFBB9
- 784               	.LM80:
- 785 0312 9601      		movw r18,r12
- 786 0314 6E2D      		mov r22,r14
- 787 0316 7F2D      		mov r23,r15
- 788 0318 832F      		mov r24,r19
- 789 031a 9C2D      		mov r25,r12
- 790 031c 20E0      		ldi r18,lo8(0x41200000)
- 791 031e 30E0      		ldi r19,hi8(0x41200000)
- 792 0320 40E2      		ldi r20,hlo8(0x41200000)
-GAS LISTING /tmp/cchIUHRR.s 			page 19
+ 685 0298 8F85      		ldd r24,Y+15
+ 686 029a 9889      		ldd r25,Y+16
+ 687 029c 20E0      		ldi r18,lo8(0x42a20000)
+ 688 029e 30E0      		ldi r19,hi8(0x42a20000)
+ 689 02a0 42EA      		ldi r20,hlo8(0x42a20000)
+ 690 02a2 52E4      		ldi r21,hhi8(0x42a20000)
+ 691 02a4 0E94 0000 		call __addsf3
+ 692 02a8 262F      		mov r18,r22
+ 693 02aa 372F      		mov r19,r23
+ 694 02ac 482F      		mov r20,r24
+ 695 02ae 592F      		mov r21,r25
+ 696 02b0 2D87      		std Y+13,r18
+ 697 02b2 3E87      		std Y+14,r19
+ 698 02b4 4F87      		std Y+15,r20
+ 699 02b6 588B      		std Y+16,r21
+  70:main.c        **** 		if(a[3]>132){count=1;}
+ 700               		.stabn	68,0,70,.LM72-.LFBB8
+ 701               	.LM72:
+ 702 02b8 20E0      		ldi r18,lo8(0x43040000)
+ 703 02ba 30E0      		ldi r19,hi8(0x43040000)
+ 704 02bc 44E0      		ldi r20,hlo8(0x43040000)
+ 705 02be 53E4      		ldi r21,hhi8(0x43040000)
+ 706 02c0 0E94 0000 		call __gtsf2
+ 707 02c4 1816      		cp __zero_reg__,r24
+ 708 02c6 04F0      		brlt .+2
+ 709 02c8 00C0      		rjmp .L81
+ 710               	.LBB12:
+ 711               	.LBB13:
+ 157:main.c        **** 	return atan(az/ax)*(57.2958);
+ 712               		.stabn	68,0,157,.LM73-.LFBB8
+ 713               	.LM73:
+ 714 02ca 6985      		ldd r22,Y+9
+ 715 02cc 7A85      		ldd r23,Y+10
+ 716 02ce 8B85      		ldd r24,Y+11
+ 717 02d0 9C85      		ldd r25,Y+12
+ 718 02d2 2981      		ldd r18,Y+1
+ 719 02d4 3A81      		ldd r19,Y+2
+ 720 02d6 4B81      		ldd r20,Y+3
+ 721 02d8 5C81      		ldd r21,Y+4
+ 722 02da 0E94 0000 		call __divsf3
+ 723 02de 0E94 0000 		call atan
+ 724 02e2 26EE      		ldi r18,lo8(0x42652ee6)
+ 725 02e4 3EE2      		ldi r19,hi8(0x42652ee6)
+ 726 02e6 45E6      		ldi r20,hlo8(0x42652ee6)
+ 727 02e8 52E4      		ldi r21,hhi8(0x42652ee6)
+ 728 02ea 0E94 0000 		call __mulsf3
+ 729 02ee 762E      		mov r7,r22
+ 730 02f0 672E      		mov r6,r23
+ 731 02f2 582E      		mov r5,r24
+ 732 02f4 492E      		mov r4,r25
+ 733 02f6 00C0      		rjmp .L83
+ 734               	.L77:
+ 735               	.LBE13:
+ 736               	.LBE12:
+  80:main.c        **** 				if(ms_time==10){time=time+1;ms_time=0;}else{time=time+0;}
+ 737               		.stabn	68,0,80,.LM74-.LFBB8
+ 738               	.LM74:
+GAS LISTING /tmp/cczgOf3U.s 			page 18
 
 
- 793 0322 51E4      		ldi r21,hhi8(0x41200000)
- 794 0324 0E94 0000 		call __eqsf2
- 795 0328 8823      		tst r24
- 796 032a 01F4      		brne .L79
-  74:main.c        **** 				if(ms_time==10){time=time+1;ms_time=0;}else{time=time+0;}
- 797               		.stabn	68,0,74,.LM81-.LFBB9
- 798               	.LM81:
- 799 032c 0894      		sec
- 800 032e 811C      		adc r8,__zero_reg__
- 801 0330 911C      		adc r9,__zero_reg__
- 802 0332 EE24      		clr r14
- 803 0334 FF24      		clr r15
- 804 0336 DD24      		clr r13
- 805 0338 CC24      		clr r12
- 806               	.L79:
- 807               	.LBB14:
- 808               	.LBB15:
- 809               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h",132,0,0,.Ltext1
- 810               	.Ltext1:
+ 739 02f8 0894      		sec
+ 740 02fa A11C      		adc r10,__zero_reg__
+ 741 02fc B11C      		adc r11,__zero_reg__
+ 742 02fe EE24      		clr r14
+ 743 0300 FF24      		clr r15
+ 744 0302 DD24      		clr r13
+ 745 0304 CC24      		clr r12
+ 746               	.L78:
+ 747               	.LBB14:
+ 748               	.LBB15:
+ 749               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h",132,0,0,.Ltext1
+ 750               	.Ltext1:
    1:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** /* Copyright (c) 2002, Marek Michalkiewicz
    2:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****    Copyright (c) 2004,2005,2007 Joerg Wunsch
    3:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****    Copyright (c) 2007  Florin-Viorel Petrov
@@ -1138,9 +1071,6 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
   36:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #define _UTIL_DELAY_H_ 1
   37:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
   38:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #ifndef __HAS_DELAY_CYCLES
-GAS LISTING /tmp/cchIUHRR.s 			page 20
-
-
   39:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #define __HAS_DELAY_CYCLES 1
   40:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #endif
   41:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
@@ -1148,6 +1078,9 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
   43:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #include <util/delay_basic.h>
   44:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #include <math.h>
   45:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
+GAS LISTING /tmp/cczgOf3U.s 			page 19
+
+
   46:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** /** \file */
   47:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** /** \defgroup util_delay <util/delay.h>: Convenience functions for busy-wait delay loops
   48:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****     \code
@@ -1198,9 +1131,6 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
   93:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
   94:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #ifndef __OPTIMIZE__
   95:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
-GAS LISTING /tmp/cchIUHRR.s 			page 21
-
-
   96:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #endif
   97:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
   98:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** /**
@@ -1208,6 +1138,9 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
  100:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
  101:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****    Perform a delay of \c __ms milliseconds, using _delay_loop_2().
  102:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
+GAS LISTING /tmp/cczgOf3U.s 			page 20
+
+
  103:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****    The macro F_CPU is supposed to be defined to a
  104:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****    constant defining the CPU clock frequency (in Hertz).
  105:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
@@ -1258,123 +1191,152 @@ GAS LISTING /tmp/cchIUHRR.s 			page 1
  150:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
  151:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 	#endif
  152:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
-GAS LISTING /tmp/cchIUHRR.s 			page 22
-
-
  153:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
- 811               		.stabn	68,0,153,.LM82-.LFBB9
- 812               	.LM82:
- 813 033a 87EA      		 ldi r24,lo8(24999)
- 814 033c 91E6      	    ldi r25,hi8(24999)
- 815 033e 0197      	    1:sbiw r24,1
- 816 0340 01F4      	    brne 1b
- 817 0342 00C0      		rjmp .
- 818 0344 0000      		nop
- 819               	.LBE15:
- 820               	.LBE14:
- 821               		.stabs	"main.c",132,0,0,.Ltext2
- 822               	.Ltext2:
-  76:main.c        **** 				ms_time=ms_time+1;	
- 823               		.stabn	68,0,76,.LM83-.LFBB9
- 824               	.LM83:
- 825 0346 9601      		movw r18,r12
- 826 0348 6E2D      		mov r22,r14
- 827 034a 7F2D      		mov r23,r15
- 828 034c 832F      		mov r24,r19
- 829 034e 9C2D      		mov r25,r12
- 830 0350 20E0      		ldi r18,lo8(0x3f800000)
- 831 0352 30E0      		ldi r19,hi8(0x3f800000)
- 832 0354 40E8      		ldi r20,hlo8(0x3f800000)
- 833 0356 5FE3      		ldi r21,hhi8(0x3f800000)
- 834 0358 0E94 0000 		call __addsf3
- 835 035c 7B01      		movw r14,r22
- 836 035e D82E      		mov r13,r24
- 837 0360 C92E      		mov r12,r25
-  77:main.c        **** 				print_Time_Binary(time);}
- 838               		.stabn	68,0,77,.LM84-.LFBB9
- 839               	.LM84:
- 840 0362 C401      		movw r24,r8
- 841 0364 0E94 0000 		call print_Time_Binary
- 842 0368 00C0      		rjmp .L85
- 843               		.size	main, .-main
- 844               		.stabs	"i:r(0,1)",64,0,44,16
- 845               		.stabs	"a:(0,16)=ar(0,17)=r(0,17);0;0177777;;0;4;(0,13)",128,0,49,1
- 846               		.stabs	"time:r(0,1)",64,0,50,8
- 847               		.stabn	192,0,0,.LFBB9-.LFBB9
- 848               		.stabn	224,0,0,.Lscope9-.LFBB9
- 849               	.Lscope9:
- 850               		.stabs	"",36,0,0,.Lscope9-.LFBB9
- 851               		.stabd	78,0,0
- 852               		.stabs	"final_distance:F(0,13)",36,0,231,final_distance
- 853               		.stabs	"angle0xz:P(0,13)",64,0,231,22
- 854               		.stabs	"tf:P(0,13)",64,0,231,18
- 855               	.global	final_distance
- 856               		.type	final_distance, @function
- 857               	final_distance:
- 858               		.stabd	46,0,0
- 223:main.c        **** 
+ 751               		.stabn	68,0,153,.LM75-.LFBB8
+ 752               	.LM75:
+ 753 0306 87EA      		 ldi r24,lo8(24999)
+ 754 0308 91E6      	    ldi r25,hi8(24999)
+ 755 030a 0197      	    1:sbiw r24,1
+ 756 030c 01F4      	    brne 1b
+GAS LISTING /tmp/cczgOf3U.s 			page 21
+
+
+ 757 030e 00C0      		rjmp .
+ 758 0310 0000      		nop
+ 759               	.LBE15:
+ 760               	.LBE14:
+ 761               		.stabs	"main.c",132,0,0,.Ltext2
+ 762               	.Ltext2:
+  82:main.c        **** 				ms_time=ms_time+1;	
+ 763               		.stabn	68,0,82,.LM76-.LFBB8
+ 764               	.LM76:
+ 765 0312 9601      		movw r18,r12
+ 766 0314 6E2D      		mov r22,r14
+ 767 0316 7F2D      		mov r23,r15
+ 768 0318 832F      		mov r24,r19
+ 769 031a 9C2D      		mov r25,r12
+ 770 031c 20E0      		ldi r18,lo8(0x3f800000)
+ 771 031e 30E0      		ldi r19,hi8(0x3f800000)
+ 772 0320 40E8      		ldi r20,hlo8(0x3f800000)
+ 773 0322 5FE3      		ldi r21,hhi8(0x3f800000)
+ 774 0324 0E94 0000 		call __addsf3
+ 775 0328 7B01      		movw r14,r22
+ 776 032a D82E      		mov r13,r24
+ 777 032c C92E      		mov r12,r25
+  83:main.c        **** 				print_Time_Binary(time);
+ 778               		.stabn	68,0,83,.LM77-.LFBB8
+ 779               	.LM77:
+ 780 032e C501      		movw r24,r10
+ 781 0330 0E94 0000 		call print_Time_Binary
+ 782               	.L83:
+  86:main.c        **** 				print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD 
+ 783               		.stabn	68,0,86,.LM78-.LFBB8
+ 784               	.LM78:
+ 785 0334 81E0      		ldi r24,lo8(1)
+ 786 0336 90E0      		ldi r25,hi8(1)
+ 787 0338 F301      		movw r30,r6
+ 788 033a 9201      		movw r18,r4
+ 789 033c 4F2F      		mov r20,r31
+ 790 033e 562D      		mov r21,r6
+ 791 0340 632F      		mov r22,r19
+ 792 0342 742D      		mov r23,r4
+ 793 0344 0E94 0000 		call print_Angle_Binary
+ 794 0348 00C0      		rjmp .L82
+ 795               	.L81:
+  80:main.c        **** 				if(ms_time==10){time=time+1;ms_time=0;}else{time=time+0;}
+ 796               		.stabn	68,0,80,.LM79-.LFBB8
+ 797               	.LM79:
+ 798 034a 9601      		movw r18,r12
+ 799 034c 6E2D      		mov r22,r14
+ 800 034e 7F2D      		mov r23,r15
+ 801 0350 832F      		mov r24,r19
+ 802 0352 9C2D      		mov r25,r12
+ 803 0354 20E0      		ldi r18,lo8(0x41200000)
+ 804 0356 30E0      		ldi r19,hi8(0x41200000)
+ 805 0358 40E2      		ldi r20,hlo8(0x41200000)
+ 806 035a 51E4      		ldi r21,hhi8(0x41200000)
+ 807 035c 0E94 0000 		call __eqsf2
+ 808 0360 8823      		tst r24
+ 809 0362 01F0      		breq .L77
+GAS LISTING /tmp/cczgOf3U.s 			page 22
+
+
+ 810 0364 00C0      		rjmp .L78
+ 811               		.size	main, .-main
+ 812               		.stabs	"i:r(0,1)",64,0,45,16
+ 813               		.stabs	"a:(0,16)=ar(0,17)=r(0,17);0;0177777;;0;4;(0,13)",128,0,50,1
+ 814               		.stabs	"time:r(0,1)",64,0,51,10
+ 815               		.stabn	192,0,0,.LFBB8-.LFBB8
+ 816               		.stabn	224,0,0,.Lscope8-.LFBB8
+ 817               	.Lscope8:
+ 818               		.stabs	"",36,0,0,.Lscope8-.LFBB8
+ 819               		.stabd	78,0,0
+ 820               		.stabs	"final_distance:F(0,13)",36,0,228,final_distance
+ 821               		.stabs	"angle0xz:P(0,13)",64,0,228,22
+ 822               		.stabs	"tf:P(0,13)",64,0,228,18
+ 823               	.global	final_distance
+ 824               		.type	final_distance, @function
+ 825               	final_distance:
+ 826               		.stabd	46,0,0
+ 220:main.c        **** 
+ 221:main.c        **** 
+ 222:main.c        **** }
+ 223:main.c        **** //------------------------------------------------------//
  224:main.c        **** 
- 225:main.c        **** }
- 226:main.c        **** //------------------------------------------------------//
- 227:main.c        **** 
- 228:main.c        **** //------------------------------------------------------//
-GAS LISTING /tmp/cchIUHRR.s 			page 23
-
-
- 229:main.c        **** //--------------------Final_Distance--------------------//
- 230:main.c        **** //------------------------------------------------------//
- 231:main.c        **** double final_distance(double angle0xz,double tf){
- 859               		.stabn	68,0,231,.LM85-.LFBB10
- 860               	.LM85:
- 861               	.LFBB10:
- 862               	/* prologue: function */
- 863               	/* frame size = 0 */
- 864               	/* stack size = 0 */
- 865               	.L__stack_usage = 0
- 232:main.c        **** 	float theta=0.7156;
- 233:main.c        **** 	float t=2.544;
- 234:main.c        **** 	float g=9.8;
- 235:main.c        **** 	float a=-sin(2*theta)/(t*t); 
- 236:main.c        **** 	float b=g;
- 237:main.c        **** 	float c=(-1/4)*g*g*t*t*sin(2*theta);
- 238:main.c        **** 	float r=(1/(2*a))*(-b+sqrt(b*b-4*a*c));
- 239:main.c        **** 	return r;
- 240:main.c        **** }
- 866               		.stabn	68,0,240,.LM86-.LFBB10
- 867               	.LM86:
- 868 036a 60E0      		ldi r22,lo8(0x80000000)
- 869 036c 70E0      		ldi r23,hi8(0x80000000)
- 870 036e 80E0      		ldi r24,hlo8(0x80000000)
- 871 0370 90E8      		ldi r25,hhi8(0x80000000)
- 872               	/* epilogue start */
- 873 0372 0895      		ret
- 874               		.size	final_distance, .-final_distance
- 875               	.Lscope10:
- 876               		.stabs	"",36,0,0,.Lscope10-.LFBB10
- 877               		.stabd	78,0,0
- 878               		.stabs	"",100,0,0,.Letext0
- 879               	.Letext0:
-GAS LISTING /tmp/cchIUHRR.s 			page 24
+ 225:main.c        **** //------------------------------------------------------//
+ 226:main.c        **** //--------------------Final_Distance--------------------//
+ 227:main.c        **** //------------------------------------------------------//
+ 228:main.c        **** double final_distance(double angle0xz,double tf){
+ 827               		.stabn	68,0,228,.LM80-.LFBB9
+ 828               	.LM80:
+ 829               	.LFBB9:
+ 830               	/* prologue: function */
+ 831               	/* frame size = 0 */
+ 832               	/* stack size = 0 */
+ 833               	.L__stack_usage = 0
+ 229:main.c        **** 	float theta=0.7156;
+ 230:main.c        **** 	float t=2.544;
+ 231:main.c        **** 	float g=9.8;
+ 232:main.c        **** 	float a=-sin(2*theta)/(t*t); 
+ 233:main.c        **** 	float b=g;
+ 234:main.c        **** 	float c=(-1/4)*g*g*t*t*sin(2*theta);
+ 235:main.c        **** 	float r=(1/(2*a))*(-b+sqrt(b*b-4*a*c));
+ 236:main.c        **** 	return r;
+ 237:main.c        **** }
+ 834               		.stabn	68,0,237,.LM81-.LFBB9
+ 835               	.LM81:
+ 836 0366 60E0      		ldi r22,lo8(0x80000000)
+ 837 0368 70E0      		ldi r23,hi8(0x80000000)
+ 838 036a 80E0      		ldi r24,hlo8(0x80000000)
+ 839 036c 90E8      		ldi r25,hhi8(0x80000000)
+ 840               	/* epilogue start */
+ 841 036e 0895      		ret
+ 842               		.size	final_distance, .-final_distance
+ 843               	.Lscope9:
+ 844               		.stabs	"",36,0,0,.Lscope9-.LFBB9
+ 845               		.stabd	78,0,0
+ 846               		.stabs	"",100,0,0,.Letext0
+ 847               	.Letext0:
+GAS LISTING /tmp/cczgOf3U.s 			page 23
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-     /tmp/cchIUHRR.s:2      *ABS*:0000003f __SREG__
-     /tmp/cchIUHRR.s:3      *ABS*:0000003e __SP_H__
-     /tmp/cchIUHRR.s:4      *ABS*:0000003d __SP_L__
-     /tmp/cchIUHRR.s:5      *ABS*:00000034 __CCP__
-     /tmp/cchIUHRR.s:6      *ABS*:00000000 __tmp_reg__
-     /tmp/cchIUHRR.s:7      *ABS*:00000001 __zero_reg__
-     /tmp/cchIUHRR.s:74     .text:00000000 init_ports
-     /tmp/cchIUHRR.s:123    .text:00000018 select_ADC_port
-     /tmp/cchIUHRR.s:158    .text:00000024 initial_anglexy
-     /tmp/cchIUHRR.s:190    .text:0000003a initial_anglexz
-     /tmp/cchIUHRR.s:234    .text:00000068 initial_angleyz
-     /tmp/cchIUHRR.s:278    .text:00000096 time_counter
-     /tmp/cchIUHRR.s:324    .text:000000ae print_Angle_Binary
-     /tmp/cchIUHRR.s:535    .text:000001cc print_Time_Binary
-     /tmp/cchIUHRR.s:637    .text:00000222 main
-     /tmp/cchIUHRR.s:857    .text:0000036a final_distance
+     /tmp/cczgOf3U.s:2      *ABS*:0000003f __SREG__
+     /tmp/cczgOf3U.s:3      *ABS*:0000003e __SP_H__
+     /tmp/cczgOf3U.s:4      *ABS*:0000003d __SP_L__
+     /tmp/cczgOf3U.s:5      *ABS*:00000034 __CCP__
+     /tmp/cczgOf3U.s:6      *ABS*:00000000 __tmp_reg__
+     /tmp/cczgOf3U.s:7      *ABS*:00000001 __zero_reg__
+     /tmp/cczgOf3U.s:74     .text:00000000 init_ports
+     /tmp/cczgOf3U.s:123    .text:00000018 select_ADC_port
+     /tmp/cczgOf3U.s:158    .text:00000024 initial_anglexy
+     /tmp/cczgOf3U.s:190    .text:0000003a initial_anglexz
+     /tmp/cczgOf3U.s:234    .text:00000068 initial_angleyz
+     /tmp/cczgOf3U.s:277    .text:00000096 print_Angle_Binary
+     /tmp/cczgOf3U.s:488    .text:000001b4 print_Time_Binary
+     /tmp/cczgOf3U.s:590    .text:0000020a main
+     /tmp/cczgOf3U.s:825    .text:00000366 final_distance
 
 UNDEFINED SYMBOLS
 __divsf3

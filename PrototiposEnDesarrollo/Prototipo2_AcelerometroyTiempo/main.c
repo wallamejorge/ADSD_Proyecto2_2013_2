@@ -8,6 +8,7 @@
 //-------------------------------------------------//
 //-----------------LIBRERIAS-----------------------//
 //------------------------------------------------//
+//#include<mega16.h>
 #include<avr/io.h>
 #include<math.h>
 #include<util/delay.h>
@@ -48,6 +49,7 @@ void main(void)
 	double x_total=0.0;
 	double a[5];
 	int time=0;
+	int rst;
 	double ms_time=0.0;
 	int count=0;
 	int rstanalogo=0;
@@ -56,31 +58,45 @@ void main(void)
 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Cargar en el vector a[i] los valores ax ay az
 	a[3]=a[3]+81;
 	a[4]=a[4]+81;
-	
-		angle0xy=initial_anglexy(a[0],a[1],a[2]); // Genero angulo entre x y y en grados
-		angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
-		angle0yz=initial_angleyz(a[0],a[1],a[2]); // Genero angulo entre y y z en grados
-		print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD
+				
+		//angle0xy=initial_anglexy(a[0],a[1],a[2]); // Genero angulo entre x y y en grados
+		//angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
+		//angle0yz=initial_angleyz(a[0],a[1],a[2]); // Genero angulo entre y y z en grados
+		//print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD
 		
 		// Conversión de entrada análoga
+
 		
 		if(a[3]>132){count=1;}
 		else{count=0;}
+
 		if(a[4]>132){rstanalogo=1;}
 		else{rstanalogo=0;}
+
 		// Si reset (análogo) todas la señales a 0, sino los contadores de milisegundos y segundos funcionan normal	
+		
 			
-			if (count==1)	{
+			if (count==0)	{
 				if(ms_time==10){time=time+1;ms_time=0;}else{time=time+0;}
 				_delay_ms(100);
 				ms_time=ms_time+1;	
-				print_Time_Binary(time);}
-			else { ms_time=ms_time;time=time;}
-			
+				print_Time_Binary(time);
+				
+				angle0xy=angle0xy; angle0xz=angle0xz; angle0yz=angle0yz; //los ángulos se mantienen con el último dato
+				print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD 
+				}
+				
 
+			else { ms_time=ms_time;time=time;
+				angle0xy=initial_anglexy(a[0],a[1],a[2]); // Genero angulo entre x y y en grados
+				angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
+				angle0yz=initial_angleyz(a[0],a[1],a[2]); // Genero angulo entre y y z en grados
+				print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD  
+			     }
+			
 		
 
-		x_total=final_distance(angle0xz,time); // Calcula la distancia final.
+		x_total=final_distance(angle0xz,(time+(ms_time/10))); // Calcula la distancia final.
 
 		
 
@@ -151,25 +167,6 @@ double initial_angleyz(double ax, double ay, double az){
 }
 //------------------------------------------------------//
 
-
-//------------------------------------------------------//
-//---------------------Time_Counter---------------------//
-//------------------------------------------------------//
-int time_counter(int Reset,int count,int count0){
-	int salida=0;
-	if(Reset==0)
-	{
-		if(count==1){salida=count0+count;}else{salida=count0;}
-	}
-	else
-	{
-		salida=0;
-	}
-	return salida;
-}
-//------------------------------------------------------//
-
-
 //------------------------------------------------------//
 //----------------------Print Angle---------------------//
 //------------------------------------------------------//
@@ -239,3 +236,7 @@ double final_distance(double angle0xz,double tf){
 	return r;
 }
 //------------------------------------------------------//
+
+
+
+
