@@ -514,9 +514,9 @@ LOAD /usr/lib/gcc/avr/4.5.3/avr5/libgcc.a
  .stab          0x000023f4       0x90 /usr/lib/gcc/avr/4.5.3/../../../avr/lib/avr5/libc.a(fp_zero.o)
                                  0x9c (size before relaxing)
 
-.stabstr        0x00000000      0xc00
+.stabstr        0x00000000      0xbfe
  *(.stabstr)
- .stabstr       0x00000000      0xc00 /usr/lib/gcc/avr/4.5.3/../../../avr/lib/avr5/crtm16.o
+ .stabstr       0x00000000      0xbfe /usr/lib/gcc/avr/4.5.3/../../../avr/lib/avr5/crtm16.o
 
 .stab.excl
  *(.stab.excl)

@@ -1,4 +1,4 @@
-GAS LISTING /tmp/ccvWWSyy.s 			page 1
+GAS LISTING /tmp/cchIUHRR.s 			page 1
 
 
    1               		.file	"main.c"
@@ -8,7 +8,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
    5               	__CCP__ = 0x34
    6               	__tmp_reg__ = 0
    7               	__zero_reg__ = 1
-   8               		.stabs	"/home/monica/Documents/ADSD_Proyecto2_2013_2/PrototiposEnDesarrollo/Prototipo2_Acelerometr
+   8               		.stabs	"/home/juanfe/Desktop/ADSD_Proyecto2_2013_2/PrototiposEnDesarrollo/Prototipo2_Acelerometroy
    9               		.stabs	"main.c",100,0,2,.Ltext0
   10               		.text
   11               	.Ltext0:
@@ -58,7 +58,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
   55               		.stabs	"int_fast32_t:t(5,23)=(5,5)",128,0,233,0
   56               		.stabs	"uint_fast32_t:t(5,24)=(5,6)",128,0,238,0
   57               		.stabs	"int_fast64_t:t(5,25)=(5,7)",128,0,246,0
-GAS LISTING /tmp/ccvWWSyy.s 			page 2
+GAS LISTING /tmp/cchIUHRR.s 			page 2
 
 
   58               		.stabs	"uint_fast64_t:t(5,26)=(5,8)",128,0,253,0
@@ -118,7 +118,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
   37:main.c        **** 
   38:main.c        **** //------------------------------------------------------//
   39:main.c        **** //---------------------Main.c---------------------------//
-GAS LISTING /tmp/ccvWWSyy.s 			page 3
+GAS LISTING /tmp/cchIUHRR.s 			page 3
 
 
   40:main.c        **** //------------------------------------------------------//
@@ -178,7 +178,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
   94:main.c        **** 
   95:main.c        **** //------------------------------------------------------//
   96:main.c        **** //-------------------Init_Ports-------------------------//
-GAS LISTING /tmp/ccvWWSyy.s 			page 4
+GAS LISTING /tmp/cchIUHRR.s 			page 4
 
 
   97:main.c        **** //------------------------------------------------------//
@@ -238,7 +238,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  114               	.LM10:
  115 0016 0895      		ret
  116               		.size	init_ports, .-init_ports
-GAS LISTING /tmp/ccvWWSyy.s 			page 5
+GAS LISTING /tmp/cchIUHRR.s 			page 5
 
 
  117               	.Lscope1:
@@ -298,7 +298,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  159               		.stabd	46,0,0
  125:main.c        **** //------------------------------------------------------//
  126:main.c        **** 
-GAS LISTING /tmp/ccvWWSyy.s 			page 6
+GAS LISTING /tmp/cchIUHRR.s 			page 6
 
 
  127:main.c        **** 
@@ -358,7 +358,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  200               	/* frame size = 0 */
  201               	/* stack size = 4 */
  202               	.L__stack_usage = 4
-GAS LISTING /tmp/ccvWWSyy.s 			page 7
+GAS LISTING /tmp/cchIUHRR.s 			page 7
 
 
  203 0042 9B01      		movw r18,r22
@@ -418,7 +418,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  248 0072 B901      		movw r22,r18
  249 0074 A801      		movw r20,r16
  250 0076 9701      		movw r18,r14
-GAS LISTING /tmp/ccvWWSyy.s 			page 8
+GAS LISTING /tmp/cchIUHRR.s 			page 8
 
 
  150:main.c        **** 	return atan(ay/az)*(57.2958);
@@ -478,7 +478,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  292               	.LM27:
  293 009a 6130      		cpi r22,1
  294 009c 7105      		cpc r23,__zero_reg__
-GAS LISTING /tmp/ccvWWSyy.s 			page 9
+GAS LISTING /tmp/cchIUHRR.s 			page 9
 
 
  295 009e 01F4      		brne .L9
@@ -538,7 +538,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  335               	/* stack size = 4 */
  336               	.L__stack_usage = 4
  337 00b6 7A01      		movw r14,r20
-GAS LISTING /tmp/ccvWWSyy.s 			page 10
+GAS LISTING /tmp/cchIUHRR.s 			page 10
 
 
  338 00b8 8B01      		movw r16,r22
@@ -598,7 +598,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  379 00f6 0E94 0000 		call __gtsf2
  380 00fa 1816      		cp __zero_reg__,r24
  381 00fc 04F4      		brge .L45
-GAS LISTING /tmp/ccvWWSyy.s 			page 11
+GAS LISTING /tmp/cchIUHRR.s 			page 11
 
 
  382               		.stabn	68,0,189,.LM37-.LFBB7
@@ -647,7 +647,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  423 0138 929A      		sbi 50-32,2
  424 013a 00C0      		rjmp .L55
  425               	.L47:
- 192:main.c        **** else if(angle>angle_segment_4){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} 
+ 192:main.c        **** else if(angle>angle_segment_4){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD
  426               		.stabn	68,0,192,.LM42-.LFBB7
  427               	.LM42:
  428 013c C801      		movw r24,r16
@@ -658,7 +658,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  433 0146 52E4      		ldi r21,hhi8(0x42200000)
  434 0148 0E94 0000 		call __gtsf2
  435 014c 1816      		cp __zero_reg__,r24
-GAS LISTING /tmp/ccvWWSyy.s 			page 12
+GAS LISTING /tmp/cchIUHRR.s 			page 12
 
 
  436 014e 04F4      		brge .L48
@@ -718,7 +718,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  487 0198 0E94 0000 		call __gtsf2
  488 019c 1816      		cp __zero_reg__,r24
  489 019e 04F4      		brge .L51
-GAS LISTING /tmp/ccvWWSyy.s 			page 13
+GAS LISTING /tmp/cchIUHRR.s 			page 13
 
 
  490               		.stabn	68,0,195,.LM49-.LFBB7
@@ -778,7 +778,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  203:main.c        **** //------------------------------------------------------//
  204:main.c        **** //----------------------Print Angle---------------------//
  205:main.c        **** //------------------------------------------------------//
-GAS LISTING /tmp/ccvWWSyy.s 			page 14
+GAS LISTING /tmp/cchIUHRR.s 			page 14
 
 
  206:main.c        **** void print_Time_Binary(int time){
@@ -797,7 +797,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  212:main.c        **** int time_segment_6=6;
  213:main.c        **** int time_segment_7=7;
  214:main.c        **** int times=time;
- 215:main.c        **** if(times>time_segment_7){	   sbi(PORTC,PC2);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORC=111//
+ 215:main.c        **** if(times>time_segment_7){	sbi(PORTC,PC2);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORC=111//
  544               		.stabn	68,0,215,.LM54-.LFBB8
  545               	.LM54:
  546 01cc 8830      		cpi r24,8
@@ -838,7 +838,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  578 01ee 01F4      		brne .L65
  579               		.stabn	68,0,218,.LM61-.LFBB8
  580               	.LM61:
-GAS LISTING /tmp/ccvWWSyy.s 			page 15
+GAS LISTING /tmp/cchIUHRR.s 			page 15
 
 
  581 01f0 AA9A      		sbi 53-32,2
@@ -898,7 +898,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  631               	.Lscope8:
  632               		.stabs	"",36,0,0,.Lscope8-.LFBB8
  633               		.stabd	78,0,0
-GAS LISTING /tmp/ccvWWSyy.s 			page 16
+GAS LISTING /tmp/cchIUHRR.s 			page 16
 
 
  634               		.stabs	"main:F(0,15)",36,0,41,main
@@ -958,7 +958,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  683 025e 3E01      		movw r6,r28
  684 0260 0894      		sec
  685 0262 611C      		adc r6,__zero_reg__
-GAS LISTING /tmp/ccvWWSyy.s 			page 17
+GAS LISTING /tmp/cchIUHRR.s 			page 17
 
 
  686 0264 711C      		adc r7,__zero_reg__
@@ -1018,7 +1018,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  737 02c0 8D87      		std Y+13,r24
  738 02c2 9E87      		std Y+14,r25
  739 02c4 AF87      		std Y+15,r26
-GAS LISTING /tmp/ccvWWSyy.s 			page 18
+GAS LISTING /tmp/cchIUHRR.s 			page 18
 
 
  740 02c6 B88B      		std Y+16,r27
@@ -1078,7 +1078,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  790 031c 20E0      		ldi r18,lo8(0x41200000)
  791 031e 30E0      		ldi r19,hi8(0x41200000)
  792 0320 40E2      		ldi r20,hlo8(0x41200000)
-GAS LISTING /tmp/ccvWWSyy.s 			page 19
+GAS LISTING /tmp/cchIUHRR.s 			page 19
 
 
  793 0322 51E4      		ldi r21,hhi8(0x41200000)
@@ -1138,7 +1138,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
   36:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #define _UTIL_DELAY_H_ 1
   37:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
   38:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #ifndef __HAS_DELAY_CYCLES
-GAS LISTING /tmp/ccvWWSyy.s 			page 20
+GAS LISTING /tmp/cchIUHRR.s 			page 20
 
 
   39:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #define __HAS_DELAY_CYCLES 1
@@ -1198,7 +1198,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
   93:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
   94:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #ifndef __OPTIMIZE__
   95:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
-GAS LISTING /tmp/ccvWWSyy.s 			page 21
+GAS LISTING /tmp/cchIUHRR.s 			page 21
 
 
   96:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #endif
@@ -1258,7 +1258,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  150:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
  151:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 	#endif
  152:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
-GAS LISTING /tmp/ccvWWSyy.s 			page 22
+GAS LISTING /tmp/cchIUHRR.s 			page 22
 
 
  153:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
@@ -1318,7 +1318,7 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  226:main.c        **** //------------------------------------------------------//
  227:main.c        **** 
  228:main.c        **** //------------------------------------------------------//
-GAS LISTING /tmp/ccvWWSyy.s 			page 23
+GAS LISTING /tmp/cchIUHRR.s 			page 23
 
 
  229:main.c        **** //--------------------Final_Distance--------------------//
@@ -1354,27 +1354,27 @@ GAS LISTING /tmp/ccvWWSyy.s 			page 1
  877               		.stabd	78,0,0
  878               		.stabs	"",100,0,0,.Letext0
  879               	.Letext0:
-GAS LISTING /tmp/ccvWWSyy.s 			page 24
+GAS LISTING /tmp/cchIUHRR.s 			page 24
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-     /tmp/ccvWWSyy.s:2      *ABS*:0000003f __SREG__
-     /tmp/ccvWWSyy.s:3      *ABS*:0000003e __SP_H__
-     /tmp/ccvWWSyy.s:4      *ABS*:0000003d __SP_L__
-     /tmp/ccvWWSyy.s:5      *ABS*:00000034 __CCP__
-     /tmp/ccvWWSyy.s:6      *ABS*:00000000 __tmp_reg__
-     /tmp/ccvWWSyy.s:7      *ABS*:00000001 __zero_reg__
-     /tmp/ccvWWSyy.s:74     .text:00000000 init_ports
-     /tmp/ccvWWSyy.s:123    .text:00000018 select_ADC_port
-     /tmp/ccvWWSyy.s:158    .text:00000024 initial_anglexy
-     /tmp/ccvWWSyy.s:190    .text:0000003a initial_anglexz
-     /tmp/ccvWWSyy.s:234    .text:00000068 initial_angleyz
-     /tmp/ccvWWSyy.s:278    .text:00000096 time_counter
-     /tmp/ccvWWSyy.s:324    .text:000000ae print_Angle_Binary
-     /tmp/ccvWWSyy.s:535    .text:000001cc print_Time_Binary
-     /tmp/ccvWWSyy.s:637    .text:00000222 main
-     /tmp/ccvWWSyy.s:857    .text:0000036a final_distance
+     /tmp/cchIUHRR.s:2      *ABS*:0000003f __SREG__
+     /tmp/cchIUHRR.s:3      *ABS*:0000003e __SP_H__
+     /tmp/cchIUHRR.s:4      *ABS*:0000003d __SP_L__
+     /tmp/cchIUHRR.s:5      *ABS*:00000034 __CCP__
+     /tmp/cchIUHRR.s:6      *ABS*:00000000 __tmp_reg__
+     /tmp/cchIUHRR.s:7      *ABS*:00000001 __zero_reg__
+     /tmp/cchIUHRR.s:74     .text:00000000 init_ports
+     /tmp/cchIUHRR.s:123    .text:00000018 select_ADC_port
+     /tmp/cchIUHRR.s:158    .text:00000024 initial_anglexy
+     /tmp/cchIUHRR.s:190    .text:0000003a initial_anglexz
+     /tmp/cchIUHRR.s:234    .text:00000068 initial_angleyz
+     /tmp/cchIUHRR.s:278    .text:00000096 time_counter
+     /tmp/cchIUHRR.s:324    .text:000000ae print_Angle_Binary
+     /tmp/cchIUHRR.s:535    .text:000001cc print_Time_Binary
+     /tmp/cchIUHRR.s:637    .text:00000222 main
+     /tmp/cchIUHRR.s:857    .text:0000036a final_distance
 
 UNDEFINED SYMBOLS
 __divsf3
