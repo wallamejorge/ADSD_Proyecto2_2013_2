@@ -171,27 +171,46 @@ double initial_angleyz(double ax, double ay, double az){
 //----------------------Print Angle---------------------//
 //------------------------------------------------------//
 void print_Angle_Binary(int NoPortCD,double angle){
+	double angle_segment_0=5;
 	double angle_segment_1=10;
-	double angle_segment_2=20;
-	double angle_segment_3=30;
-	double angle_segment_4=40;
-	double angle_segment_5=50;
-	double angle_segment_6=60;
-	double angle_segment_7=70;
-	double angle_segment_8=80;
-	double angle_segment_9=90;
+	double angle_segment_2=15;
+	double angle_segment_3=20;
+	double angle_segment_4=25;
+	double angle_segment_5=30;
+	double angle_segment_6=35;
+	double angle_segment_7=40;
+	double angle_segment_8=45;
+	double angle_segment_9=50;
+	double angle_segment_10=55;
+	double angle_segment_11=60;
+	double angle_segment_12=65;
+	double angle_segment_13=70;
+	double angle_segment_14=75;
+	double angle_segment_15=80;
+	double angle_segment_16=85;
+	double angle_segment_17=90;
+
 	
-if(angle>angle_segment_9){     cbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0001//
-else if(angle>angle_segment_8){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=0010//
-else if(angle>angle_segment_7){cbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0011//
-else if(angle>angle_segment_6){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=0100//
-else if(angle>angle_segment_5){cbi(PORTD,PD3);sbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0101//
-else if(angle>angle_segment_4){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=0110//
-else if(angle>angle_segment_3){cbi(PORTD,PD3);sbi(PORTD,PD2);sbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=0111// 
-else if(angle>angle_segment_2){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=1000// 
-else if(angle>angle_segment_1){sbi(PORTD,PD3);cbi(PORTD,PD2);cbi(PORTD,PD1);sbi(PORTD,PD0);} //PORD=1001// 
-else if(angle>0){              sbi(PORTD,PD3);cbi(PORTD,PD2);sbi(PORTD,PD1);cbi(PORTD,PD0);} //PORD=1010//
-		
+	if(angle>angle_segment_17){PORTD=0x00;}        //0000//-----//0000// = 00
+	else if(angle>angle_segment_16){PORTD=0x05;}   //0000//-----//0101// = 05
+	else if(angle>angle_segment_15){PORTD=0x10;}   //0001//-----//0000// = 10  
+	else if(angle>angle_segment_14){PORTD=0x15;}   //0001//-----//0101// = 15 
+	else if(angle>angle_segment_13){PORTD=0x20;}   //0010//-----//0000// = 10  
+	else if(angle>angle_segment_12){PORTD=0x25;}   //0010//-----//0101// = 25  
+	else if(angle>angle_segment_11){PORTD=0x30;}   //0011//-----//0000// = 30  
+	else if(angle>angle_segment_10){PORTD=0x35;}   //0011//-----//0101// = 35 
+	else if(angle>angle_segment_9){PORTD=0x40;}    //0100//-----//0000// = 40  
+	else if(angle>angle_segment_8){PORTD=0x45;}    //0100//-----//0101// = 45  
+	else if(angle>angle_segment_7){PORTD=0x50;}    //0101//-----//0000// = 50   
+	else if(angle>angle_segment_6){PORTD=0x55;}    //0101//-----//0101// = 55  
+	else if(angle>angle_segment_5){PORTD=0x60;}    //0110//-----//0000// = 60   
+	else if(angle>angle_segment_4){PORTD=0x65;}    //0110//-----//0101// = 65 
+	else if(angle>angle_segment_3){PORTD=0x70;}    //0111//-----//0000// = 70 
+	else if(angle>angle_segment_2){PORTD=0x75;}    //0111//-----//0101// = 75
+	else if(angle>angle_segment_1){PORTD=0x80;}    //1000//-----//0000// = 80 
+	else if(angle>angle_segment_0){PORTD=0x85;}    //1000//-----//0101// = 85  
+	else {PORTD=0x90;}                             //1000//-----//0000// = 90 
+	
 }
 //------------------------------------------------------//
 
