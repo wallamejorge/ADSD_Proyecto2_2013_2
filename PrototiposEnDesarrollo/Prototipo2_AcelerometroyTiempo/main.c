@@ -294,4 +294,3 @@ double final_distance(double angle0xz,double tf){
 
 
 
-
