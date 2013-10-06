@@ -25,8 +25,6 @@
 #define is_high(x,y) ((x & _BV(y)) == _BV(y))
 #define is_low(x,y) ((x & (_BV(y))) == 0) //check if the input pin is low
 double initial_anglexz(double ax, double ay, double az); // Calcula el angulo xz inicial de lanzamiento
-double initial_anglexy(double ax, double ay, double az); // Calcula el angulo xy inicial de lanzamiento
-double initial_angleyz(double ax, double ay, double az); // Calcula el angulo yz inicial de lanzamiento
 double final_distance(double angle0xz,double tf); // Calcula la distancia del cohete en mts usando el angulo y el tiempo
 int time_counter(int Reset,int count,int count0); // Contador mientras que este activo count
 void init_ports(void); //Inicializa los puertos
@@ -45,65 +43,62 @@ void main(void)
 {
 	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
 	int i=0;
-	double angle0xy=0.0;
-	double angle0yz=0.0;
 	double angle0xz=0.0;
 	double x_total=0.0;
-	double y=0.0;
 	double a[5];
 	int time=0;
 	double ms_time=0.0;
 	int count=0;
-	int print_distance=0;
+	int aterrizo=0;
 
 	while (1)
 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Cargar en el vector a[i] los valores ax ay az
 	a[3]=a[3]+81;
 	a[4]=a[4]+81;
-				
-	
+			
 		// Conversión de entrada análoga
-
 		
 		if(a[3]>132){count=1;}
 		else{count=0;}
 
-		if(a[4]>132){print_distance=1;}
-		else{print_distance=0;}
+		if(a[4]>132){aterrizo=1;}
+		else{aterrizo=0;}
 
 		// Si reset (análogo) todas la señales a 0, sino los contadores de milisegundos y segundos funcionan normal	
-		
-		
-			if (count==0)	{
-				if(ms_time==10){time=time+1;ms_time=0;}else{time=time+0;}
-				_delay_ms(100);
+								    	
+	    if ((count==1) && (aterrizo==0)) {
+			        ms_time=ms_time;time=time;
+				angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
+				
+				print_Angle_Binary(1,angle0xz);// Imprime el angulo en binario en el puerto PORTD  */
+				
+				x_total=final_distance(angle0xz,(time+(ms_time/10))); // Calcula la distancia final.
+				print_Decimes(x_total);
+			        }			
+	    else if ((count==0) && (aterrizo==0))     {
+
+				if(ms_time==8){time=time+1;ms_time=0;}else{time=time+0;}
+				_delay_ms(99);
 				ms_time=ms_time+1;	
 				print_Time_Binary(time);
-				
-				angle0xy=angle0xy; angle0xz=angle0xz; angle0yz=angle0yz; //los ángulos se mantienen con el último dato
-				//print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD */
+				angle0xz=angle0xz;
+				print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD */
 
 				x_total=final_distance(angle0xz,(time+(ms_time/10))); // Calcula la distancia final.
 				print_Decimes(x_total);
-
+				
 				}
-				
-
-			else { ms_time=ms_time;time=time;
-				angle0xy=initial_anglexy(a[0],a[1],a[2]); // Genero angulo entre x y y en grados
-				angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
-				angle0yz=initial_angleyz(a[0],a[1],a[2]); // Genero angulo entre y y z en grados
-				
-				//print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD  */
-				
+	    else {
+				ms_time=ms_time;
+				time=time;
+				print_Time_Binary(time);				
+				angle0xz=angle0xz; 
+				print_Angle_Binary(1,angle0xz);
 				x_total=final_distance(angle0xz,(time+(ms_time/10))); // Calcula la distancia final.
 				print_Decimes(x_total);
-
-			     }
-			
-
-		
+	 		
 	}
+}
 }
 //------------------------------------------------------//
 //------------------------------------------------------//
@@ -111,9 +106,11 @@ void main(void)
 //------------------------------------------------------//
 void init_ports(void){
 
-	DDRA=0x00;		//Defino Puerto A como Inputs
+	MCUCSR|=(1<<JTD);
+	MCUCSR|=(1<<JTD);
+	DDRA=0x00;	//Defino Puerto A como Inputs
 	PORTA=0x00;     //Habilito los puertos de A
-	DDRB = 0x00;    //Defino Puerto B como Inputs
+	DDRB = 0x1f;    //Defino Puerto B como Inputs
 	PORTB=0x00;     //Habilito los puertos de B
 
 	DDRC=0xff;		//Defino Puerto C como Outputs
@@ -138,30 +135,11 @@ void select_ADC_port(int i){
 }
 //------------------------------------------------------//
 
-
-//------------------------------------------------------//
-//----------------Initial_Angle_XY----------------------//
-//------------------------------------------------------//
-double initial_anglexy(double ax, double ay, double az){
-	return atan(ax/ay)*(57.2958);
-}
-//------------------------------------------------------//
-
-
 //------------------------------------------------------//
 //----------------Initial_Angle_XZ----------------------//
 //------------------------------------------------------//
 double initial_anglexz(double ax, double ay, double az){
 	return atan(az/ax)*(57.2958);
-}
-//------------------------------------------------------//
-
-
-//------------------------------------------------------//
-//----------------Initial_Angle_YZ----------------------//
-//------------------------------------------------------//
-double initial_angleyz(double ax, double ay, double az){
-	return atan(ay/az)*(57.2958);
 }
 //------------------------------------------------------//
 
@@ -236,17 +214,17 @@ char decimas=0x00;
 	else {decimas=0x00; num0=num;}
 
 
-	if(num0>=9){PORTD=decimas+0x09;}
-	else if(num0>=8){PORTD=decimas+0x08;}
-	else if(num0>=7){PORTD=decimas+0x07;}
-	else if(num0>=6){PORTD=decimas+0x06;}
-	else if(num0>=5){PORTD=decimas+0x05;}
-	else if(num0>=4){PORTD=decimas+0x04;}
-	else if(num0>=3){PORTD=decimas+0x03;}
-	else if(num0>=2){PORTD=decimas+0x02;}
-	else if(num0>=1){PORTD=decimas+0x01;}
-	else if(num0>=0){PORTD=decimas+0x00;}
-	else {PORTD=0xAA;}
+	if(num0>=9){PORTC=decimas+0x09;}
+	else if(num0>=8){PORTC=decimas+0x08;}
+	else if(num0>=7){PORTC=decimas+0x07;}
+	else if(num0>=6){PORTC=decimas+0x06;}
+	else if(num0>=5){PORTC=decimas+0x05;}
+	else if(num0>=4){PORTC=decimas+0x04;}
+	else if(num0>=3){PORTC=decimas+0x03;}
+	else if(num0>=2){PORTC=decimas+0x02;}
+	else if(num0>=1){PORTC=decimas+0x01;}
+	else if(num0>=0){PORTC=decimas+0x00;}
+	else {PORTC=0xAA;}
 
 }
 
@@ -263,14 +241,15 @@ int time_segment_5=5;
 int time_segment_6=6;
 int time_segment_7=7;
 int times=time;
-if(times>time_segment_7){	sbi(PORTC,PC7);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORC=111//
-else if(times>time_segment_6){  sbi(PORTC,PC7);sbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=110//
-else if(times>time_segment_5){  sbi(PORTC,PC7);cbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=101//
-else if(times>time_segment_4){  sbi(PORTC,PC7);cbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=100//
-else if(times>time_segment_3){  cbi(PORTC,PC7);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=011//
-else if(times>time_segment_2){  cbi(PORTC,PC7);sbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=010//
-else if(times>time_segment_1){  cbi(PORTC,PC7);cbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=001//
-else {			        cbi(PORTC,PC7);cbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=000//
+
+if(times>time_segment_7){	sbi(PORTB,PB2);sbi(PORTB,PB1);sbi(PORTB,PB0);} //PORC=111//
+else if(times>time_segment_6){  sbi(PORTB,PB2);sbi(PORTB,PB1);cbi(PORTB,PB0);} //PORD=110//
+else if(times>time_segment_5){  sbi(PORTB,PB2);cbi(PORTB,PB1);sbi(PORTB,PB0);} //PORD=101//
+else if(times>time_segment_4){  sbi(PORTB,PB2);cbi(PORTB,PB1);cbi(PORTB,PB0);} //PORD=100//
+else if(times>time_segment_3){  cbi(PORTB,PB2);sbi(PORTB,PB1);sbi(PORTB,PB0);} //PORD=011//
+else if(times>time_segment_2){  cbi(PORTB,PB2);sbi(PORTB,PB1);cbi(PORTB,PB0);} //PORD=010//
+else if(times>time_segment_1){  cbi(PORTB,PB2);cbi(PORTB,PB1);sbi(PORTB,PB0);} //PORD=001//
+else {			        cbi(PORTB,PB2);cbi(PORTB,PB1);cbi(PORTB,PB0);} //PORD=000//
 
 
 }
@@ -281,16 +260,21 @@ else {			        cbi(PORTC,PC7);cbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=000//
 //------------------------------------------------------//
 
 double final_distance(double angle0xz,double tf){
-	float theta=45/57.2958;
-	float t=1;
+	float theta=(90-angle0xz)*0.017453;
+	//float t=2.75;
+	float t=tf;
+	float t2=t*t;
 	float g=9.8;
-	float a=-sin(2*theta)/(t*t); 
+	float a=-sin(2.0*theta)/(t2); 
 	float b=g;
-	float c=(-1/4)*(g*g)*(t*t)*(sin(2*theta));
-	float r=(1/(2*a))*(-b+sqrt(b*b-4*a*c));
+	float g2=g*g;
+	
+	float c=(0.25)*(g2)*(t2)*(sin(2.0*theta));
+	float r=(1.0/(2.0*a))*(-b+sqrt(b*b+4.0*a*c));
 
 	return r;
 }
+
 //------------------------------------------------------//
 
 
