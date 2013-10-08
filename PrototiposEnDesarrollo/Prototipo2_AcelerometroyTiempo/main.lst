@@ -1,4 +1,4 @@
-GAS LISTING /tmp/ccIBfZSu.s 			page 1
+GAS LISTING /tmp/ccDlPBYj.s 			page 1
 
 
    1               		.file	"main.c"
@@ -8,7 +8,7 @@ GAS LISTING /tmp/ccIBfZSu.s 			page 1
    5               	__CCP__ = 0x34
    6               	__tmp_reg__ = 0
    7               	__zero_reg__ = 1
-   8               		.stabs	"/home/juanfe/Desktop/Prototipo2_AcelerometroyTiempo_juanfe/",100,0,2,.Ltext0
+   8               		.stabs	"/home/juanfe/Desktop/ADSD_Proyecto2_2013_2/PrototiposEnDesarrollo/Prototipo2_Acelerometroy
    9               		.stabs	"main.c",100,0,2,.Ltext0
   10               		.text
   11               	.Ltext0:
@@ -58,7 +58,7 @@ GAS LISTING /tmp/ccIBfZSu.s 			page 1
   55               		.stabs	"int_fast32_t:t(5,23)=(5,5)",128,0,233,0
   56               		.stabs	"uint_fast32_t:t(5,24)=(5,6)",128,0,238,0
   57               		.stabs	"int_fast64_t:t(5,25)=(5,7)",128,0,246,0
-GAS LISTING /tmp/ccIBfZSu.s 			page 2
+GAS LISTING /tmp/ccDlPBYj.s 			page 2
 
 
   58               		.stabs	"uint_fast64_t:t(5,26)=(5,8)",128,0,253,0
@@ -74,7 +74,7 @@ GAS LISTING /tmp/ccIBfZSu.s 			page 1
   68               		.stabs	"__fuse_t:t(6,1)=(6,2)=s2low:(0,11),0,8;high:(0,11),8,8;;",128,0,252,0
   69               		.stabn	162,0,0,0
   70               		.stabn	162,0,0,0
-  71               		.stabs	"init_ports:F(0,15)",36,0,116,init_ports
+  71               		.stabs	"init_ports:F(0,15)",36,0,107,init_ports
   72               	.global	init_ports
   73               		.type	init_ports, @function
   74               	init_ports:
@@ -106,1621 +106,1840 @@ GAS LISTING /tmp/ccIBfZSu.s 			page 1
   25:main.c        **** #define is_high(x,y) ((x & _BV(y)) == _BV(y))
   26:main.c        **** #define is_low(x,y) ((x & (_BV(y))) == 0) //check if the input pin is low
   27:main.c        **** double initial_anglexz(double ax, double ay, double az); // Calcula el angulo xz inicial de lanzami
-  28:main.c        **** double initial_anglexy(double ax, double ay, double az); // Calcula el angulo xy inicial de lanzami
-  29:main.c        **** double initial_angleyz(double ax, double ay, double az); // Calcula el angulo yz inicial de lanzami
-  30:main.c        **** double final_distance(double angle0xz,double tf); // Calcula la distancia del cohete en mts usando 
-  31:main.c        **** int time_counter(int Reset,int count,int count0); // Contador mientras que este activo count
-  32:main.c        **** void init_ports(void); //Inicializa los puertos
-  33:main.c        **** void select_ADC_port(int i);// Seleccion cual puerto de ADC leer
-  34:main.c        **** void print_Angle_Binary(int NoPortCD,double angle);// Imprime en PORTD el angulo medido en binario
-  35:main.c        **** void print_Decimes(float num_in);// Imprime en PORTD el angulo medido en binario
-  36:main.c        **** void print_Time_Binary(int time);// Imprime en PORTC el tiempo medido en binario
-  37:main.c        **** //void print_Units(double num_in, char decimas);
-  38:main.c        **** //------------------------------------------------------//
-  39:main.c        **** 
-GAS LISTING /tmp/ccIBfZSu.s 			page 3
+  28:main.c        **** double final_distance(double angle0xz,double tf); // Calcula la distancia del cohete en mts usando 
+  29:main.c        **** int time_counter(int Reset,int count,int count0); // Contador mientras que este activo count
+  30:main.c        **** void init_ports(void); //Inicializa los puertos
+  31:main.c        **** void select_ADC_port(int i);// Seleccion cual puerto de ADC leer
+  32:main.c        **** void print_Angle_Binary(int NoPortCD,double angle);// Imprime en PORTD el angulo medido en binario
+  33:main.c        **** void print_Decimes(float num_in);// Imprime en PORTD el angulo medido en binario
+  34:main.c        **** void print_Time_Binary(int time);// Imprime en PORTC el tiempo medido en binario
+  35:main.c        **** 
+  36:main.c        **** //------------------------------------------------------//
+  37:main.c        **** 
+  38:main.c        **** 
+  39:main.c        **** //------------------------------------------------------//
+GAS LISTING /tmp/ccDlPBYj.s 			page 3
 
 
-  40:main.c        **** 
+  40:main.c        **** //---------------------Main.c---------------------------//
   41:main.c        **** //------------------------------------------------------//
-  42:main.c        **** //---------------------Main.c---------------------------//
-  43:main.c        **** //------------------------------------------------------//
-  44:main.c        **** void main(void)
-  45:main.c        **** {
-  46:main.c        **** 	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
-  47:main.c        **** 	int i=0;
-  48:main.c        **** 	double angle0xy=0.0;
-  49:main.c        **** 	double angle0yz=0.0;
-  50:main.c        **** 	double angle0xz=0.0;
-  51:main.c        **** 	double x_total=0.0;
-  52:main.c        **** 	double y=0.0;
-  53:main.c        **** 	double a[5];
-  54:main.c        **** 	int time=0;
-  55:main.c        **** 	double ms_time=0.0;
-  56:main.c        **** 	int count=0;
-  57:main.c        **** 	int print_distance=0;
-  58:main.c        **** 
-  59:main.c        **** 	while (1)
-  60:main.c        **** 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Ca
-  61:main.c        **** 	a[3]=a[3]+81;
-  62:main.c        **** 	a[4]=a[4]+81;
-  63:main.c        **** 				
-  64:main.c        **** 	
-  65:main.c        **** 		// Conversión de entrada análoga
+  42:main.c        **** void main(void)
+  43:main.c        **** {
+  44:main.c        **** 	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
+  45:main.c        **** 	int i=0;
+  46:main.c        **** 	double angle0xz=0.0;
+  47:main.c        **** 	double x_total=0.0;
+  48:main.c        **** 	double a[5];
+  49:main.c        **** 	int time=0;
+  50:main.c        **** 	double ms_time=0.0;
+  51:main.c        **** 	int count=0;
+  52:main.c        **** 	int aterrizo=0;
+  53:main.c        **** 
+  54:main.c        **** 	while (1)
+  55:main.c        **** 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Ca
+  56:main.c        **** 	a[3]=a[3]+81;
+  57:main.c        **** 	a[4]=a[4]+81;
+  58:main.c        **** 			
+  59:main.c        **** 		// Conversión de entrada análoga
+  60:main.c        **** 		
+  61:main.c        **** 		if(a[3]>132){count=1;}
+  62:main.c        **** 		else{count=0;}
+  63:main.c        **** 
+  64:main.c        **** 		if(a[4]>132){aterrizo=1;}
+  65:main.c        **** 		else{aterrizo=0;}
   66:main.c        **** 
-  67:main.c        **** 		
-  68:main.c        **** 		if(a[3]>132){count=1;}
-  69:main.c        **** 		else{count=0;}
-  70:main.c        **** 
-  71:main.c        **** 		if(a[4]>132){print_distance=1;}
-  72:main.c        **** 		else{print_distance=0;}
-  73:main.c        **** 
-  74:main.c        **** 		// Si reset (análogo) todas la señales a 0, sino los contadores de milisegundos y segundos func
-  75:main.c        **** 		
-  76:main.c        **** 		
-  77:main.c        **** 			if (count==0)	{
-  78:main.c        **** 				if(ms_time==10){time=time+1;ms_time=0;}else{time=time+0;}
-  79:main.c        **** 				_delay_ms(100);
-  80:main.c        **** 				ms_time=ms_time+1;	
-  81:main.c        **** 				print_Time_Binary(time);
-  82:main.c        **** 				
-  83:main.c        **** 				angle0xy=angle0xy; angle0xz=angle0xz; angle0yz=angle0yz; //los ángulos se mantienen con el úl
-  84:main.c        **** 				//print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD */
-  85:main.c        **** 
-  86:main.c        **** 				x_total=final_distance(angle0xz,(time+(ms_time/10))); // Calcula la distancia final.
-  87:main.c        **** 				print_Decimes(x_total);
-  88:main.c        **** 				//print_Units(y,);
-  89:main.c        **** 				}
-  90:main.c        **** 				
-  91:main.c        **** 
-  92:main.c        **** 			else { ms_time=ms_time;time=time;
-  93:main.c        **** 				angle0xy=initial_anglexy(a[0],a[1],a[2]); // Genero angulo entre x y y en grados
-  94:main.c        **** 				angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
-  95:main.c        **** 				angle0yz=initial_angleyz(a[0],a[1],a[2]); // Genero angulo entre y y z en grados
-  96:main.c        **** 				//print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD  */
-GAS LISTING /tmp/ccIBfZSu.s 			page 4
+  67:main.c        **** 		// Si reset (análogo) todas la señales a 0, sino los contadores de milisegundos y segundos func
+  68:main.c        **** 								    	
+  69:main.c        **** 	    if ((count==1) && (aterrizo==0)) {
+  70:main.c        **** 			        ms_time=ms_time;time=time;
+  71:main.c        **** 				angle0xz=initial_anglexz(a[0],a[1],a[2]); // Genero angulo entre x y z en grados
+  72:main.c        **** 				
+  73:main.c        **** 				print_Angle_Binary(1,angle0xz);// Imprime el angulo en binario en el puerto PORTD  */
+  74:main.c        **** 				
+  75:main.c        **** 				x_total=final_distance(angle0xz,(time+(ms_time/10))); // Calcula la distancia final.
+  76:main.c        **** 				print_Decimes(x_total);
+  77:main.c        **** 			        }			
+  78:main.c        **** 	    else if ((count==0) && (aterrizo==0))     {
+  79:main.c        **** 
+  80:main.c        **** 				if(ms_time==8){time=time+1;ms_time=0;}else{time=time+0;}
+  81:main.c        **** 				_delay_ms(99);
+  82:main.c        **** 				ms_time=ms_time+1;	
+  83:main.c        **** 				print_Time_Binary(time);
+  84:main.c        **** 				angle0xz=angle0xz;
+  85:main.c        **** 				print_Angle_Binary(1,angle0xz); // Imprime el angulo en binario en el puerto PORTD */
+  86:main.c        **** 
+  87:main.c        **** 				x_total=final_distance(angle0xz,(time+(ms_time/10))); // Calcula la distancia final.
+  88:main.c        **** 				print_Decimes(x_total);
+  89:main.c        **** 				
+  90:main.c        **** 				}
+  91:main.c        **** 	    else {
+  92:main.c        **** 				ms_time=ms_time;
+  93:main.c        **** 				time=time;
+  94:main.c        **** 				print_Time_Binary(time);				
+  95:main.c        **** 				angle0xz=angle0xz; 
+  96:main.c        **** 				print_Angle_Binary(1,angle0xz);
+GAS LISTING /tmp/ccDlPBYj.s 			page 4
 
 
-  97:main.c        **** 				
-  98:main.c        **** 				x_total=final_distance(angle0xz,(time+(ms_time/10))); // Calcula la distancia final.
-  99:main.c        **** 				print_Decimes(x_total);
- 100:main.c        **** 				//_delay_ms(150);
- 101:main.c        **** 				//print_Units(y);
- 102:main.c        **** 				//_delay_ms(180);
- 103:main.c        **** 			     }
- 104:main.c        **** 			
- 105:main.c        **** 		
- 106:main.c        **** //		if(print_distance=1){print_Distance(x_total);}
- 107:main.c        **** //		else{print_Angle_Binary(1,angle0xz);}
- 108:main.c        **** 
- 109:main.c        **** 		
- 110:main.c        **** 	}
- 111:main.c        **** }
- 112:main.c        **** //------------------------------------------------------//
- 113:main.c        **** //------------------------------------------------------//
- 114:main.c        **** //-------------------Init_Ports-------------------------//
- 115:main.c        **** //------------------------------------------------------//
- 116:main.c        **** void init_ports(void){
-  76               		.stabn	68,0,116,.LM0-.LFBB1
+  97:main.c        **** 				x_total=final_distance(angle0xz,(time+(ms_time/10))); // Calcula la distancia final.
+  98:main.c        **** 				print_Decimes(x_total);
+  99:main.c        **** 	 		
+ 100:main.c        **** 	}
+ 101:main.c        **** }
+ 102:main.c        **** }
+ 103:main.c        **** //------------------------------------------------------//
+ 104:main.c        **** //------------------------------------------------------//
+ 105:main.c        **** //-------------------Init_Ports-------------------------//
+ 106:main.c        **** //------------------------------------------------------//
+ 107:main.c        **** void init_ports(void){
+  76               		.stabn	68,0,107,.LM0-.LFBB1
   77               	.LM0:
   78               	.LFBB1:
   79               	/* prologue: function */
   80               	/* frame size = 0 */
   81               	/* stack size = 0 */
   82               	.L__stack_usage = 0
- 117:main.c        **** 
- 118:main.c        **** 	DDRA=0x00;		//Defino Puerto A como Inputs
-  83               		.stabn	68,0,118,.LM1-.LFBB1
+ 108:main.c        **** 
+ 109:main.c        **** 	MCUCSR|=(1<<JTD);
+  83               		.stabn	68,0,109,.LM1-.LFBB1
   84               	.LM1:
-  85 0000 1ABA      		out 58-32,__zero_reg__
- 119:main.c        **** 	PORTA=0x00;     //Habilito los puertos de A
-  86               		.stabn	68,0,119,.LM2-.LFBB1
-  87               	.LM2:
-  88 0002 1BBA      		out 59-32,__zero_reg__
- 120:main.c        **** 	DDRB = 0x00;    //Defino Puerto B como Inputs
-  89               		.stabn	68,0,120,.LM3-.LFBB1
-  90               	.LM3:
-  91 0004 17BA      		out 55-32,__zero_reg__
- 121:main.c        **** 	PORTB=0x00;     //Habilito los puertos de B
-  92               		.stabn	68,0,121,.LM4-.LFBB1
-  93               	.LM4:
-  94 0006 18BA      		out 56-32,__zero_reg__
+  85 0000 84B7      		in r24,84-32
+  86 0002 8068      		ori r24,lo8(-128)
+  87 0004 84BF      		out 84-32,r24
+ 110:main.c        **** 	MCUCSR|=(1<<JTD);
+  88               		.stabn	68,0,110,.LM2-.LFBB1
+  89               	.LM2:
+  90 0006 84B7      		in r24,84-32
+  91 0008 8068      		ori r24,lo8(-128)
+  92 000a 84BF      		out 84-32,r24
+ 111:main.c        **** 	DDRA=0x00;	//Defino Puerto A como Inputs
+  93               		.stabn	68,0,111,.LM3-.LFBB1
+  94               	.LM3:
+  95 000c 1ABA      		out 58-32,__zero_reg__
+ 112:main.c        **** 	PORTA=0x00;     //Habilito los puertos de A
+  96               		.stabn	68,0,112,.LM4-.LFBB1
+  97               	.LM4:
+  98 000e 1BBA      		out 59-32,__zero_reg__
+ 113:main.c        **** 	DDRB = 0x1f;    //Defino Puerto B como Inputs
+  99               		.stabn	68,0,113,.LM5-.LFBB1
+ 100               	.LM5:
+ 101 0010 8FE1      		ldi r24,lo8(31)
+ 102 0012 87BB      		out 55-32,r24
+ 114:main.c        **** 	PORTB=0x00;     //Habilito los puertos de B
+ 103               		.stabn	68,0,114,.LM6-.LFBB1
+ 104               	.LM6:
+ 105 0014 18BA      		out 56-32,__zero_reg__
+ 115:main.c        **** 
+ 116:main.c        **** 	DDRC=0xff;		//Defino Puerto C como Outputs
+ 106               		.stabn	68,0,116,.LM7-.LFBB1
+ 107               	.LM7:
+ 108 0016 8FEF      		ldi r24,lo8(-1)
+ 109 0018 84BB      		out 52-32,r24
+ 117:main.c        **** 	PORTC=0x00;     //Habilito los puertos de C
+ 110               		.stabn	68,0,117,.LM8-.LFBB1
+ 111               	.LM8:
+GAS LISTING /tmp/ccDlPBYj.s 			page 5
+
+
+ 112 001a 15BA      		out 53-32,__zero_reg__
+ 118:main.c        **** 	DDRD = 0xff;    //Defino Puerto D como Outputs
+ 113               		.stabn	68,0,118,.LM9-.LFBB1
+ 114               	.LM9:
+ 115 001c 81BB      		out 49-32,r24
+ 119:main.c        **** 	PORTD=0x00;     //Habilito los puertos de D
+ 116               		.stabn	68,0,119,.LM10-.LFBB1
+ 117               	.LM10:
+ 118 001e 12BA      		out 50-32,__zero_reg__
+ 120:main.c        **** 
+ 121:main.c        **** 	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0); // Habilito preescaler para tener una b
+ 119               		.stabn	68,0,121,.LM11-.LFBB1
+ 120               	.LM11:
+ 121 0020 87E8      		ldi r24,lo8(-121)
+ 122 0022 86B9      		out 38-32,r24
+ 123               	/* epilogue start */
  122:main.c        **** 
- 123:main.c        **** 	DDRC=0xff;		//Defino Puerto C como Outputs
-  95               		.stabn	68,0,123,.LM5-.LFBB1
-  96               	.LM5:
-  97 0008 8FEF      		ldi r24,lo8(-1)
-  98 000a 84BB      		out 52-32,r24
- 124:main.c        **** 	PORTC=0x00;     //Habilito los puertos de C
-  99               		.stabn	68,0,124,.LM6-.LFBB1
- 100               	.LM6:
- 101 000c 15BA      		out 53-32,__zero_reg__
- 125:main.c        **** 	DDRD = 0xff;    //Defino Puerto D como Outputs
- 102               		.stabn	68,0,125,.LM7-.LFBB1
- 103               	.LM7:
-GAS LISTING /tmp/ccIBfZSu.s 			page 5
-
-
- 104 000e 81BB      		out 49-32,r24
- 126:main.c        **** 	PORTD=0x00;     //Habilito los puertos de D
- 105               		.stabn	68,0,126,.LM8-.LFBB1
- 106               	.LM8:
- 107 0010 12BA      		out 50-32,__zero_reg__
- 127:main.c        **** 
- 128:main.c        **** 	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0); // Habilito preescaler para tener una b
- 108               		.stabn	68,0,128,.LM9-.LFBB1
- 109               	.LM9:
- 110 0012 87E8      		ldi r24,lo8(-121)
- 111 0014 86B9      		out 38-32,r24
- 112               	/* epilogue start */
- 129:main.c        **** 
- 130:main.c        **** }
- 113               		.stabn	68,0,130,.LM10-.LFBB1
- 114               	.LM10:
- 115 0016 0895      		ret
- 116               		.size	init_ports, .-init_ports
- 117               	.Lscope1:
- 118               		.stabs	"",36,0,0,.Lscope1-.LFBB1
- 119               		.stabd	78,0,0
- 120               		.stabs	"select_ADC_port:F(0,15)",36,0,137,select_ADC_port
- 121               	.global	select_ADC_port
- 122               		.type	select_ADC_port, @function
- 123               	select_ADC_port:
- 124               		.stabd	46,0,0
- 131:main.c        **** //------------------------------------------------------//
- 132:main.c        **** 
- 133:main.c        **** 
- 134:main.c        **** //------------------------------------------------------//
- 135:main.c        **** //----------------Select_ADC_port-----------------------//
- 136:main.c        **** //------------------------------------------------------//
- 137:main.c        **** void select_ADC_port(int i){
- 125               		.stabn	68,0,137,.LM11-.LFBB2
- 126               	.LM11:
- 127               	.LFBB2:
- 128               	/* prologue: function */
- 129               	/* frame size = 0 */
- 130               	/* stack size = 0 */
- 131               	.L__stack_usage = 0
- 138:main.c        **** 	ADMUX = _BV(ADLAR) + i; // Selecciona un pin de las entradas analogas ADC[i]
- 132               		.stabn	68,0,138,.LM12-.LFBB2
- 133               	.LM12:
- 134 0018 805E      		subi r24,lo8(-(32))
- 135 001a 87B9      		out 39-32,r24
- 139:main.c        **** 	ADCSRA |= _BV(ADSC); //Comienza conversion
- 136               		.stabn	68,0,139,.LM13-.LFBB2
+ 123:main.c        **** }
+ 124               		.stabn	68,0,123,.LM12-.LFBB1
+ 125               	.LM12:
+ 126 0024 0895      		ret
+ 127               		.size	init_ports, .-init_ports
+ 128               	.Lscope1:
+ 129               		.stabs	"",36,0,0,.Lscope1-.LFBB1
+ 130               		.stabd	78,0,0
+ 131               		.stabs	"select_ADC_port:F(0,15)",36,0,130,select_ADC_port
+ 132               	.global	select_ADC_port
+ 133               		.type	select_ADC_port, @function
+ 134               	select_ADC_port:
+ 135               		.stabd	46,0,0
+ 124:main.c        **** //------------------------------------------------------//
+ 125:main.c        **** 
+ 126:main.c        **** 
+ 127:main.c        **** //------------------------------------------------------//
+ 128:main.c        **** //----------------Select_ADC_port-----------------------//
+ 129:main.c        **** //------------------------------------------------------//
+ 130:main.c        **** void select_ADC_port(int i){
+ 136               		.stabn	68,0,130,.LM13-.LFBB2
  137               	.LM13:
- 138 001c 369A      		sbi 38-32,6
- 139               	.L3:
- 140:main.c        **** 	while (ADCSRA & _BV(ADSC) ) {}  // Esperar la conversion
- 140               		.stabn	68,0,140,.LM14-.LFBB2
- 141               	.LM14:
- 142 001e 3699      		sbic 38-32,6
- 143 0020 00C0      		rjmp .L3
- 144               	/* epilogue start */
- 141:main.c        **** 
-GAS LISTING /tmp/ccIBfZSu.s 			page 6
+ 138               	.LFBB2:
+ 139               	/* prologue: function */
+ 140               	/* frame size = 0 */
+ 141               	/* stack size = 0 */
+ 142               	.L__stack_usage = 0
+ 131:main.c        **** 	ADMUX = _BV(ADLAR) + i; // Selecciona un pin de las entradas analogas ADC[i]
+ 143               		.stabn	68,0,131,.LM14-.LFBB2
+ 144               	.LM14:
+ 145 0026 805E      		subi r24,lo8(-(32))
+ 146 0028 87B9      		out 39-32,r24
+ 132:main.c        **** 	ADCSRA |= _BV(ADSC); //Comienza conversion
+ 147               		.stabn	68,0,132,.LM15-.LFBB2
+ 148               	.LM15:
+ 149 002a 369A      		sbi 38-32,6
+ 150               	.L3:
+ 133:main.c        **** 	while (ADCSRA & _BV(ADSC) ) {}  // Esperar la conversion
+ 151               		.stabn	68,0,133,.LM16-.LFBB2
+ 152               	.LM16:
+GAS LISTING /tmp/ccDlPBYj.s 			page 6
 
 
- 142:main.c        **** }
- 145               		.stabn	68,0,142,.LM15-.LFBB2
- 146               	.LM15:
- 147 0022 0895      		ret
- 148               		.size	select_ADC_port, .-select_ADC_port
- 149               	.Lscope2:
- 150               		.stabs	"",36,0,0,.Lscope2-.LFBB2
- 151               		.stabd	78,0,0
- 152               		.stabs	"initial_anglexy:F(0,13)",36,0,149,initial_anglexy
- 153               		.stabs	"ax:P(0,13)",64,0,149,22
- 154               		.stabs	"ay:P(0,13)",64,0,149,18
- 155               		.stabs	"az:P(0,13)",64,0,149,14
- 156               	.global	initial_anglexy
- 157               		.type	initial_anglexy, @function
- 158               	initial_anglexy:
- 159               		.stabd	46,0,0
- 143:main.c        **** //------------------------------------------------------//
- 144:main.c        **** 
+ 153 002c 3699      		sbic 38-32,6
+ 154 002e 00C0      		rjmp .L3
+ 155               	/* epilogue start */
+ 134:main.c        **** 
+ 135:main.c        **** }
+ 156               		.stabn	68,0,135,.LM17-.LFBB2
+ 157               	.LM17:
+ 158 0030 0895      		ret
+ 159               		.size	select_ADC_port, .-select_ADC_port
+ 160               	.Lscope2:
+ 161               		.stabs	"",36,0,0,.Lscope2-.LFBB2
+ 162               		.stabd	78,0,0
+ 163               		.stabs	"initial_anglexz:F(0,13)",36,0,141,initial_anglexz
+ 164               		.stabs	"ax:P(0,13)",64,0,141,18
+ 165               		.stabs	"ay:P(0,13)",64,0,141,18
+ 166               		.stabs	"az:P(0,13)",64,0,141,22
+ 167               	.global	initial_anglexz
+ 168               		.type	initial_anglexz, @function
+ 169               	initial_anglexz:
+ 170               		.stabd	46,0,0
+ 136:main.c        **** //------------------------------------------------------//
+ 137:main.c        **** 
+ 138:main.c        **** //------------------------------------------------------//
+ 139:main.c        **** //----------------Initial_Angle_XZ----------------------//
+ 140:main.c        **** //------------------------------------------------------//
+ 141:main.c        **** double initial_anglexz(double ax, double ay, double az){
+ 171               		.stabn	68,0,141,.LM18-.LFBB3
+ 172               	.LM18:
+ 173               	.LFBB3:
+ 174 0032 EF92      		push r14
+ 175 0034 FF92      		push r15
+ 176 0036 0F93      		push r16
+ 177 0038 1F93      		push r17
+ 178               	/* prologue: function */
+ 179               	/* frame size = 0 */
+ 180               	/* stack size = 4 */
+ 181               	.L__stack_usage = 4
+ 182 003a 9B01      		movw r18,r22
+ 183 003c AC01      		movw r20,r24
+ 184 003e C801      		movw r24,r16
+ 185 0040 B701      		movw r22,r14
+ 142:main.c        **** 	return atan(az/ax)*(57.2958);
+ 186               		.stabn	68,0,142,.LM19-.LFBB3
+ 187               	.LM19:
+ 188 0042 0E94 0000 		call __divsf3
+ 189 0046 0E94 0000 		call atan
+ 190 004a 26EE      		ldi r18,lo8(0x42652ee6)
+ 191 004c 3EE2      		ldi r19,hi8(0x42652ee6)
+ 192 004e 45E6      		ldi r20,hlo8(0x42652ee6)
+ 193 0050 52E4      		ldi r21,hhi8(0x42652ee6)
+ 194 0052 0E94 0000 		call __mulsf3
+ 195               	/* epilogue start */
+ 143:main.c        **** }
+ 196               		.stabn	68,0,143,.LM20-.LFBB3
+ 197               	.LM20:
+ 198 0056 1F91      		pop r17
+ 199 0058 0F91      		pop r16
+GAS LISTING /tmp/ccDlPBYj.s 			page 7
+
+
+ 200 005a FF90      		pop r15
+ 201 005c EF90      		pop r14
+ 202 005e 0895      		ret
+ 203               		.size	initial_anglexz, .-initial_anglexz
+ 204               	.Lscope3:
+ 205               		.stabs	"",36,0,0,.Lscope3-.LFBB3
+ 206               		.stabd	78,0,0
+ 207               		.stabs	"print_Angle_Binary:F(0,15)",36,0,149,print_Angle_Binary
+ 208               		.stabs	"NoPortCD:P(0,1)",64,0,149,24
+ 209               		.stabs	"angle:P(0,13)",64,0,149,14
+ 210               	.global	print_Angle_Binary
+ 211               		.type	print_Angle_Binary, @function
+ 212               	print_Angle_Binary:
+ 213               		.stabd	46,0,0
+ 144:main.c        **** //------------------------------------------------------//
  145:main.c        **** 
  146:main.c        **** //------------------------------------------------------//
- 147:main.c        **** //----------------Initial_Angle_XY----------------------//
+ 147:main.c        **** //----------------------Print Angle---------------------//
  148:main.c        **** //------------------------------------------------------//
- 149:main.c        **** double initial_anglexy(double ax, double ay, double az){
- 160               		.stabn	68,0,149,.LM16-.LFBB3
- 161               	.LM16:
- 162               	.LFBB3:
- 163               	/* prologue: function */
- 164               	/* frame size = 0 */
- 165               	/* stack size = 0 */
- 166               	.L__stack_usage = 0
- 150:main.c        **** 	return atan(ax/ay)*(57.2958);
- 167               		.stabn	68,0,150,.LM17-.LFBB3
- 168               	.LM17:
- 169 0024 0E94 0000 		call __divsf3
- 170 0028 0E94 0000 		call atan
- 171 002c 26EE      		ldi r18,lo8(0x42652ee6)
- 172 002e 3EE2      		ldi r19,hi8(0x42652ee6)
- 173 0030 45E6      		ldi r20,hlo8(0x42652ee6)
- 174 0032 52E4      		ldi r21,hhi8(0x42652ee6)
- 175 0034 0E94 0000 		call __mulsf3
- 176               	/* epilogue start */
- 151:main.c        **** }
- 177               		.stabn	68,0,151,.LM18-.LFBB3
- 178               	.LM18:
- 179 0038 0895      		ret
- 180               		.size	initial_anglexy, .-initial_anglexy
- 181               	.Lscope3:
- 182               		.stabs	"",36,0,0,.Lscope3-.LFBB3
- 183               		.stabd	78,0,0
- 184               		.stabs	"initial_anglexz:F(0,13)",36,0,158,initial_anglexz
- 185               		.stabs	"ax:P(0,13)",64,0,158,18
- 186               		.stabs	"ay:P(0,13)",64,0,158,18
- 187               		.stabs	"az:P(0,13)",64,0,158,22
- 188               	.global	initial_anglexz
- 189               		.type	initial_anglexz, @function
- 190               	initial_anglexz:
- 191               		.stabd	46,0,0
-GAS LISTING /tmp/ccIBfZSu.s 			page 7
+ 149:main.c        **** void print_Angle_Binary(int NoPortCD,double angle){
+ 214               		.stabn	68,0,149,.LM21-.LFBB4
+ 215               	.LM21:
+ 216               	.LFBB4:
+ 217 0060 EF92      		push r14
+ 218 0062 FF92      		push r15
+ 219 0064 0F93      		push r16
+ 220 0066 1F93      		push r17
+ 221               	/* prologue: function */
+ 222               	/* frame size = 0 */
+ 223               	/* stack size = 4 */
+ 224               	.L__stack_usage = 4
+ 225 0068 7A01      		movw r14,r20
+ 226 006a 8B01      		movw r16,r22
+ 150:main.c        **** 
+ 151:main.c        **** 	double angle_segment_0=5;
+ 152:main.c        **** 	double angle_segment_1=10;
+ 153:main.c        **** 	double angle_segment_2=15;
+ 154:main.c        **** 	double angle_segment_3=20;
+ 155:main.c        **** 	double angle_segment_4=25;
+ 156:main.c        **** 	double angle_segment_5=30;
+ 157:main.c        **** 	double angle_segment_6=35;
+ 158:main.c        **** 	double angle_segment_7=40;
+ 159:main.c        **** 	double angle_segment_8=45;
+ 160:main.c        **** 	double angle_segment_9=50;
+ 161:main.c        **** 	double angle_segment_10=55;
+ 162:main.c        **** 	double angle_segment_11=60;
+ 163:main.c        **** 	double angle_segment_12=65;
+ 164:main.c        **** 	double angle_segment_13=70;
+ 165:main.c        **** 	double angle_segment_14=75;
+ 166:main.c        **** 	double angle_segment_15=80;
+ 167:main.c        **** 	double angle_segment_16=85;
+ 168:main.c        **** 	double angle_segment_17=90;
+ 169:main.c        **** 
+ 170:main.c        **** 
+ 171:main.c        **** 	if(angle>angle_segment_17){PORTD=0x05;}        //0000//-----//0000// = 00
+ 227               		.stabn	68,0,171,.LM22-.LFBB4
+ 228               	.LM22:
+GAS LISTING /tmp/ccDlPBYj.s 			page 8
 
 
- 152:main.c        **** //------------------------------------------------------//
- 153:main.c        **** 
- 154:main.c        **** 
- 155:main.c        **** //------------------------------------------------------//
- 156:main.c        **** //----------------Initial_Angle_XZ----------------------//
- 157:main.c        **** //------------------------------------------------------//
- 158:main.c        **** double initial_anglexz(double ax, double ay, double az){
- 192               		.stabn	68,0,158,.LM19-.LFBB4
- 193               	.LM19:
- 194               	.LFBB4:
- 195 003a EF92      		push r14
- 196 003c FF92      		push r15
- 197 003e 0F93      		push r16
- 198 0040 1F93      		push r17
- 199               	/* prologue: function */
- 200               	/* frame size = 0 */
- 201               	/* stack size = 4 */
- 202               	.L__stack_usage = 4
- 203 0042 9B01      		movw r18,r22
- 204 0044 AC01      		movw r20,r24
- 205 0046 C801      		movw r24,r16
- 206 0048 B701      		movw r22,r14
- 159:main.c        **** 	return atan(az/ax)*(57.2958);
- 207               		.stabn	68,0,159,.LM20-.LFBB4
- 208               	.LM20:
- 209 004a 0E94 0000 		call __divsf3
- 210 004e 0E94 0000 		call atan
- 211 0052 26EE      		ldi r18,lo8(0x42652ee6)
- 212 0054 3EE2      		ldi r19,hi8(0x42652ee6)
- 213 0056 45E6      		ldi r20,hlo8(0x42652ee6)
- 214 0058 52E4      		ldi r21,hhi8(0x42652ee6)
- 215 005a 0E94 0000 		call __mulsf3
- 216               	/* epilogue start */
- 160:main.c        **** }
- 217               		.stabn	68,0,160,.LM21-.LFBB4
- 218               	.LM21:
- 219 005e 1F91      		pop r17
- 220 0060 0F91      		pop r16
- 221 0062 FF90      		pop r15
- 222 0064 EF90      		pop r14
- 223 0066 0895      		ret
- 224               		.size	initial_anglexz, .-initial_anglexz
- 225               	.Lscope4:
- 226               		.stabs	"",36,0,0,.Lscope4-.LFBB4
- 227               		.stabd	78,0,0
- 228               		.stabs	"initial_angleyz:F(0,13)",36,0,167,initial_angleyz
- 229               		.stabs	"ax:P(0,13)",64,0,167,22
- 230               		.stabs	"ay:P(0,13)",64,0,167,22
- 231               		.stabs	"az:P(0,13)",64,0,167,18
- 232               	.global	initial_angleyz
- 233               		.type	initial_angleyz, @function
- 234               	initial_angleyz:
- 235               		.stabd	46,0,0
- 161:main.c        **** //------------------------------------------------------//
- 162:main.c        **** 
- 163:main.c        **** 
- 164:main.c        **** //------------------------------------------------------//
-GAS LISTING /tmp/ccIBfZSu.s 			page 8
+ 229 006c CB01      		movw r24,r22
+ 230 006e BA01      		movw r22,r20
+ 231 0070 20E0      		ldi r18,lo8(0x42b40000)
+ 232 0072 30E0      		ldi r19,hi8(0x42b40000)
+ 233 0074 44EB      		ldi r20,hlo8(0x42b40000)
+ 234 0076 52E4      		ldi r21,hhi8(0x42b40000)
+ 235 0078 0E94 0000 		call __gtsf2
+ 236 007c 1816      		cp __zero_reg__,r24
+ 237 007e 04F4      		brge .L62
+ 238               		.stabn	68,0,171,.LM23-.LFBB4
+ 239               	.LM23:
+ 240 0080 85E0      		ldi r24,lo8(5)
+ 241 0082 00C0      		rjmp .L80
+ 242               	.L62:
+ 172:main.c        **** 	else if(angle>angle_segment_16){PORTD=0x10;}   //0000//-----//0101// = 05
+ 243               		.stabn	68,0,172,.LM24-.LFBB4
+ 244               	.LM24:
+ 245 0084 C801      		movw r24,r16
+ 246 0086 B701      		movw r22,r14
+ 247 0088 20E0      		ldi r18,lo8(0x42aa0000)
+ 248 008a 30E0      		ldi r19,hi8(0x42aa0000)
+ 249 008c 4AEA      		ldi r20,hlo8(0x42aa0000)
+ 250 008e 52E4      		ldi r21,hhi8(0x42aa0000)
+ 251 0090 0E94 0000 		call __gtsf2
+ 252 0094 1816      		cp __zero_reg__,r24
+ 253 0096 04F4      		brge .L63
+ 254               		.stabn	68,0,172,.LM25-.LFBB4
+ 255               	.LM25:
+ 256 0098 80E1      		ldi r24,lo8(16)
+ 257 009a 00C0      		rjmp .L80
+ 258               	.L63:
+ 173:main.c        **** 	else if(angle>angle_segment_15){PORTD=0x15;}   //0001//-----//0000// = 10  
+ 259               		.stabn	68,0,173,.LM26-.LFBB4
+ 260               	.LM26:
+ 261 009c C801      		movw r24,r16
+ 262 009e B701      		movw r22,r14
+ 263 00a0 20E0      		ldi r18,lo8(0x42a00000)
+ 264 00a2 30E0      		ldi r19,hi8(0x42a00000)
+ 265 00a4 40EA      		ldi r20,hlo8(0x42a00000)
+ 266 00a6 52E4      		ldi r21,hhi8(0x42a00000)
+ 267 00a8 0E94 0000 		call __gtsf2
+ 268 00ac 1816      		cp __zero_reg__,r24
+ 269 00ae 04F4      		brge .L64
+ 270               		.stabn	68,0,173,.LM27-.LFBB4
+ 271               	.LM27:
+ 272 00b0 85E1      		ldi r24,lo8(21)
+ 273 00b2 00C0      		rjmp .L80
+ 274               	.L64:
+ 174:main.c        **** 	else if(angle>angle_segment_14){PORTD=0x20;}   //0001//-----//0101// = 15 
+ 275               		.stabn	68,0,174,.LM28-.LFBB4
+ 276               	.LM28:
+ 277 00b4 C801      		movw r24,r16
+ 278 00b6 B701      		movw r22,r14
+ 279 00b8 20E0      		ldi r18,lo8(0x42960000)
+ 280 00ba 30E0      		ldi r19,hi8(0x42960000)
+ 281 00bc 46E9      		ldi r20,hlo8(0x42960000)
+ 282 00be 52E4      		ldi r21,hhi8(0x42960000)
+GAS LISTING /tmp/ccDlPBYj.s 			page 9
 
 
- 165:main.c        **** //----------------Initial_Angle_YZ----------------------//
- 166:main.c        **** //------------------------------------------------------//
- 167:main.c        **** double initial_angleyz(double ax, double ay, double az){
- 236               		.stabn	68,0,167,.LM22-.LFBB5
- 237               	.LM22:
- 238               	.LFBB5:
- 239 0068 EF92      		push r14
- 240 006a FF92      		push r15
- 241 006c 0F93      		push r16
- 242 006e 1F93      		push r17
- 243               	/* prologue: function */
- 244               	/* frame size = 0 */
- 245               	/* stack size = 4 */
- 246               	.L__stack_usage = 4
- 247 0070 CA01      		movw r24,r20
- 248 0072 B901      		movw r22,r18
- 249 0074 A801      		movw r20,r16
- 250 0076 9701      		movw r18,r14
- 168:main.c        **** 	return atan(ay/az)*(57.2958);
- 251               		.stabn	68,0,168,.LM23-.LFBB5
- 252               	.LM23:
- 253 0078 0E94 0000 		call __divsf3
- 254 007c 0E94 0000 		call atan
- 255 0080 26EE      		ldi r18,lo8(0x42652ee6)
- 256 0082 3EE2      		ldi r19,hi8(0x42652ee6)
- 257 0084 45E6      		ldi r20,hlo8(0x42652ee6)
- 258 0086 52E4      		ldi r21,hhi8(0x42652ee6)
- 259 0088 0E94 0000 		call __mulsf3
- 260               	/* epilogue start */
- 169:main.c        **** }
- 261               		.stabn	68,0,169,.LM24-.LFBB5
- 262               	.LM24:
- 263 008c 1F91      		pop r17
- 264 008e 0F91      		pop r16
- 265 0090 FF90      		pop r15
- 266 0092 EF90      		pop r14
- 267 0094 0895      		ret
- 268               		.size	initial_angleyz, .-initial_angleyz
- 269               	.Lscope5:
- 270               		.stabs	"",36,0,0,.Lscope5-.LFBB5
- 271               		.stabd	78,0,0
- 272               		.stabs	"print_Angle_Binary:F(0,15)",36,0,175,print_Angle_Binary
- 273               		.stabs	"NoPortCD:P(0,1)",64,0,175,24
- 274               		.stabs	"angle:P(0,13)",64,0,175,14
- 275               	.global	print_Angle_Binary
- 276               		.type	print_Angle_Binary, @function
- 277               	print_Angle_Binary:
- 278               		.stabd	46,0,0
- 170:main.c        **** //------------------------------------------------------//
- 171:main.c        **** 
- 172:main.c        **** //------------------------------------------------------//
- 173:main.c        **** //----------------------Print Angle---------------------//
- 174:main.c        **** //------------------------------------------------------//
- 175:main.c        **** void print_Angle_Binary(int NoPortCD,double angle){
- 279               		.stabn	68,0,175,.LM25-.LFBB6
- 280               	.LM25:
- 281               	.LFBB6:
-GAS LISTING /tmp/ccIBfZSu.s 			page 9
+ 283 00c0 0E94 0000 		call __gtsf2
+ 284 00c4 1816      		cp __zero_reg__,r24
+ 285 00c6 04F4      		brge .L65
+ 286               		.stabn	68,0,174,.LM29-.LFBB4
+ 287               	.LM29:
+ 288 00c8 80E2      		ldi r24,lo8(32)
+ 289 00ca 00C0      		rjmp .L80
+ 290               	.L65:
+ 175:main.c        **** 	else if(angle>angle_segment_13){PORTD=0x25;}   //0010//-----//0000// = 10  
+ 291               		.stabn	68,0,175,.LM30-.LFBB4
+ 292               	.LM30:
+ 293 00cc C801      		movw r24,r16
+ 294 00ce B701      		movw r22,r14
+ 295 00d0 20E0      		ldi r18,lo8(0x428c0000)
+ 296 00d2 30E0      		ldi r19,hi8(0x428c0000)
+ 297 00d4 4CE8      		ldi r20,hlo8(0x428c0000)
+ 298 00d6 52E4      		ldi r21,hhi8(0x428c0000)
+ 299 00d8 0E94 0000 		call __gtsf2
+ 300 00dc 1816      		cp __zero_reg__,r24
+ 301 00de 04F4      		brge .L66
+ 302               		.stabn	68,0,175,.LM31-.LFBB4
+ 303               	.LM31:
+ 304 00e0 85E2      		ldi r24,lo8(37)
+ 305 00e2 00C0      		rjmp .L80
+ 306               	.L66:
+ 176:main.c        **** 	else if(angle>angle_segment_12){PORTD=0x30;}   //0010//-----//0101// = 25  
+ 307               		.stabn	68,0,176,.LM32-.LFBB4
+ 308               	.LM32:
+ 309 00e4 C801      		movw r24,r16
+ 310 00e6 B701      		movw r22,r14
+ 311 00e8 20E0      		ldi r18,lo8(0x42820000)
+ 312 00ea 30E0      		ldi r19,hi8(0x42820000)
+ 313 00ec 42E8      		ldi r20,hlo8(0x42820000)
+ 314 00ee 52E4      		ldi r21,hhi8(0x42820000)
+ 315 00f0 0E94 0000 		call __gtsf2
+ 316 00f4 1816      		cp __zero_reg__,r24
+ 317 00f6 04F4      		brge .L67
+ 318               		.stabn	68,0,176,.LM33-.LFBB4
+ 319               	.LM33:
+ 320 00f8 80E3      		ldi r24,lo8(48)
+ 321 00fa 00C0      		rjmp .L80
+ 322               	.L67:
+ 177:main.c        **** 	else if(angle>angle_segment_11){PORTD=0x35;}   //0011//-----//0000// = 30  
+ 323               		.stabn	68,0,177,.LM34-.LFBB4
+ 324               	.LM34:
+ 325 00fc C801      		movw r24,r16
+ 326 00fe B701      		movw r22,r14
+ 327 0100 20E0      		ldi r18,lo8(0x42700000)
+ 328 0102 30E0      		ldi r19,hi8(0x42700000)
+ 329 0104 40E7      		ldi r20,hlo8(0x42700000)
+ 330 0106 52E4      		ldi r21,hhi8(0x42700000)
+ 331 0108 0E94 0000 		call __gtsf2
+ 332 010c 1816      		cp __zero_reg__,r24
+ 333 010e 04F4      		brge .L68
+ 334               		.stabn	68,0,177,.LM35-.LFBB4
+ 335               	.LM35:
+ 336 0110 85E3      		ldi r24,lo8(53)
+GAS LISTING /tmp/ccDlPBYj.s 			page 10
 
 
- 282 0096 EF92      		push r14
- 283 0098 FF92      		push r15
- 284 009a 0F93      		push r16
- 285 009c 1F93      		push r17
- 286               	/* prologue: function */
- 287               	/* frame size = 0 */
- 288               	/* stack size = 4 */
- 289               	.L__stack_usage = 4
- 290 009e 7A01      		movw r14,r20
- 291 00a0 8B01      		movw r16,r22
- 176:main.c        **** 
- 177:main.c        **** 	double angle_segment_0=5;
- 178:main.c        **** 	double angle_segment_1=10;
- 179:main.c        **** 	double angle_segment_2=15;
- 180:main.c        **** 	double angle_segment_3=20;
- 181:main.c        **** 	double angle_segment_4=25;
- 182:main.c        **** 	double angle_segment_5=30;
- 183:main.c        **** 	double angle_segment_6=35;
- 184:main.c        **** 	double angle_segment_7=40;
- 185:main.c        **** 	double angle_segment_8=45;
- 186:main.c        **** 	double angle_segment_9=50;
- 187:main.c        **** 	double angle_segment_10=55;
- 188:main.c        **** 	double angle_segment_11=60;
- 189:main.c        **** 	double angle_segment_12=65;
- 190:main.c        **** 	double angle_segment_13=70;
- 191:main.c        **** 	double angle_segment_14=75;
- 192:main.c        **** 	double angle_segment_15=80;
- 193:main.c        **** 	double angle_segment_16=85;
- 194:main.c        **** 	double angle_segment_17=90;
- 195:main.c        **** 
+ 337 0112 00C0      		rjmp .L80
+ 338               	.L68:
+ 178:main.c        **** 	else if(angle>angle_segment_10){PORTD=0x40;}   //0011//-----//0101// = 35 
+ 339               		.stabn	68,0,178,.LM36-.LFBB4
+ 340               	.LM36:
+ 341 0114 C801      		movw r24,r16
+ 342 0116 B701      		movw r22,r14
+ 343 0118 20E0      		ldi r18,lo8(0x425c0000)
+ 344 011a 30E0      		ldi r19,hi8(0x425c0000)
+ 345 011c 4CE5      		ldi r20,hlo8(0x425c0000)
+ 346 011e 52E4      		ldi r21,hhi8(0x425c0000)
+ 347 0120 0E94 0000 		call __gtsf2
+ 348 0124 1816      		cp __zero_reg__,r24
+ 349 0126 04F4      		brge .L69
+ 350               		.stabn	68,0,178,.LM37-.LFBB4
+ 351               	.LM37:
+ 352 0128 80E4      		ldi r24,lo8(64)
+ 353 012a 00C0      		rjmp .L80
+ 354               	.L69:
+ 179:main.c        **** 	else if(angle>angle_segment_9){PORTD=0x45;}    //0100//-----//0000// = 40  
+ 355               		.stabn	68,0,179,.LM38-.LFBB4
+ 356               	.LM38:
+ 357 012c C801      		movw r24,r16
+ 358 012e B701      		movw r22,r14
+ 359 0130 20E0      		ldi r18,lo8(0x42480000)
+ 360 0132 30E0      		ldi r19,hi8(0x42480000)
+ 361 0134 48E4      		ldi r20,hlo8(0x42480000)
+ 362 0136 52E4      		ldi r21,hhi8(0x42480000)
+ 363 0138 0E94 0000 		call __gtsf2
+ 364 013c 1816      		cp __zero_reg__,r24
+ 365 013e 04F4      		brge .L70
+ 366               		.stabn	68,0,179,.LM39-.LFBB4
+ 367               	.LM39:
+ 368 0140 85E4      		ldi r24,lo8(69)
+ 369 0142 00C0      		rjmp .L80
+ 370               	.L70:
+ 180:main.c        **** 	else if(angle>angle_segment_8){PORTD=0x50;}    //0100//-----//0101// = 45  
+ 371               		.stabn	68,0,180,.LM40-.LFBB4
+ 372               	.LM40:
+ 373 0144 C801      		movw r24,r16
+ 374 0146 B701      		movw r22,r14
+ 375 0148 20E0      		ldi r18,lo8(0x42340000)
+ 376 014a 30E0      		ldi r19,hi8(0x42340000)
+ 377 014c 44E3      		ldi r20,hlo8(0x42340000)
+ 378 014e 52E4      		ldi r21,hhi8(0x42340000)
+ 379 0150 0E94 0000 		call __gtsf2
+ 380 0154 1816      		cp __zero_reg__,r24
+ 381 0156 04F4      		brge .L71
+ 382               		.stabn	68,0,180,.LM41-.LFBB4
+ 383               	.LM41:
+ 384 0158 80E5      		ldi r24,lo8(80)
+ 385 015a 00C0      		rjmp .L80
+ 386               	.L71:
+ 181:main.c        **** 	else if(angle>angle_segment_7){PORTD=0x55;}    //0101//-----//0000// = 50   
+ 387               		.stabn	68,0,181,.LM42-.LFBB4
+ 388               	.LM42:
+ 389 015c C801      		movw r24,r16
+GAS LISTING /tmp/ccDlPBYj.s 			page 11
+
+
+ 390 015e B701      		movw r22,r14
+ 391 0160 20E0      		ldi r18,lo8(0x42200000)
+ 392 0162 30E0      		ldi r19,hi8(0x42200000)
+ 393 0164 40E2      		ldi r20,hlo8(0x42200000)
+ 394 0166 52E4      		ldi r21,hhi8(0x42200000)
+ 395 0168 0E94 0000 		call __gtsf2
+ 396 016c 1816      		cp __zero_reg__,r24
+ 397 016e 04F4      		brge .L72
+ 398               		.stabn	68,0,181,.LM43-.LFBB4
+ 399               	.LM43:
+ 400 0170 85E5      		ldi r24,lo8(85)
+ 401 0172 00C0      		rjmp .L80
+ 402               	.L72:
+ 182:main.c        **** 	else if(angle>angle_segment_6){PORTD=0x60;}    //0101//-----//0101// = 55  
+ 403               		.stabn	68,0,182,.LM44-.LFBB4
+ 404               	.LM44:
+ 405 0174 C801      		movw r24,r16
+ 406 0176 B701      		movw r22,r14
+ 407 0178 20E0      		ldi r18,lo8(0x420c0000)
+ 408 017a 30E0      		ldi r19,hi8(0x420c0000)
+ 409 017c 4CE0      		ldi r20,hlo8(0x420c0000)
+ 410 017e 52E4      		ldi r21,hhi8(0x420c0000)
+ 411 0180 0E94 0000 		call __gtsf2
+ 412 0184 1816      		cp __zero_reg__,r24
+ 413 0186 04F4      		brge .L73
+ 414               		.stabn	68,0,182,.LM45-.LFBB4
+ 415               	.LM45:
+ 416 0188 80E6      		ldi r24,lo8(96)
+ 417 018a 00C0      		rjmp .L80
+ 418               	.L73:
+ 183:main.c        **** 	else if(angle>angle_segment_5){PORTD=0x65;}    //0110//-----//0000// = 60   
+ 419               		.stabn	68,0,183,.LM46-.LFBB4
+ 420               	.LM46:
+ 421 018c C801      		movw r24,r16
+ 422 018e B701      		movw r22,r14
+ 423 0190 20E0      		ldi r18,lo8(0x41f00000)
+ 424 0192 30E0      		ldi r19,hi8(0x41f00000)
+ 425 0194 40EF      		ldi r20,hlo8(0x41f00000)
+ 426 0196 51E4      		ldi r21,hhi8(0x41f00000)
+ 427 0198 0E94 0000 		call __gtsf2
+ 428 019c 1816      		cp __zero_reg__,r24
+ 429 019e 04F4      		brge .L74
+ 430               		.stabn	68,0,183,.LM47-.LFBB4
+ 431               	.LM47:
+ 432 01a0 85E6      		ldi r24,lo8(101)
+ 433 01a2 00C0      		rjmp .L80
+ 434               	.L74:
+ 184:main.c        **** 	else if(angle>angle_segment_4){PORTD=0x70;}    //0110//-----//0101// = 65 
+ 435               		.stabn	68,0,184,.LM48-.LFBB4
+ 436               	.LM48:
+ 437 01a4 C801      		movw r24,r16
+ 438 01a6 B701      		movw r22,r14
+ 439 01a8 20E0      		ldi r18,lo8(0x41c80000)
+ 440 01aa 30E0      		ldi r19,hi8(0x41c80000)
+ 441 01ac 48EC      		ldi r20,hlo8(0x41c80000)
+ 442 01ae 51E4      		ldi r21,hhi8(0x41c80000)
+ 443 01b0 0E94 0000 		call __gtsf2
+GAS LISTING /tmp/ccDlPBYj.s 			page 12
+
+
+ 444 01b4 1816      		cp __zero_reg__,r24
+ 445 01b6 04F4      		brge .L75
+ 446               		.stabn	68,0,184,.LM49-.LFBB4
+ 447               	.LM49:
+ 448 01b8 80E7      		ldi r24,lo8(112)
+ 449 01ba 00C0      		rjmp .L80
+ 450               	.L75:
+ 185:main.c        **** 	else if(angle>angle_segment_3){PORTD=0x75;}    //0111//-----//0000// = 70 
+ 451               		.stabn	68,0,185,.LM50-.LFBB4
+ 452               	.LM50:
+ 453 01bc C801      		movw r24,r16
+ 454 01be B701      		movw r22,r14
+ 455 01c0 20E0      		ldi r18,lo8(0x41a00000)
+ 456 01c2 30E0      		ldi r19,hi8(0x41a00000)
+ 457 01c4 40EA      		ldi r20,hlo8(0x41a00000)
+ 458 01c6 51E4      		ldi r21,hhi8(0x41a00000)
+ 459 01c8 0E94 0000 		call __gtsf2
+ 460 01cc 1816      		cp __zero_reg__,r24
+ 461 01ce 04F4      		brge .L76
+ 462               		.stabn	68,0,185,.LM51-.LFBB4
+ 463               	.LM51:
+ 464 01d0 85E7      		ldi r24,lo8(117)
+ 465 01d2 00C0      		rjmp .L80
+ 466               	.L76:
+ 186:main.c        **** 	else if(angle>angle_segment_2){PORTD=0x80;}    //0111//-----//0101// = 75
+ 467               		.stabn	68,0,186,.LM52-.LFBB4
+ 468               	.LM52:
+ 469 01d4 C801      		movw r24,r16
+ 470 01d6 B701      		movw r22,r14
+ 471 01d8 20E0      		ldi r18,lo8(0x41700000)
+ 472 01da 30E0      		ldi r19,hi8(0x41700000)
+ 473 01dc 40E7      		ldi r20,hlo8(0x41700000)
+ 474 01de 51E4      		ldi r21,hhi8(0x41700000)
+ 475 01e0 0E94 0000 		call __gtsf2
+ 476 01e4 1816      		cp __zero_reg__,r24
+ 477 01e6 04F4      		brge .L77
+ 478               		.stabn	68,0,186,.LM53-.LFBB4
+ 479               	.LM53:
+ 480 01e8 80E8      		ldi r24,lo8(-128)
+ 481 01ea 00C0      		rjmp .L80
+ 482               	.L77:
+ 187:main.c        **** 	else if(angle>angle_segment_1){PORTD=0x85;}    //1000//-----//0000// = 80 
+ 483               		.stabn	68,0,187,.LM54-.LFBB4
+ 484               	.LM54:
+ 485 01ec C801      		movw r24,r16
+ 486 01ee B701      		movw r22,r14
+ 487 01f0 20E0      		ldi r18,lo8(0x41200000)
+ 488 01f2 30E0      		ldi r19,hi8(0x41200000)
+ 489 01f4 40E2      		ldi r20,hlo8(0x41200000)
+ 490 01f6 51E4      		ldi r21,hhi8(0x41200000)
+ 491 01f8 0E94 0000 		call __gtsf2
+ 492 01fc 1816      		cp __zero_reg__,r24
+ 493 01fe 04F4      		brge .L78
+ 494               		.stabn	68,0,187,.LM55-.LFBB4
+ 495               	.LM55:
+ 496 0200 85E8      		ldi r24,lo8(-123)
+ 497 0202 00C0      		rjmp .L80
+GAS LISTING /tmp/ccDlPBYj.s 			page 13
+
+
+ 498               	.L78:
+ 188:main.c        **** 	else if(angle>angle_segment_0){PORTD=0x90;}    //1000//-----//0101// = 85  
+ 499               		.stabn	68,0,188,.LM56-.LFBB4
+ 500               	.LM56:
+ 501 0204 C801      		movw r24,r16
+ 502 0206 B701      		movw r22,r14
+ 503 0208 20E0      		ldi r18,lo8(0x40a00000)
+ 504 020a 30E0      		ldi r19,hi8(0x40a00000)
+ 505 020c 40EA      		ldi r20,hlo8(0x40a00000)
+ 506 020e 50E4      		ldi r21,hhi8(0x40a00000)
+ 507 0210 0E94 0000 		call __gtsf2
+ 508 0214 1816      		cp __zero_reg__,r24
+ 509 0216 04F4      		brge .L79
+ 510               		.stabn	68,0,188,.LM57-.LFBB4
+ 511               	.LM57:
+ 512 0218 80E9      		ldi r24,lo8(-112)
+ 513               	.L80:
+ 514 021a 82BB      		out 50-32,r24
+ 515 021c 00C0      		rjmp .L6
+ 516               	.L79:
+ 189:main.c        **** 	else {PORTD=0x00;}  
+ 517               		.stabn	68,0,189,.LM58-.LFBB4
+ 518               	.LM58:
+ 519 021e 12BA      		out 50-32,__zero_reg__
+ 520               	.L6:
+ 521               	/* epilogue start */
+ 190:main.c        **** }
+ 522               		.stabn	68,0,190,.LM59-.LFBB4
+ 523               	.LM59:
+ 524 0220 1F91      		pop r17
+ 525 0222 0F91      		pop r16
+ 526 0224 FF90      		pop r15
+ 527 0226 EF90      		pop r14
+ 528 0228 0895      		ret
+ 529               		.size	print_Angle_Binary, .-print_Angle_Binary
+ 530               	.Lscope4:
+ 531               		.stabs	"",36,0,0,.Lscope4-.LFBB4
+ 532               		.stabd	78,0,0
+ 533               		.stabs	"print_Decimes:F(0,15)",36,0,195,print_Decimes
+ 534               	.global	print_Decimes
+ 535               		.type	print_Decimes, @function
+ 536               	print_Decimes:
+ 537               		.stabd	46,0,0
+ 191:main.c        **** //------------------------------------------------------//
+ 192:main.c        **** 
+ 193:main.c        **** //-------------------Print Distance---------------------//
+ 194:main.c        **** 
+ 195:main.c        **** void print_Decimes(float num_in){
+ 538               		.stabn	68,0,195,.LM60-.LFBB5
+ 539               	.LM60:
+ 540               	.LFBB5:
+ 541 022a DF92      		push r13
+ 542 022c EF92      		push r14
+ 543 022e FF92      		push r15
+ 544 0230 0F93      		push r16
+ 545 0232 1F93      		push r17
+ 546               	/* prologue: function */
+GAS LISTING /tmp/ccDlPBYj.s 			page 14
+
+
+ 547               	/* frame size = 0 */
+ 548               	/* stack size = 5 */
+ 549               	.L__stack_usage = 5
+ 550 0234 7B01      		movw r14,r22
+ 551 0236 8C01      		movw r16,r24
  196:main.c        **** 
- 197:main.c        **** 	if(angle>angle_segment_17){PORTD=0x05;}        //0000//-----//0000// = 00
- 292               		.stabn	68,0,197,.LM26-.LFBB6
- 293               	.LM26:
- 294 00a2 CB01      		movw r24,r22
- 295 00a4 BA01      		movw r22,r20
- 296 00a6 20E0      		ldi r18,lo8(0x42b40000)
- 297 00a8 30E0      		ldi r19,hi8(0x42b40000)
- 298 00aa 44EB      		ldi r20,hlo8(0x42b40000)
- 299 00ac 52E4      		ldi r21,hhi8(0x42b40000)
- 300 00ae 0E94 0000 		call __gtsf2
- 301 00b2 1816      		cp __zero_reg__,r24
- 302 00b4 04F4      		brge .L64
- 303               		.stabn	68,0,197,.LM27-.LFBB6
- 304               	.LM27:
- 305 00b6 85E0      		ldi r24,lo8(5)
- 306 00b8 00C0      		rjmp .L82
- 307               	.L64:
- 198:main.c        **** 	else if(angle>angle_segment_16){PORTD=0x10;}   //0000//-----//0101// = 05
- 308               		.stabn	68,0,198,.LM28-.LFBB6
- 309               	.LM28:
- 310 00ba C801      		movw r24,r16
- 311 00bc B701      		movw r22,r14
- 312 00be 20E0      		ldi r18,lo8(0x42aa0000)
- 313 00c0 30E0      		ldi r19,hi8(0x42aa0000)
- 314 00c2 4AEA      		ldi r20,hlo8(0x42aa0000)
- 315 00c4 52E4      		ldi r21,hhi8(0x42aa0000)
-GAS LISTING /tmp/ccIBfZSu.s 			page 10
+ 197:main.c        **** double num0=0.0;
+ 198:main.c        **** 
+ 199:main.c        **** double num=0.0;
+ 200:main.c        **** 
+ 201:main.c        **** 	num=num_in;
+ 202:main.c        **** 
+ 203:main.c        **** char decimas=0x00;
+ 204:main.c        **** 
+ 205:main.c        **** 	if(num>=90){decimas=0x90;num0=num-90;}
+ 552               		.stabn	68,0,205,.LM61-.LFBB5
+ 553               	.LM61:
+ 554 0238 7F2D      		mov r23,r15
+ 555 023a 912F      		mov r25,r17
+ 556 023c 20E0      		ldi r18,lo8(0x42b40000)
+ 557 023e 30E0      		ldi r19,hi8(0x42b40000)
+ 558 0240 44EB      		ldi r20,hlo8(0x42b40000)
+ 559 0242 52E4      		ldi r21,hhi8(0x42b40000)
+ 560 0244 0E94 0000 		call __gesf2
+ 561 0248 87FD      		sbrc r24,7
+ 562 024a 00C0      		rjmp .L141
+ 563               		.stabn	68,0,205,.LM62-.LFBB5
+ 564               	.LM62:
+ 565 024c 6E2D      		mov r22,r14
+ 566 024e 7F2D      		mov r23,r15
+ 567 0250 802F      		mov r24,r16
+ 568 0252 912F      		mov r25,r17
+ 569 0254 20E0      		ldi r18,lo8(0x42b40000)
+ 570 0256 30E0      		ldi r19,hi8(0x42b40000)
+ 571 0258 44EB      		ldi r20,hlo8(0x42b40000)
+ 572 025a 52E4      		ldi r21,hhi8(0x42b40000)
+ 573 025c 0E94 0000 		call __subsf3
+ 574 0260 7B01      		movw r14,r22
+ 575 0262 8C01      		movw r16,r24
+ 576 0264 E0E9      		ldi r30,lo8(-112)
+ 577 0266 DE2E      		mov r13,r30
+ 578 0268 00C0      		rjmp .L84
+ 579               	.L141:
+ 206:main.c        **** 	else if(num>=80){decimas=0x80;num0=num-80;}
+ 580               		.stabn	68,0,206,.LM63-.LFBB5
+ 581               	.LM63:
+ 582 026a 6E2D      		mov r22,r14
+ 583 026c 7F2D      		mov r23,r15
+ 584 026e 802F      		mov r24,r16
+ 585 0270 912F      		mov r25,r17
+ 586 0272 20E0      		ldi r18,lo8(0x42a00000)
+ 587 0274 30E0      		ldi r19,hi8(0x42a00000)
+ 588 0276 40EA      		ldi r20,hlo8(0x42a00000)
+ 589 0278 52E4      		ldi r21,hhi8(0x42a00000)
+ 590 027a 0E94 0000 		call __gesf2
+ 591 027e 87FD      		sbrc r24,7
+ 592 0280 00C0      		rjmp .L142
+GAS LISTING /tmp/ccDlPBYj.s 			page 15
 
 
- 316 00c6 0E94 0000 		call __gtsf2
- 317 00ca 1816      		cp __zero_reg__,r24
- 318 00cc 04F4      		brge .L65
- 319               		.stabn	68,0,198,.LM29-.LFBB6
- 320               	.LM29:
- 321 00ce 80E1      		ldi r24,lo8(16)
- 322 00d0 00C0      		rjmp .L82
- 323               	.L65:
- 199:main.c        **** 	else if(angle>angle_segment_15){PORTD=0x15;}   //0001//-----//0000// = 10  
- 324               		.stabn	68,0,199,.LM30-.LFBB6
- 325               	.LM30:
- 326 00d2 C801      		movw r24,r16
- 327 00d4 B701      		movw r22,r14
- 328 00d6 20E0      		ldi r18,lo8(0x42a00000)
- 329 00d8 30E0      		ldi r19,hi8(0x42a00000)
- 330 00da 40EA      		ldi r20,hlo8(0x42a00000)
- 331 00dc 52E4      		ldi r21,hhi8(0x42a00000)
- 332 00de 0E94 0000 		call __gtsf2
- 333 00e2 1816      		cp __zero_reg__,r24
- 334 00e4 04F4      		brge .L66
- 335               		.stabn	68,0,199,.LM31-.LFBB6
- 336               	.LM31:
- 337 00e6 85E1      		ldi r24,lo8(21)
- 338 00e8 00C0      		rjmp .L82
- 339               	.L66:
- 200:main.c        **** 	else if(angle>angle_segment_14){PORTD=0x20;}   //0001//-----//0101// = 15 
- 340               		.stabn	68,0,200,.LM32-.LFBB6
- 341               	.LM32:
- 342 00ea C801      		movw r24,r16
- 343 00ec B701      		movw r22,r14
- 344 00ee 20E0      		ldi r18,lo8(0x42960000)
- 345 00f0 30E0      		ldi r19,hi8(0x42960000)
- 346 00f2 46E9      		ldi r20,hlo8(0x42960000)
- 347 00f4 52E4      		ldi r21,hhi8(0x42960000)
- 348 00f6 0E94 0000 		call __gtsf2
- 349 00fa 1816      		cp __zero_reg__,r24
- 350 00fc 04F4      		brge .L67
- 351               		.stabn	68,0,200,.LM33-.LFBB6
- 352               	.LM33:
- 353 00fe 80E2      		ldi r24,lo8(32)
- 354 0100 00C0      		rjmp .L82
- 355               	.L67:
- 201:main.c        **** 	else if(angle>angle_segment_13){PORTD=0x25;}   //0010//-----//0000// = 10  
- 356               		.stabn	68,0,201,.LM34-.LFBB6
- 357               	.LM34:
- 358 0102 C801      		movw r24,r16
- 359 0104 B701      		movw r22,r14
- 360 0106 20E0      		ldi r18,lo8(0x428c0000)
- 361 0108 30E0      		ldi r19,hi8(0x428c0000)
- 362 010a 4CE8      		ldi r20,hlo8(0x428c0000)
- 363 010c 52E4      		ldi r21,hhi8(0x428c0000)
- 364 010e 0E94 0000 		call __gtsf2
- 365 0112 1816      		cp __zero_reg__,r24
- 366 0114 04F4      		brge .L68
- 367               		.stabn	68,0,201,.LM35-.LFBB6
- 368               	.LM35:
- 369 0116 85E2      		ldi r24,lo8(37)
-GAS LISTING /tmp/ccIBfZSu.s 			page 11
+ 593               		.stabn	68,0,206,.LM64-.LFBB5
+ 594               	.LM64:
+ 595 0282 6E2D      		mov r22,r14
+ 596 0284 7F2D      		mov r23,r15
+ 597 0286 802F      		mov r24,r16
+ 598 0288 912F      		mov r25,r17
+ 599 028a 20E0      		ldi r18,lo8(0x42a00000)
+ 600 028c 30E0      		ldi r19,hi8(0x42a00000)
+ 601 028e 40EA      		ldi r20,hlo8(0x42a00000)
+ 602 0290 52E4      		ldi r21,hhi8(0x42a00000)
+ 603 0292 0E94 0000 		call __subsf3
+ 604 0296 7B01      		movw r14,r22
+ 605 0298 8C01      		movw r16,r24
+ 606 029a 70E8      		ldi r23,lo8(-128)
+ 607 029c D72E      		mov r13,r23
+ 608 029e 00C0      		rjmp .L84
+ 609               	.L142:
+ 207:main.c        **** 	else if(num>=70){decimas=0x70;num0=num-70;}
+ 610               		.stabn	68,0,207,.LM65-.LFBB5
+ 611               	.LM65:
+ 612 02a0 6E2D      		mov r22,r14
+ 613 02a2 7F2D      		mov r23,r15
+ 614 02a4 802F      		mov r24,r16
+ 615 02a6 912F      		mov r25,r17
+ 616 02a8 20E0      		ldi r18,lo8(0x428c0000)
+ 617 02aa 30E0      		ldi r19,hi8(0x428c0000)
+ 618 02ac 4CE8      		ldi r20,hlo8(0x428c0000)
+ 619 02ae 52E4      		ldi r21,hhi8(0x428c0000)
+ 620 02b0 0E94 0000 		call __gesf2
+ 621 02b4 87FD      		sbrc r24,7
+ 622 02b6 00C0      		rjmp .L143
+ 623               		.stabn	68,0,207,.LM66-.LFBB5
+ 624               	.LM66:
+ 625 02b8 6E2D      		mov r22,r14
+ 626 02ba 7F2D      		mov r23,r15
+ 627 02bc 802F      		mov r24,r16
+ 628 02be 912F      		mov r25,r17
+ 629 02c0 20E0      		ldi r18,lo8(0x428c0000)
+ 630 02c2 30E0      		ldi r19,hi8(0x428c0000)
+ 631 02c4 4CE8      		ldi r20,hlo8(0x428c0000)
+ 632 02c6 52E4      		ldi r21,hhi8(0x428c0000)
+ 633 02c8 0E94 0000 		call __subsf3
+ 634 02cc 7B01      		movw r14,r22
+ 635 02ce 8C01      		movw r16,r24
+ 636 02d0 60E7      		ldi r22,lo8(112)
+ 637 02d2 D62E      		mov r13,r22
+ 638 02d4 00C0      		rjmp .L84
+ 639               	.L143:
+ 208:main.c        **** 	else if(num>=60){decimas=0x60;num0=num-60;}
+ 640               		.stabn	68,0,208,.LM67-.LFBB5
+ 641               	.LM67:
+ 642 02d6 6E2D      		mov r22,r14
+ 643 02d8 7F2D      		mov r23,r15
+ 644 02da 802F      		mov r24,r16
+ 645 02dc 912F      		mov r25,r17
+ 646 02de 20E0      		ldi r18,lo8(0x42700000)
+ 647 02e0 30E0      		ldi r19,hi8(0x42700000)
+GAS LISTING /tmp/ccDlPBYj.s 			page 16
 
 
- 370 0118 00C0      		rjmp .L82
- 371               	.L68:
- 202:main.c        **** 	else if(angle>angle_segment_12){PORTD=0x30;}   //0010//-----//0101// = 25  
- 372               		.stabn	68,0,202,.LM36-.LFBB6
- 373               	.LM36:
- 374 011a C801      		movw r24,r16
- 375 011c B701      		movw r22,r14
- 376 011e 20E0      		ldi r18,lo8(0x42820000)
- 377 0120 30E0      		ldi r19,hi8(0x42820000)
- 378 0122 42E8      		ldi r20,hlo8(0x42820000)
- 379 0124 52E4      		ldi r21,hhi8(0x42820000)
- 380 0126 0E94 0000 		call __gtsf2
- 381 012a 1816      		cp __zero_reg__,r24
- 382 012c 04F4      		brge .L69
- 383               		.stabn	68,0,202,.LM37-.LFBB6
- 384               	.LM37:
- 385 012e 80E3      		ldi r24,lo8(48)
- 386 0130 00C0      		rjmp .L82
- 387               	.L69:
- 203:main.c        **** 	else if(angle>angle_segment_11){PORTD=0x35;}   //0011//-----//0000// = 30  
- 388               		.stabn	68,0,203,.LM38-.LFBB6
- 389               	.LM38:
- 390 0132 C801      		movw r24,r16
- 391 0134 B701      		movw r22,r14
- 392 0136 20E0      		ldi r18,lo8(0x42700000)
- 393 0138 30E0      		ldi r19,hi8(0x42700000)
- 394 013a 40E7      		ldi r20,hlo8(0x42700000)
- 395 013c 52E4      		ldi r21,hhi8(0x42700000)
- 396 013e 0E94 0000 		call __gtsf2
- 397 0142 1816      		cp __zero_reg__,r24
- 398 0144 04F4      		brge .L70
- 399               		.stabn	68,0,203,.LM39-.LFBB6
- 400               	.LM39:
- 401 0146 85E3      		ldi r24,lo8(53)
- 402 0148 00C0      		rjmp .L82
- 403               	.L70:
- 204:main.c        **** 	else if(angle>angle_segment_10){PORTD=0x40;}   //0011//-----//0101// = 35 
- 404               		.stabn	68,0,204,.LM40-.LFBB6
- 405               	.LM40:
- 406 014a C801      		movw r24,r16
- 407 014c B701      		movw r22,r14
- 408 014e 20E0      		ldi r18,lo8(0x425c0000)
- 409 0150 30E0      		ldi r19,hi8(0x425c0000)
- 410 0152 4CE5      		ldi r20,hlo8(0x425c0000)
- 411 0154 52E4      		ldi r21,hhi8(0x425c0000)
- 412 0156 0E94 0000 		call __gtsf2
- 413 015a 1816      		cp __zero_reg__,r24
- 414 015c 04F4      		brge .L71
- 415               		.stabn	68,0,204,.LM41-.LFBB6
- 416               	.LM41:
- 417 015e 80E4      		ldi r24,lo8(64)
- 418 0160 00C0      		rjmp .L82
- 419               	.L71:
- 205:main.c        **** 	else if(angle>angle_segment_9){PORTD=0x45;}    //0100//-----//0000// = 40  
- 420               		.stabn	68,0,205,.LM42-.LFBB6
- 421               	.LM42:
- 422 0162 C801      		movw r24,r16
-GAS LISTING /tmp/ccIBfZSu.s 			page 12
+ 648 02e2 40E7      		ldi r20,hlo8(0x42700000)
+ 649 02e4 52E4      		ldi r21,hhi8(0x42700000)
+ 650 02e6 0E94 0000 		call __gesf2
+ 651 02ea 87FD      		sbrc r24,7
+ 652 02ec 00C0      		rjmp .L144
+ 653               		.stabn	68,0,208,.LM68-.LFBB5
+ 654               	.LM68:
+ 655 02ee 6E2D      		mov r22,r14
+ 656 02f0 7F2D      		mov r23,r15
+ 657 02f2 802F      		mov r24,r16
+ 658 02f4 912F      		mov r25,r17
+ 659 02f6 20E0      		ldi r18,lo8(0x42700000)
+ 660 02f8 30E0      		ldi r19,hi8(0x42700000)
+ 661 02fa 40E7      		ldi r20,hlo8(0x42700000)
+ 662 02fc 52E4      		ldi r21,hhi8(0x42700000)
+ 663 02fe 0E94 0000 		call __subsf3
+ 664 0302 7B01      		movw r14,r22
+ 665 0304 8C01      		movw r16,r24
+ 666 0306 50E6      		ldi r21,lo8(96)
+ 667 0308 D52E      		mov r13,r21
+ 668 030a 00C0      		rjmp .L84
+ 669               	.L144:
+ 209:main.c        **** 	else if(num>=50){decimas=0x50;num0=num-50;}
+ 670               		.stabn	68,0,209,.LM69-.LFBB5
+ 671               	.LM69:
+ 672 030c 6E2D      		mov r22,r14
+ 673 030e 7F2D      		mov r23,r15
+ 674 0310 802F      		mov r24,r16
+ 675 0312 912F      		mov r25,r17
+ 676 0314 20E0      		ldi r18,lo8(0x42480000)
+ 677 0316 30E0      		ldi r19,hi8(0x42480000)
+ 678 0318 48E4      		ldi r20,hlo8(0x42480000)
+ 679 031a 52E4      		ldi r21,hhi8(0x42480000)
+ 680 031c 0E94 0000 		call __gesf2
+ 681 0320 87FD      		sbrc r24,7
+ 682 0322 00C0      		rjmp .L145
+ 683               		.stabn	68,0,209,.LM70-.LFBB5
+ 684               	.LM70:
+ 685 0324 6E2D      		mov r22,r14
+ 686 0326 7F2D      		mov r23,r15
+ 687 0328 802F      		mov r24,r16
+ 688 032a 912F      		mov r25,r17
+ 689 032c 20E0      		ldi r18,lo8(0x42480000)
+ 690 032e 30E0      		ldi r19,hi8(0x42480000)
+ 691 0330 48E4      		ldi r20,hlo8(0x42480000)
+ 692 0332 52E4      		ldi r21,hhi8(0x42480000)
+ 693 0334 0E94 0000 		call __subsf3
+ 694 0338 7B01      		movw r14,r22
+ 695 033a 8C01      		movw r16,r24
+ 696 033c 40E5      		ldi r20,lo8(80)
+ 697 033e D42E      		mov r13,r20
+ 698 0340 00C0      		rjmp .L84
+ 699               	.L145:
+ 210:main.c        **** 	else if(num>=40){decimas=0x40;num0=num-40;}
+ 700               		.stabn	68,0,210,.LM71-.LFBB5
+ 701               	.LM71:
+ 702 0342 6E2D      		mov r22,r14
+GAS LISTING /tmp/ccDlPBYj.s 			page 17
 
 
- 423 0164 B701      		movw r22,r14
- 424 0166 20E0      		ldi r18,lo8(0x42480000)
- 425 0168 30E0      		ldi r19,hi8(0x42480000)
- 426 016a 48E4      		ldi r20,hlo8(0x42480000)
- 427 016c 52E4      		ldi r21,hhi8(0x42480000)
- 428 016e 0E94 0000 		call __gtsf2
- 429 0172 1816      		cp __zero_reg__,r24
- 430 0174 04F4      		brge .L72
- 431               		.stabn	68,0,205,.LM43-.LFBB6
- 432               	.LM43:
- 433 0176 85E4      		ldi r24,lo8(69)
- 434 0178 00C0      		rjmp .L82
- 435               	.L72:
- 206:main.c        **** 	else if(angle>angle_segment_8){PORTD=0x50;}    //0100//-----//0101// = 45  
- 436               		.stabn	68,0,206,.LM44-.LFBB6
- 437               	.LM44:
- 438 017a C801      		movw r24,r16
- 439 017c B701      		movw r22,r14
- 440 017e 20E0      		ldi r18,lo8(0x42340000)
- 441 0180 30E0      		ldi r19,hi8(0x42340000)
- 442 0182 44E3      		ldi r20,hlo8(0x42340000)
- 443 0184 52E4      		ldi r21,hhi8(0x42340000)
- 444 0186 0E94 0000 		call __gtsf2
- 445 018a 1816      		cp __zero_reg__,r24
- 446 018c 04F4      		brge .L73
- 447               		.stabn	68,0,206,.LM45-.LFBB6
- 448               	.LM45:
- 449 018e 80E5      		ldi r24,lo8(80)
- 450 0190 00C0      		rjmp .L82
- 451               	.L73:
- 207:main.c        **** 	else if(angle>angle_segment_7){PORTD=0x55;}    //0101//-----//0000// = 50   
- 452               		.stabn	68,0,207,.LM46-.LFBB6
- 453               	.LM46:
- 454 0192 C801      		movw r24,r16
- 455 0194 B701      		movw r22,r14
- 456 0196 20E0      		ldi r18,lo8(0x42200000)
- 457 0198 30E0      		ldi r19,hi8(0x42200000)
- 458 019a 40E2      		ldi r20,hlo8(0x42200000)
- 459 019c 52E4      		ldi r21,hhi8(0x42200000)
- 460 019e 0E94 0000 		call __gtsf2
- 461 01a2 1816      		cp __zero_reg__,r24
- 462 01a4 04F4      		brge .L74
- 463               		.stabn	68,0,207,.LM47-.LFBB6
- 464               	.LM47:
- 465 01a6 85E5      		ldi r24,lo8(85)
- 466 01a8 00C0      		rjmp .L82
- 467               	.L74:
- 208:main.c        **** 	else if(angle>angle_segment_6){PORTD=0x60;}    //0101//-----//0101// = 55  
- 468               		.stabn	68,0,208,.LM48-.LFBB6
- 469               	.LM48:
- 470 01aa C801      		movw r24,r16
- 471 01ac B701      		movw r22,r14
- 472 01ae 20E0      		ldi r18,lo8(0x420c0000)
- 473 01b0 30E0      		ldi r19,hi8(0x420c0000)
- 474 01b2 4CE0      		ldi r20,hlo8(0x420c0000)
- 475 01b4 52E4      		ldi r21,hhi8(0x420c0000)
- 476 01b6 0E94 0000 		call __gtsf2
-GAS LISTING /tmp/ccIBfZSu.s 			page 13
+ 703 0344 7F2D      		mov r23,r15
+ 704 0346 802F      		mov r24,r16
+ 705 0348 912F      		mov r25,r17
+ 706 034a 20E0      		ldi r18,lo8(0x42200000)
+ 707 034c 30E0      		ldi r19,hi8(0x42200000)
+ 708 034e 40E2      		ldi r20,hlo8(0x42200000)
+ 709 0350 52E4      		ldi r21,hhi8(0x42200000)
+ 710 0352 0E94 0000 		call __gesf2
+ 711 0356 87FD      		sbrc r24,7
+ 712 0358 00C0      		rjmp .L146
+ 713               		.stabn	68,0,210,.LM72-.LFBB5
+ 714               	.LM72:
+ 715 035a 6E2D      		mov r22,r14
+ 716 035c 7F2D      		mov r23,r15
+ 717 035e 802F      		mov r24,r16
+ 718 0360 912F      		mov r25,r17
+ 719 0362 20E0      		ldi r18,lo8(0x42200000)
+ 720 0364 30E0      		ldi r19,hi8(0x42200000)
+ 721 0366 40E2      		ldi r20,hlo8(0x42200000)
+ 722 0368 52E4      		ldi r21,hhi8(0x42200000)
+ 723 036a 0E94 0000 		call __subsf3
+ 724 036e 7B01      		movw r14,r22
+ 725 0370 8C01      		movw r16,r24
+ 726 0372 30E4      		ldi r19,lo8(64)
+ 727 0374 D32E      		mov r13,r19
+ 728 0376 00C0      		rjmp .L84
+ 729               	.L146:
+ 211:main.c        **** 	else if(num>=30){decimas=0x30;num0=num-30;}
+ 730               		.stabn	68,0,211,.LM73-.LFBB5
+ 731               	.LM73:
+ 732 0378 6E2D      		mov r22,r14
+ 733 037a 7F2D      		mov r23,r15
+ 734 037c 802F      		mov r24,r16
+ 735 037e 912F      		mov r25,r17
+ 736 0380 20E0      		ldi r18,lo8(0x41f00000)
+ 737 0382 30E0      		ldi r19,hi8(0x41f00000)
+ 738 0384 40EF      		ldi r20,hlo8(0x41f00000)
+ 739 0386 51E4      		ldi r21,hhi8(0x41f00000)
+ 740 0388 0E94 0000 		call __gesf2
+ 741 038c 87FD      		sbrc r24,7
+ 742 038e 00C0      		rjmp .L147
+ 743               		.stabn	68,0,211,.LM74-.LFBB5
+ 744               	.LM74:
+ 745 0390 6E2D      		mov r22,r14
+ 746 0392 7F2D      		mov r23,r15
+ 747 0394 802F      		mov r24,r16
+ 748 0396 912F      		mov r25,r17
+ 749 0398 20E0      		ldi r18,lo8(0x41f00000)
+ 750 039a 30E0      		ldi r19,hi8(0x41f00000)
+ 751 039c 40EF      		ldi r20,hlo8(0x41f00000)
+ 752 039e 51E4      		ldi r21,hhi8(0x41f00000)
+ 753 03a0 0E94 0000 		call __subsf3
+ 754 03a4 7B01      		movw r14,r22
+ 755 03a6 8C01      		movw r16,r24
+ 756 03a8 20E3      		ldi r18,lo8(48)
+ 757 03aa D22E      		mov r13,r18
+ 758 03ac 00C0      		rjmp .L84
+GAS LISTING /tmp/ccDlPBYj.s 			page 18
 
 
- 477 01ba 1816      		cp __zero_reg__,r24
- 478 01bc 04F4      		brge .L75
- 479               		.stabn	68,0,208,.LM49-.LFBB6
- 480               	.LM49:
- 481 01be 80E6      		ldi r24,lo8(96)
- 482 01c0 00C0      		rjmp .L82
- 483               	.L75:
- 209:main.c        **** 	else if(angle>angle_segment_5){PORTD=0x65;}    //0110//-----//0000// = 60   
- 484               		.stabn	68,0,209,.LM50-.LFBB6
- 485               	.LM50:
- 486 01c2 C801      		movw r24,r16
- 487 01c4 B701      		movw r22,r14
- 488 01c6 20E0      		ldi r18,lo8(0x41f00000)
- 489 01c8 30E0      		ldi r19,hi8(0x41f00000)
- 490 01ca 40EF      		ldi r20,hlo8(0x41f00000)
- 491 01cc 51E4      		ldi r21,hhi8(0x41f00000)
- 492 01ce 0E94 0000 		call __gtsf2
- 493 01d2 1816      		cp __zero_reg__,r24
- 494 01d4 04F4      		brge .L76
- 495               		.stabn	68,0,209,.LM51-.LFBB6
- 496               	.LM51:
- 497 01d6 85E6      		ldi r24,lo8(101)
- 498 01d8 00C0      		rjmp .L82
- 499               	.L76:
- 210:main.c        **** 	else if(angle>angle_segment_4){PORTD=0x70;}    //0110//-----//0101// = 65 
- 500               		.stabn	68,0,210,.LM52-.LFBB6
- 501               	.LM52:
- 502 01da C801      		movw r24,r16
- 503 01dc B701      		movw r22,r14
- 504 01de 20E0      		ldi r18,lo8(0x41c80000)
- 505 01e0 30E0      		ldi r19,hi8(0x41c80000)
- 506 01e2 48EC      		ldi r20,hlo8(0x41c80000)
- 507 01e4 51E4      		ldi r21,hhi8(0x41c80000)
- 508 01e6 0E94 0000 		call __gtsf2
- 509 01ea 1816      		cp __zero_reg__,r24
- 510 01ec 04F4      		brge .L77
- 511               		.stabn	68,0,210,.LM53-.LFBB6
- 512               	.LM53:
- 513 01ee 80E7      		ldi r24,lo8(112)
- 514 01f0 00C0      		rjmp .L82
- 515               	.L77:
- 211:main.c        **** 	else if(angle>angle_segment_3){PORTD=0x75;}    //0111//-----//0000// = 70 
- 516               		.stabn	68,0,211,.LM54-.LFBB6
- 517               	.LM54:
- 518 01f2 C801      		movw r24,r16
- 519 01f4 B701      		movw r22,r14
- 520 01f6 20E0      		ldi r18,lo8(0x41a00000)
- 521 01f8 30E0      		ldi r19,hi8(0x41a00000)
- 522 01fa 40EA      		ldi r20,hlo8(0x41a00000)
- 523 01fc 51E4      		ldi r21,hhi8(0x41a00000)
- 524 01fe 0E94 0000 		call __gtsf2
- 525 0202 1816      		cp __zero_reg__,r24
- 526 0204 04F4      		brge .L78
- 527               		.stabn	68,0,211,.LM55-.LFBB6
- 528               	.LM55:
- 529 0206 85E7      		ldi r24,lo8(117)
- 530 0208 00C0      		rjmp .L82
-GAS LISTING /tmp/ccIBfZSu.s 			page 14
+ 759               	.L147:
+ 212:main.c        **** 	else if(num>=20){decimas=0x20;num0=num-20;}
+ 760               		.stabn	68,0,212,.LM75-.LFBB5
+ 761               	.LM75:
+ 762 03ae 6E2D      		mov r22,r14
+ 763 03b0 7F2D      		mov r23,r15
+ 764 03b2 802F      		mov r24,r16
+ 765 03b4 912F      		mov r25,r17
+ 766 03b6 20E0      		ldi r18,lo8(0x41a00000)
+ 767 03b8 30E0      		ldi r19,hi8(0x41a00000)
+ 768 03ba 40EA      		ldi r20,hlo8(0x41a00000)
+ 769 03bc 51E4      		ldi r21,hhi8(0x41a00000)
+ 770 03be 0E94 0000 		call __gesf2
+ 771 03c2 87FD      		sbrc r24,7
+ 772 03c4 00C0      		rjmp .L148
+ 773               		.stabn	68,0,212,.LM76-.LFBB5
+ 774               	.LM76:
+ 775 03c6 6E2D      		mov r22,r14
+ 776 03c8 7F2D      		mov r23,r15
+ 777 03ca 802F      		mov r24,r16
+ 778 03cc 912F      		mov r25,r17
+ 779 03ce 20E0      		ldi r18,lo8(0x41a00000)
+ 780 03d0 30E0      		ldi r19,hi8(0x41a00000)
+ 781 03d2 40EA      		ldi r20,hlo8(0x41a00000)
+ 782 03d4 51E4      		ldi r21,hhi8(0x41a00000)
+ 783 03d6 0E94 0000 		call __subsf3
+ 784 03da 7B01      		movw r14,r22
+ 785 03dc 8C01      		movw r16,r24
+ 786 03de 90E2      		ldi r25,lo8(32)
+ 787 03e0 D92E      		mov r13,r25
+ 788 03e2 00C0      		rjmp .L84
+ 789               	.L148:
+ 213:main.c        **** 	else if(num>=10){decimas=0x10;num0=num-10;}
+ 790               		.stabn	68,0,213,.LM77-.LFBB5
+ 791               	.LM77:
+ 792 03e4 6E2D      		mov r22,r14
+ 793 03e6 7F2D      		mov r23,r15
+ 794 03e8 802F      		mov r24,r16
+ 795 03ea 912F      		mov r25,r17
+ 796 03ec 20E0      		ldi r18,lo8(0x41200000)
+ 797 03ee 30E0      		ldi r19,hi8(0x41200000)
+ 798 03f0 40E2      		ldi r20,hlo8(0x41200000)
+ 799 03f2 51E4      		ldi r21,hhi8(0x41200000)
+ 800 03f4 0E94 0000 		call __gesf2
+ 801 03f8 87FD      		sbrc r24,7
+ 802 03fa 00C0      		rjmp .L149
+ 803               		.stabn	68,0,213,.LM78-.LFBB5
+ 804               	.LM78:
+ 805 03fc 6E2D      		mov r22,r14
+ 806 03fe 7F2D      		mov r23,r15
+ 807 0400 802F      		mov r24,r16
+ 808 0402 912F      		mov r25,r17
+ 809 0404 20E0      		ldi r18,lo8(0x41200000)
+ 810 0406 30E0      		ldi r19,hi8(0x41200000)
+ 811 0408 40E2      		ldi r20,hlo8(0x41200000)
+ 812 040a 51E4      		ldi r21,hhi8(0x41200000)
+ 813 040c 0E94 0000 		call __subsf3
+GAS LISTING /tmp/ccDlPBYj.s 			page 19
 
 
- 531               	.L78:
- 212:main.c        **** 	else if(angle>angle_segment_2){PORTD=0x80;}    //0111//-----//0101// = 75
- 532               		.stabn	68,0,212,.LM56-.LFBB6
- 533               	.LM56:
- 534 020a C801      		movw r24,r16
- 535 020c B701      		movw r22,r14
- 536 020e 20E0      		ldi r18,lo8(0x41700000)
- 537 0210 30E0      		ldi r19,hi8(0x41700000)
- 538 0212 40E7      		ldi r20,hlo8(0x41700000)
- 539 0214 51E4      		ldi r21,hhi8(0x41700000)
- 540 0216 0E94 0000 		call __gtsf2
- 541 021a 1816      		cp __zero_reg__,r24
- 542 021c 04F4      		brge .L79
- 543               		.stabn	68,0,212,.LM57-.LFBB6
- 544               	.LM57:
- 545 021e 80E8      		ldi r24,lo8(-128)
- 546 0220 00C0      		rjmp .L82
- 547               	.L79:
- 213:main.c        **** 	else if(angle>angle_segment_1){PORTD=0x85;}    //1000//-----//0000// = 80 
- 548               		.stabn	68,0,213,.LM58-.LFBB6
- 549               	.LM58:
- 550 0222 C801      		movw r24,r16
- 551 0224 B701      		movw r22,r14
- 552 0226 20E0      		ldi r18,lo8(0x41200000)
- 553 0228 30E0      		ldi r19,hi8(0x41200000)
- 554 022a 40E2      		ldi r20,hlo8(0x41200000)
- 555 022c 51E4      		ldi r21,hhi8(0x41200000)
- 556 022e 0E94 0000 		call __gtsf2
- 557 0232 1816      		cp __zero_reg__,r24
- 558 0234 04F4      		brge .L80
- 559               		.stabn	68,0,213,.LM59-.LFBB6
- 560               	.LM59:
- 561 0236 85E8      		ldi r24,lo8(-123)
- 562 0238 00C0      		rjmp .L82
- 563               	.L80:
- 214:main.c        **** 	else if(angle>angle_segment_0){PORTD=0x90;}    //1000//-----//0101// = 85  
- 564               		.stabn	68,0,214,.LM60-.LFBB6
- 565               	.LM60:
- 566 023a C801      		movw r24,r16
- 567 023c B701      		movw r22,r14
- 568 023e 20E0      		ldi r18,lo8(0x40a00000)
- 569 0240 30E0      		ldi r19,hi8(0x40a00000)
- 570 0242 40EA      		ldi r20,hlo8(0x40a00000)
- 571 0244 50E4      		ldi r21,hhi8(0x40a00000)
- 572 0246 0E94 0000 		call __gtsf2
- 573 024a 1816      		cp __zero_reg__,r24
- 574 024c 04F4      		brge .L81
- 575               		.stabn	68,0,214,.LM61-.LFBB6
- 576               	.LM61:
- 577 024e 80E9      		ldi r24,lo8(-112)
- 578               	.L82:
- 579 0250 82BB      		out 50-32,r24
- 580 0252 00C0      		rjmp .L8
- 581               	.L81:
- 215:main.c        **** 	else {PORTD=0x00;}  
- 582               		.stabn	68,0,215,.LM62-.LFBB6
- 583               	.LM62:
-GAS LISTING /tmp/ccIBfZSu.s 			page 15
+ 814 0410 7B01      		movw r14,r22
+ 815 0412 8C01      		movw r16,r24
+ 816 0414 80E1      		ldi r24,lo8(16)
+ 817 0416 D82E      		mov r13,r24
+ 818 0418 00C0      		rjmp .L84
+ 819               	.L149:
+ 214:main.c        **** 	else {decimas=0x00; num0=num;}
+ 820               		.stabn	68,0,214,.LM79-.LFBB5
+ 821               	.LM79:
+ 822 041a DD24      		clr r13
+ 823               	.L84:
+ 215:main.c        **** 
+ 216:main.c        **** 
+ 217:main.c        **** 	if(num0>=9){PORTC=decimas+0x09;}
+ 824               		.stabn	68,0,217,.LM80-.LFBB5
+ 825               	.LM80:
+ 826 041c 6E2D      		mov r22,r14
+ 827 041e 7F2D      		mov r23,r15
+ 828 0420 802F      		mov r24,r16
+ 829 0422 912F      		mov r25,r17
+ 830 0424 20E0      		ldi r18,lo8(0x41100000)
+ 831 0426 30E0      		ldi r19,hi8(0x41100000)
+ 832 0428 40E1      		ldi r20,hlo8(0x41100000)
+ 833 042a 51E4      		ldi r21,hhi8(0x41100000)
+ 834 042c 0E94 0000 		call __gesf2
+ 835 0430 87FD      		sbrc r24,7
+ 836 0432 00C0      		rjmp .L150
+ 837               		.stabn	68,0,217,.LM81-.LFBB5
+ 838               	.LM81:
+ 839 0434 8D2D      		mov r24,r13
+ 840 0436 875F      		subi r24,lo8(-(9))
+ 841 0438 00C0      		rjmp .L161
+ 842               	.L150:
+ 218:main.c        **** 	else if(num0>=8){PORTC=decimas+0x08;}
+ 843               		.stabn	68,0,218,.LM82-.LFBB5
+ 844               	.LM82:
+ 845 043a 6E2D      		mov r22,r14
+ 846 043c 7F2D      		mov r23,r15
+ 847 043e 802F      		mov r24,r16
+ 848 0440 912F      		mov r25,r17
+ 849 0442 20E0      		ldi r18,lo8(0x41000000)
+ 850 0444 30E0      		ldi r19,hi8(0x41000000)
+ 851 0446 40E0      		ldi r20,hlo8(0x41000000)
+ 852 0448 51E4      		ldi r21,hhi8(0x41000000)
+ 853 044a 0E94 0000 		call __gesf2
+ 854 044e 87FD      		sbrc r24,7
+ 855 0450 00C0      		rjmp .L151
+ 856               		.stabn	68,0,218,.LM83-.LFBB5
+ 857               	.LM83:
+ 858 0452 8D2D      		mov r24,r13
+ 859 0454 885F      		subi r24,lo8(-(8))
+ 860 0456 00C0      		rjmp .L161
+ 861               	.L151:
+ 219:main.c        **** 	else if(num0>=7){PORTC=decimas+0x07;}
+ 862               		.stabn	68,0,219,.LM84-.LFBB5
+ 863               	.LM84:
+ 864 0458 6E2D      		mov r22,r14
+GAS LISTING /tmp/ccDlPBYj.s 			page 20
 
 
- 584 0254 12BA      		out 50-32,__zero_reg__
- 585               	.L8:
- 586               	/* epilogue start */
- 216:main.c        **** }
- 587               		.stabn	68,0,216,.LM63-.LFBB6
- 588               	.LM63:
- 589 0256 1F91      		pop r17
- 590 0258 0F91      		pop r16
- 591 025a FF90      		pop r15
- 592 025c EF90      		pop r14
- 593 025e 0895      		ret
- 594               		.size	print_Angle_Binary, .-print_Angle_Binary
- 595               	.Lscope6:
- 596               		.stabs	"",36,0,0,.Lscope6-.LFBB6
- 597               		.stabd	78,0,0
- 598               		.stabs	"print_Decimes:F(0,15)",36,0,221,print_Decimes
- 599               	.global	print_Decimes
- 600               		.type	print_Decimes, @function
- 601               	print_Decimes:
- 602               		.stabd	46,0,0
- 217:main.c        **** //------------------------------------------------------//
- 218:main.c        **** 
- 219:main.c        **** //-------------------Print Distance---------------------//
- 220:main.c        **** 
- 221:main.c        **** void print_Decimes(float num_in){
- 603               		.stabn	68,0,221,.LM64-.LFBB7
- 604               	.LM64:
- 605               	.LFBB7:
- 606 0260 DF92      		push r13
- 607 0262 EF92      		push r14
- 608 0264 FF92      		push r15
- 609 0266 0F93      		push r16
- 610 0268 1F93      		push r17
- 611               	/* prologue: function */
- 612               	/* frame size = 0 */
- 613               	/* stack size = 5 */
- 614               	.L__stack_usage = 5
- 615 026a 7B01      		movw r14,r22
- 616 026c 8C01      		movw r16,r24
- 222:main.c        **** 
- 223:main.c        **** double num0=0.0;
- 224:main.c        **** 
- 225:main.c        **** double num=0.0;
- 226:main.c        **** 
- 227:main.c        **** 	num=num_in;
+ 865 045a 7F2D      		mov r23,r15
+ 866 045c 802F      		mov r24,r16
+ 867 045e 912F      		mov r25,r17
+ 868 0460 20E0      		ldi r18,lo8(0x40e00000)
+ 869 0462 30E0      		ldi r19,hi8(0x40e00000)
+ 870 0464 40EE      		ldi r20,hlo8(0x40e00000)
+ 871 0466 50E4      		ldi r21,hhi8(0x40e00000)
+ 872 0468 0E94 0000 		call __gesf2
+ 873 046c 87FD      		sbrc r24,7
+ 874 046e 00C0      		rjmp .L152
+ 875               		.stabn	68,0,219,.LM85-.LFBB5
+ 876               	.LM85:
+ 877 0470 8D2D      		mov r24,r13
+ 878 0472 895F      		subi r24,lo8(-(7))
+ 879 0474 00C0      		rjmp .L161
+ 880               	.L152:
+ 220:main.c        **** 	else if(num0>=6){PORTC=decimas+0x06;}
+ 881               		.stabn	68,0,220,.LM86-.LFBB5
+ 882               	.LM86:
+ 883 0476 6E2D      		mov r22,r14
+ 884 0478 7F2D      		mov r23,r15
+ 885 047a 802F      		mov r24,r16
+ 886 047c 912F      		mov r25,r17
+ 887 047e 20E0      		ldi r18,lo8(0x40c00000)
+ 888 0480 30E0      		ldi r19,hi8(0x40c00000)
+ 889 0482 40EC      		ldi r20,hlo8(0x40c00000)
+ 890 0484 50E4      		ldi r21,hhi8(0x40c00000)
+ 891 0486 0E94 0000 		call __gesf2
+ 892 048a 87FD      		sbrc r24,7
+ 893 048c 00C0      		rjmp .L153
+ 894               		.stabn	68,0,220,.LM87-.LFBB5
+ 895               	.LM87:
+ 896 048e 8D2D      		mov r24,r13
+ 897 0490 8A5F      		subi r24,lo8(-(6))
+ 898 0492 00C0      		rjmp .L161
+ 899               	.L153:
+ 221:main.c        **** 	else if(num0>=5){PORTC=decimas+0x05;}
+ 900               		.stabn	68,0,221,.LM88-.LFBB5
+ 901               	.LM88:
+ 902 0494 6E2D      		mov r22,r14
+ 903 0496 7F2D      		mov r23,r15
+ 904 0498 802F      		mov r24,r16
+ 905 049a 912F      		mov r25,r17
+ 906 049c 20E0      		ldi r18,lo8(0x40a00000)
+ 907 049e 30E0      		ldi r19,hi8(0x40a00000)
+ 908 04a0 40EA      		ldi r20,hlo8(0x40a00000)
+ 909 04a2 50E4      		ldi r21,hhi8(0x40a00000)
+ 910 04a4 0E94 0000 		call __gesf2
+ 911 04a8 87FD      		sbrc r24,7
+ 912 04aa 00C0      		rjmp .L154
+ 913               		.stabn	68,0,221,.LM89-.LFBB5
+ 914               	.LM89:
+ 915 04ac 8D2D      		mov r24,r13
+ 916 04ae 8B5F      		subi r24,lo8(-(5))
+ 917 04b0 00C0      		rjmp .L161
+ 918               	.L154:
+ 222:main.c        **** 	else if(num0>=4){PORTC=decimas+0x04;}
+GAS LISTING /tmp/ccDlPBYj.s 			page 21
+
+
+ 919               		.stabn	68,0,222,.LM90-.LFBB5
+ 920               	.LM90:
+ 921 04b2 6E2D      		mov r22,r14
+ 922 04b4 7F2D      		mov r23,r15
+ 923 04b6 802F      		mov r24,r16
+ 924 04b8 912F      		mov r25,r17
+ 925 04ba 20E0      		ldi r18,lo8(0x40800000)
+ 926 04bc 30E0      		ldi r19,hi8(0x40800000)
+ 927 04be 40E8      		ldi r20,hlo8(0x40800000)
+ 928 04c0 50E4      		ldi r21,hhi8(0x40800000)
+ 929 04c2 0E94 0000 		call __gesf2
+ 930 04c6 87FD      		sbrc r24,7
+ 931 04c8 00C0      		rjmp .L155
+ 932               		.stabn	68,0,222,.LM91-.LFBB5
+ 933               	.LM91:
+ 934 04ca 8D2D      		mov r24,r13
+ 935 04cc 8C5F      		subi r24,lo8(-(4))
+ 936 04ce 00C0      		rjmp .L161
+ 937               	.L155:
+ 223:main.c        **** 	else if(num0>=3){PORTC=decimas+0x03;}
+ 938               		.stabn	68,0,223,.LM92-.LFBB5
+ 939               	.LM92:
+ 940 04d0 6E2D      		mov r22,r14
+ 941 04d2 7F2D      		mov r23,r15
+ 942 04d4 802F      		mov r24,r16
+ 943 04d6 912F      		mov r25,r17
+ 944 04d8 20E0      		ldi r18,lo8(0x40400000)
+ 945 04da 30E0      		ldi r19,hi8(0x40400000)
+ 946 04dc 40E4      		ldi r20,hlo8(0x40400000)
+ 947 04de 50E4      		ldi r21,hhi8(0x40400000)
+ 948 04e0 0E94 0000 		call __gesf2
+ 949 04e4 87FD      		sbrc r24,7
+ 950 04e6 00C0      		rjmp .L156
+ 951               		.stabn	68,0,223,.LM93-.LFBB5
+ 952               	.LM93:
+ 953 04e8 8D2D      		mov r24,r13
+ 954 04ea 8D5F      		subi r24,lo8(-(3))
+ 955 04ec 00C0      		rjmp .L161
+ 956               	.L156:
+ 224:main.c        **** 	else if(num0>=2){PORTC=decimas+0x02;}
+ 957               		.stabn	68,0,224,.LM94-.LFBB5
+ 958               	.LM94:
+ 959 04ee 6E2D      		mov r22,r14
+ 960 04f0 7F2D      		mov r23,r15
+ 961 04f2 802F      		mov r24,r16
+ 962 04f4 912F      		mov r25,r17
+ 963 04f6 20E0      		ldi r18,lo8(0x40000000)
+ 964 04f8 30E0      		ldi r19,hi8(0x40000000)
+ 965 04fa 40E0      		ldi r20,hlo8(0x40000000)
+ 966 04fc 50E4      		ldi r21,hhi8(0x40000000)
+ 967 04fe 0E94 0000 		call __gesf2
+ 968 0502 87FD      		sbrc r24,7
+ 969 0504 00C0      		rjmp .L157
+ 970               		.stabn	68,0,224,.LM95-.LFBB5
+ 971               	.LM95:
+ 972 0506 8D2D      		mov r24,r13
+ 973 0508 8E5F      		subi r24,lo8(-(2))
+GAS LISTING /tmp/ccDlPBYj.s 			page 22
+
+
+ 974 050a 00C0      		rjmp .L161
+ 975               	.L157:
+ 225:main.c        **** 	else if(num0>=1){PORTC=decimas+0x01;}
+ 976               		.stabn	68,0,225,.LM96-.LFBB5
+ 977               	.LM96:
+ 978 050c 6E2D      		mov r22,r14
+ 979 050e 7F2D      		mov r23,r15
+ 980 0510 802F      		mov r24,r16
+ 981 0512 912F      		mov r25,r17
+ 982 0514 20E0      		ldi r18,lo8(0x3f800000)
+ 983 0516 30E0      		ldi r19,hi8(0x3f800000)
+ 984 0518 40E8      		ldi r20,hlo8(0x3f800000)
+ 985 051a 5FE3      		ldi r21,hhi8(0x3f800000)
+ 986 051c 0E94 0000 		call __gesf2
+ 987 0520 87FD      		sbrc r24,7
+ 988 0522 00C0      		rjmp .L158
+ 989               		.stabn	68,0,225,.LM97-.LFBB5
+ 990               	.LM97:
+ 991 0524 D394      		inc r13
+ 992 0526 00C0      		rjmp .L160
+ 993               	.L158:
+ 226:main.c        **** 	else if(num0>=0){PORTC=decimas+0x00;}
+ 994               		.stabn	68,0,226,.LM98-.LFBB5
+ 995               	.LM98:
+ 996 0528 6E2D      		mov r22,r14
+ 997 052a 7F2D      		mov r23,r15
+ 998 052c 802F      		mov r24,r16
+ 999 052e 912F      		mov r25,r17
+ 1000 0530 20E0      		ldi r18,lo8(0x0)
+ 1001 0532 30E0      		ldi r19,hi8(0x0)
+ 1002 0534 A901      		movw r20,r18
+ 1003 0536 0E94 0000 		call __gesf2
+ 1004 053a 87FD      		sbrc r24,7
+ 1005 053c 00C0      		rjmp .L159
+ 1006               	.L160:
+ 1007               		.stabn	68,0,226,.LM99-.LFBB5
+ 1008               	.LM99:
+ 1009 053e D5BA      		out 53-32,r13
+ 1010 0540 00C0      		rjmp .L81
+ 1011               	.L159:
+ 227:main.c        **** 	else {PORTC=0xAA;}
+ 1012               		.stabn	68,0,227,.LM100-.LFBB5
+ 1013               	.LM100:
+ 1014 0542 8AEA      		ldi r24,lo8(-86)
+ 1015               	.L161:
+ 1016 0544 85BB      		out 53-32,r24
+ 1017               	.L81:
+ 1018               	/* epilogue start */
  228:main.c        **** 
- 229:main.c        **** char decimas=0x00;
+ 229:main.c        **** }
+ 1019               		.stabn	68,0,229,.LM101-.LFBB5
+ 1020               	.LM101:
+ 1021 0546 1F91      		pop r17
+ 1022 0548 0F91      		pop r16
+ 1023 054a FF90      		pop r15
+ 1024 054c EF90      		pop r14
+ 1025 054e DF90      		pop r13
+GAS LISTING /tmp/ccDlPBYj.s 			page 23
+
+
+ 1026 0550 0895      		ret
+ 1027               		.size	print_Decimes, .-print_Decimes
+ 1028               		.stabs	"decimas:r(0,2)",64,0,203,13
+ 1029               		.stabn	192,0,0,.LFBB5-.LFBB5
+ 1030               		.stabn	224,0,0,.Lscope5-.LFBB5
+ 1031               	.Lscope5:
+ 1032               		.stabs	"",36,0,0,.Lscope5-.LFBB5
+ 1033               		.stabd	78,0,0
+ 1034               		.stabs	"print_Time_Binary:F(0,15)",36,0,235,print_Time_Binary
+ 1035               		.stabs	"time:P(0,1)",64,0,235,24
+ 1036               	.global	print_Time_Binary
+ 1037               		.type	print_Time_Binary, @function
+ 1038               	print_Time_Binary:
+ 1039               		.stabd	46,0,0
  230:main.c        **** 
- 231:main.c        **** 	if(num>=90){decimas=0x90;num0=num-90;}
- 617               		.stabn	68,0,231,.LM65-.LFBB7
- 618               	.LM65:
- 619 026e 7F2D      		mov r23,r15
- 620 0270 912F      		mov r25,r17
- 621 0272 20E0      		ldi r18,lo8(0x42b40000)
- 622 0274 30E0      		ldi r19,hi8(0x42b40000)
- 623 0276 44EB      		ldi r20,hlo8(0x42b40000)
- 624 0278 52E4      		ldi r21,hhi8(0x42b40000)
-GAS LISTING /tmp/ccIBfZSu.s 			page 16
+ 231:main.c        **** //------------------------------------------------------//
+ 232:main.c        **** //----------------------Print time---------------------//
+ 233:main.c        **** //------------------------------------------------------//
+ 234:main.c        **** 
+ 235:main.c        **** void print_Time_Binary(int time){
+ 1040               		.stabn	68,0,235,.LM102-.LFBB6
+ 1041               	.LM102:
+ 1042               	.LFBB6:
+ 1043               	/* prologue: function */
+ 1044               	/* frame size = 0 */
+ 1045               	/* stack size = 0 */
+ 1046               	.L__stack_usage = 0
+ 236:main.c        **** int time_segment_1=1;
+ 237:main.c        **** int time_segment_2=2;
+ 238:main.c        **** int time_segment_3=3;
+ 239:main.c        **** int time_segment_4=4;
+ 240:main.c        **** int time_segment_5=5;
+ 241:main.c        **** int time_segment_6=6;
+ 242:main.c        **** int time_segment_7=7;
+ 243:main.c        **** int times=time;
+ 244:main.c        **** 
+ 245:main.c        **** if(times>time_segment_7){	sbi(PORTB,PB2);sbi(PORTB,PB1);sbi(PORTB,PB0);} //PORC=111//
+ 1047               		.stabn	68,0,245,.LM103-.LFBB6
+ 1048               	.LM103:
+ 1049 0552 8830      		cpi r24,8
+ 1050 0554 9105      		cpc r25,__zero_reg__
+ 1051 0556 04F0      		brlt .L163
+ 1052               		.stabn	68,0,245,.LM104-.LFBB6
+ 1053               	.LM104:
+ 1054 0558 C29A      		sbi 56-32,2
+ 1055 055a 00C0      		rjmp .L173
+ 1056               	.L163:
+ 246:main.c        **** else if(times>time_segment_6){  sbi(PORTB,PB2);sbi(PORTB,PB1);cbi(PORTB,PB0);} //PORD=110//
+ 1057               		.stabn	68,0,246,.LM105-.LFBB6
+ 1058               	.LM105:
+ 1059 055c 8730      		cpi r24,7
+ 1060 055e 9105      		cpc r25,__zero_reg__
+ 1061 0560 01F4      		brne .L165
+ 1062               		.stabn	68,0,246,.LM106-.LFBB6
+ 1063               	.LM106:
+ 1064 0562 C29A      		sbi 56-32,2
+ 1065 0564 00C0      		rjmp .L175
+GAS LISTING /tmp/ccDlPBYj.s 			page 24
 
 
- 625 027a 0E94 0000 		call __gesf2
- 626 027e 87FD      		sbrc r24,7
- 627 0280 00C0      		rjmp .L143
- 628               		.stabn	68,0,231,.LM66-.LFBB7
- 629               	.LM66:
- 630 0282 6E2D      		mov r22,r14
- 631 0284 7F2D      		mov r23,r15
- 632 0286 802F      		mov r24,r16
- 633 0288 912F      		mov r25,r17
- 634 028a 20E0      		ldi r18,lo8(0x42b40000)
- 635 028c 30E0      		ldi r19,hi8(0x42b40000)
- 636 028e 44EB      		ldi r20,hlo8(0x42b40000)
- 637 0290 52E4      		ldi r21,hhi8(0x42b40000)
- 638 0292 0E94 0000 		call __subsf3
- 639 0296 7B01      		movw r14,r22
- 640 0298 8C01      		movw r16,r24
- 641 029a E0E9      		ldi r30,lo8(-112)
- 642 029c DE2E      		mov r13,r30
- 643 029e 00C0      		rjmp .L86
- 644               	.L143:
- 232:main.c        **** 	else if(num>=80){decimas=0x80;num0=num-80;}
- 645               		.stabn	68,0,232,.LM67-.LFBB7
- 646               	.LM67:
- 647 02a0 6E2D      		mov r22,r14
- 648 02a2 7F2D      		mov r23,r15
- 649 02a4 802F      		mov r24,r16
- 650 02a6 912F      		mov r25,r17
- 651 02a8 20E0      		ldi r18,lo8(0x42a00000)
- 652 02aa 30E0      		ldi r19,hi8(0x42a00000)
- 653 02ac 40EA      		ldi r20,hlo8(0x42a00000)
- 654 02ae 52E4      		ldi r21,hhi8(0x42a00000)
- 655 02b0 0E94 0000 		call __gesf2
- 656 02b4 87FD      		sbrc r24,7
- 657 02b6 00C0      		rjmp .L144
- 658               		.stabn	68,0,232,.LM68-.LFBB7
- 659               	.LM68:
- 660 02b8 6E2D      		mov r22,r14
- 661 02ba 7F2D      		mov r23,r15
- 662 02bc 802F      		mov r24,r16
- 663 02be 912F      		mov r25,r17
- 664 02c0 20E0      		ldi r18,lo8(0x42a00000)
- 665 02c2 30E0      		ldi r19,hi8(0x42a00000)
- 666 02c4 40EA      		ldi r20,hlo8(0x42a00000)
- 667 02c6 52E4      		ldi r21,hhi8(0x42a00000)
- 668 02c8 0E94 0000 		call __subsf3
- 669 02cc 7B01      		movw r14,r22
- 670 02ce 8C01      		movw r16,r24
- 671 02d0 70E8      		ldi r23,lo8(-128)
- 672 02d2 D72E      		mov r13,r23
- 673 02d4 00C0      		rjmp .L86
- 674               	.L144:
- 233:main.c        **** 	else if(num>=70){decimas=0x70;num0=num-70;}
- 675               		.stabn	68,0,233,.LM69-.LFBB7
- 676               	.LM69:
- 677 02d6 6E2D      		mov r22,r14
- 678 02d8 7F2D      		mov r23,r15
- 679 02da 802F      		mov r24,r16
-GAS LISTING /tmp/ccIBfZSu.s 			page 17
+ 1066               	.L165:
+ 247:main.c        **** else if(times>time_segment_5){  sbi(PORTB,PB2);cbi(PORTB,PB1);sbi(PORTB,PB0);} //PORD=101//
+ 1067               		.stabn	68,0,247,.LM107-.LFBB6
+ 1068               	.LM107:
+ 1069 0566 8630      		cpi r24,6
+ 1070 0568 9105      		cpc r25,__zero_reg__
+ 1071 056a 01F4      		brne .L166
+ 1072               		.stabn	68,0,247,.LM108-.LFBB6
+ 1073               	.LM108:
+ 1074 056c C29A      		sbi 56-32,2
+ 1075 056e 00C0      		rjmp .L174
+ 1076               	.L166:
+ 248:main.c        **** else if(times>time_segment_4){  sbi(PORTB,PB2);cbi(PORTB,PB1);cbi(PORTB,PB0);} //PORD=100//
+ 1077               		.stabn	68,0,248,.LM109-.LFBB6
+ 1078               	.LM109:
+ 1079 0570 8530      		cpi r24,5
+ 1080 0572 9105      		cpc r25,__zero_reg__
+ 1081 0574 01F4      		brne .L167
+ 1082               		.stabn	68,0,248,.LM110-.LFBB6
+ 1083               	.LM110:
+ 1084 0576 C29A      		sbi 56-32,2
+ 1085 0578 00C0      		rjmp .L176
+ 1086               	.L167:
+ 249:main.c        **** else if(times>time_segment_3){  cbi(PORTB,PB2);sbi(PORTB,PB1);sbi(PORTB,PB0);} //PORD=011//
+ 1087               		.stabn	68,0,249,.LM111-.LFBB6
+ 1088               	.LM111:
+ 1089 057a 8430      		cpi r24,4
+ 1090 057c 9105      		cpc r25,__zero_reg__
+ 1091 057e 01F4      		brne .L168
+ 1092               		.stabn	68,0,249,.LM112-.LFBB6
+ 1093               	.LM112:
+ 1094 0580 C298      		cbi 56-32,2
+ 1095               	.L173:
+ 1096 0582 C19A      		sbi 56-32,1
+ 1097 0584 00C0      		rjmp .L172
+ 1098               	.L168:
+ 250:main.c        **** else if(times>time_segment_2){  cbi(PORTB,PB2);sbi(PORTB,PB1);cbi(PORTB,PB0);} //PORD=010//
+ 1099               		.stabn	68,0,250,.LM113-.LFBB6
+ 1100               	.LM113:
+ 1101 0586 8330      		cpi r24,3
+ 1102 0588 9105      		cpc r25,__zero_reg__
+ 1103 058a 01F4      		brne .L169
+ 1104               		.stabn	68,0,250,.LM114-.LFBB6
+ 1105               	.LM114:
+ 1106 058c C298      		cbi 56-32,2
+ 1107               	.L175:
+ 1108 058e C19A      		sbi 56-32,1
+ 1109 0590 00C0      		rjmp .L171
+ 1110               	.L169:
+ 251:main.c        **** else if(times>time_segment_1){  cbi(PORTB,PB2);cbi(PORTB,PB1);sbi(PORTB,PB0);} //PORD=001//
+ 1111               		.stabn	68,0,251,.LM115-.LFBB6
+ 1112               	.LM115:
+ 1113 0592 8230      		cpi r24,2
+ 1114 0594 9105      		cpc r25,__zero_reg__
+ 1115 0596 01F4      		brne .L170
+ 1116               		.stabn	68,0,251,.LM116-.LFBB6
+ 1117               	.LM116:
+GAS LISTING /tmp/ccDlPBYj.s 			page 25
 
 
- 680 02dc 912F      		mov r25,r17
- 681 02de 20E0      		ldi r18,lo8(0x428c0000)
- 682 02e0 30E0      		ldi r19,hi8(0x428c0000)
- 683 02e2 4CE8      		ldi r20,hlo8(0x428c0000)
- 684 02e4 52E4      		ldi r21,hhi8(0x428c0000)
- 685 02e6 0E94 0000 		call __gesf2
- 686 02ea 87FD      		sbrc r24,7
- 687 02ec 00C0      		rjmp .L145
- 688               		.stabn	68,0,233,.LM70-.LFBB7
- 689               	.LM70:
- 690 02ee 6E2D      		mov r22,r14
- 691 02f0 7F2D      		mov r23,r15
- 692 02f2 802F      		mov r24,r16
- 693 02f4 912F      		mov r25,r17
- 694 02f6 20E0      		ldi r18,lo8(0x428c0000)
- 695 02f8 30E0      		ldi r19,hi8(0x428c0000)
- 696 02fa 4CE8      		ldi r20,hlo8(0x428c0000)
- 697 02fc 52E4      		ldi r21,hhi8(0x428c0000)
- 698 02fe 0E94 0000 		call __subsf3
- 699 0302 7B01      		movw r14,r22
- 700 0304 8C01      		movw r16,r24
- 701 0306 60E7      		ldi r22,lo8(112)
- 702 0308 D62E      		mov r13,r22
- 703 030a 00C0      		rjmp .L86
- 704               	.L145:
- 234:main.c        **** 	else if(num>=60){decimas=0x60;num0=num-60;}
- 705               		.stabn	68,0,234,.LM71-.LFBB7
- 706               	.LM71:
- 707 030c 6E2D      		mov r22,r14
- 708 030e 7F2D      		mov r23,r15
- 709 0310 802F      		mov r24,r16
- 710 0312 912F      		mov r25,r17
- 711 0314 20E0      		ldi r18,lo8(0x42700000)
- 712 0316 30E0      		ldi r19,hi8(0x42700000)
- 713 0318 40E7      		ldi r20,hlo8(0x42700000)
- 714 031a 52E4      		ldi r21,hhi8(0x42700000)
- 715 031c 0E94 0000 		call __gesf2
- 716 0320 87FD      		sbrc r24,7
- 717 0322 00C0      		rjmp .L146
- 718               		.stabn	68,0,234,.LM72-.LFBB7
- 719               	.LM72:
- 720 0324 6E2D      		mov r22,r14
- 721 0326 7F2D      		mov r23,r15
- 722 0328 802F      		mov r24,r16
- 723 032a 912F      		mov r25,r17
- 724 032c 20E0      		ldi r18,lo8(0x42700000)
- 725 032e 30E0      		ldi r19,hi8(0x42700000)
- 726 0330 40E7      		ldi r20,hlo8(0x42700000)
- 727 0332 52E4      		ldi r21,hhi8(0x42700000)
- 728 0334 0E94 0000 		call __subsf3
- 729 0338 7B01      		movw r14,r22
- 730 033a 8C01      		movw r16,r24
- 731 033c 50E6      		ldi r21,lo8(96)
- 732 033e D52E      		mov r13,r21
- 733 0340 00C0      		rjmp .L86
- 734               	.L146:
- 235:main.c        **** 	else if(num>=50){decimas=0x50;num0=num-50;}
-GAS LISTING /tmp/ccIBfZSu.s 			page 18
-
-
- 735               		.stabn	68,0,235,.LM73-.LFBB7
- 736               	.LM73:
- 737 0342 6E2D      		mov r22,r14
- 738 0344 7F2D      		mov r23,r15
- 739 0346 802F      		mov r24,r16
- 740 0348 912F      		mov r25,r17
- 741 034a 20E0      		ldi r18,lo8(0x42480000)
- 742 034c 30E0      		ldi r19,hi8(0x42480000)
- 743 034e 48E4      		ldi r20,hlo8(0x42480000)
- 744 0350 52E4      		ldi r21,hhi8(0x42480000)
- 745 0352 0E94 0000 		call __gesf2
- 746 0356 87FD      		sbrc r24,7
- 747 0358 00C0      		rjmp .L147
- 748               		.stabn	68,0,235,.LM74-.LFBB7
- 749               	.LM74:
- 750 035a 6E2D      		mov r22,r14
- 751 035c 7F2D      		mov r23,r15
- 752 035e 802F      		mov r24,r16
- 753 0360 912F      		mov r25,r17
- 754 0362 20E0      		ldi r18,lo8(0x42480000)
- 755 0364 30E0      		ldi r19,hi8(0x42480000)
- 756 0366 48E4      		ldi r20,hlo8(0x42480000)
- 757 0368 52E4      		ldi r21,hhi8(0x42480000)
- 758 036a 0E94 0000 		call __subsf3
- 759 036e 7B01      		movw r14,r22
- 760 0370 8C01      		movw r16,r24
- 761 0372 40E5      		ldi r20,lo8(80)
- 762 0374 D42E      		mov r13,r20
- 763 0376 00C0      		rjmp .L86
- 764               	.L147:
- 236:main.c        **** 	else if(num>=40){decimas=0x40;num0=num-40;}
- 765               		.stabn	68,0,236,.LM75-.LFBB7
- 766               	.LM75:
- 767 0378 6E2D      		mov r22,r14
- 768 037a 7F2D      		mov r23,r15
- 769 037c 802F      		mov r24,r16
- 770 037e 912F      		mov r25,r17
- 771 0380 20E0      		ldi r18,lo8(0x42200000)
- 772 0382 30E0      		ldi r19,hi8(0x42200000)
- 773 0384 40E2      		ldi r20,hlo8(0x42200000)
- 774 0386 52E4      		ldi r21,hhi8(0x42200000)
- 775 0388 0E94 0000 		call __gesf2
- 776 038c 87FD      		sbrc r24,7
- 777 038e 00C0      		rjmp .L148
- 778               		.stabn	68,0,236,.LM76-.LFBB7
- 779               	.LM76:
- 780 0390 6E2D      		mov r22,r14
- 781 0392 7F2D      		mov r23,r15
- 782 0394 802F      		mov r24,r16
- 783 0396 912F      		mov r25,r17
- 784 0398 20E0      		ldi r18,lo8(0x42200000)
- 785 039a 30E0      		ldi r19,hi8(0x42200000)
- 786 039c 40E2      		ldi r20,hlo8(0x42200000)
- 787 039e 52E4      		ldi r21,hhi8(0x42200000)
- 788 03a0 0E94 0000 		call __subsf3
- 789 03a4 7B01      		movw r14,r22
- 790 03a6 8C01      		movw r16,r24
-GAS LISTING /tmp/ccIBfZSu.s 			page 19
-
-
- 791 03a8 30E4      		ldi r19,lo8(64)
- 792 03aa D32E      		mov r13,r19
- 793 03ac 00C0      		rjmp .L86
- 794               	.L148:
- 237:main.c        **** 	else if(num>=30){decimas=0x30;num0=num-30;}
- 795               		.stabn	68,0,237,.LM77-.LFBB7
- 796               	.LM77:
- 797 03ae 6E2D      		mov r22,r14
- 798 03b0 7F2D      		mov r23,r15
- 799 03b2 802F      		mov r24,r16
- 800 03b4 912F      		mov r25,r17
- 801 03b6 20E0      		ldi r18,lo8(0x41f00000)
- 802 03b8 30E0      		ldi r19,hi8(0x41f00000)
- 803 03ba 40EF      		ldi r20,hlo8(0x41f00000)
- 804 03bc 51E4      		ldi r21,hhi8(0x41f00000)
- 805 03be 0E94 0000 		call __gesf2
- 806 03c2 87FD      		sbrc r24,7
- 807 03c4 00C0      		rjmp .L149
- 808               		.stabn	68,0,237,.LM78-.LFBB7
- 809               	.LM78:
- 810 03c6 6E2D      		mov r22,r14
- 811 03c8 7F2D      		mov r23,r15
- 812 03ca 802F      		mov r24,r16
- 813 03cc 912F      		mov r25,r17
- 814 03ce 20E0      		ldi r18,lo8(0x41f00000)
- 815 03d0 30E0      		ldi r19,hi8(0x41f00000)
- 816 03d2 40EF      		ldi r20,hlo8(0x41f00000)
- 817 03d4 51E4      		ldi r21,hhi8(0x41f00000)
- 818 03d6 0E94 0000 		call __subsf3
- 819 03da 7B01      		movw r14,r22
- 820 03dc 8C01      		movw r16,r24
- 821 03de 20E3      		ldi r18,lo8(48)
- 822 03e0 D22E      		mov r13,r18
- 823 03e2 00C0      		rjmp .L86
- 824               	.L149:
- 238:main.c        **** 	else if(num>=20){decimas=0x20;num0=num-20;}
- 825               		.stabn	68,0,238,.LM79-.LFBB7
- 826               	.LM79:
- 827 03e4 6E2D      		mov r22,r14
- 828 03e6 7F2D      		mov r23,r15
- 829 03e8 802F      		mov r24,r16
- 830 03ea 912F      		mov r25,r17
- 831 03ec 20E0      		ldi r18,lo8(0x41a00000)
- 832 03ee 30E0      		ldi r19,hi8(0x41a00000)
- 833 03f0 40EA      		ldi r20,hlo8(0x41a00000)
- 834 03f2 51E4      		ldi r21,hhi8(0x41a00000)
- 835 03f4 0E94 0000 		call __gesf2
- 836 03f8 87FD      		sbrc r24,7
- 837 03fa 00C0      		rjmp .L150
- 838               		.stabn	68,0,238,.LM80-.LFBB7
- 839               	.LM80:
- 840 03fc 6E2D      		mov r22,r14
- 841 03fe 7F2D      		mov r23,r15
- 842 0400 802F      		mov r24,r16
- 843 0402 912F      		mov r25,r17
- 844 0404 20E0      		ldi r18,lo8(0x41a00000)
- 845 0406 30E0      		ldi r19,hi8(0x41a00000)
-GAS LISTING /tmp/ccIBfZSu.s 			page 20
-
-
- 846 0408 40EA      		ldi r20,hlo8(0x41a00000)
- 847 040a 51E4      		ldi r21,hhi8(0x41a00000)
- 848 040c 0E94 0000 		call __subsf3
- 849 0410 7B01      		movw r14,r22
- 850 0412 8C01      		movw r16,r24
- 851 0414 90E2      		ldi r25,lo8(32)
- 852 0416 D92E      		mov r13,r25
- 853 0418 00C0      		rjmp .L86
- 854               	.L150:
- 239:main.c        **** 	else if(num>=10){decimas=0x10;num0=num-10;}
- 855               		.stabn	68,0,239,.LM81-.LFBB7
- 856               	.LM81:
- 857 041a 6E2D      		mov r22,r14
- 858 041c 7F2D      		mov r23,r15
- 859 041e 802F      		mov r24,r16
- 860 0420 912F      		mov r25,r17
- 861 0422 20E0      		ldi r18,lo8(0x41200000)
- 862 0424 30E0      		ldi r19,hi8(0x41200000)
- 863 0426 40E2      		ldi r20,hlo8(0x41200000)
- 864 0428 51E4      		ldi r21,hhi8(0x41200000)
- 865 042a 0E94 0000 		call __gesf2
- 866 042e 87FD      		sbrc r24,7
- 867 0430 00C0      		rjmp .L151
- 868               		.stabn	68,0,239,.LM82-.LFBB7
- 869               	.LM82:
- 870 0432 6E2D      		mov r22,r14
- 871 0434 7F2D      		mov r23,r15
- 872 0436 802F      		mov r24,r16
- 873 0438 912F      		mov r25,r17
- 874 043a 20E0      		ldi r18,lo8(0x41200000)
- 875 043c 30E0      		ldi r19,hi8(0x41200000)
- 876 043e 40E2      		ldi r20,hlo8(0x41200000)
- 877 0440 51E4      		ldi r21,hhi8(0x41200000)
- 878 0442 0E94 0000 		call __subsf3
- 879 0446 7B01      		movw r14,r22
- 880 0448 8C01      		movw r16,r24
- 881 044a 80E1      		ldi r24,lo8(16)
- 882 044c D82E      		mov r13,r24
- 883 044e 00C0      		rjmp .L86
- 884               	.L151:
- 240:main.c        **** 	else {decimas=0x00; num0=num;}
- 885               		.stabn	68,0,240,.LM83-.LFBB7
- 886               	.LM83:
- 887 0450 DD24      		clr r13
- 888               	.L86:
- 241:main.c        **** 
- 242:main.c        **** 
- 243:main.c        **** 	if(num0>=9){PORTD=decimas+0x09;}
- 889               		.stabn	68,0,243,.LM84-.LFBB7
- 890               	.LM84:
- 891 0452 6E2D      		mov r22,r14
- 892 0454 7F2D      		mov r23,r15
- 893 0456 802F      		mov r24,r16
- 894 0458 912F      		mov r25,r17
- 895 045a 20E0      		ldi r18,lo8(0x41100000)
- 896 045c 30E0      		ldi r19,hi8(0x41100000)
- 897 045e 40E1      		ldi r20,hlo8(0x41100000)
-GAS LISTING /tmp/ccIBfZSu.s 			page 21
-
-
- 898 0460 51E4      		ldi r21,hhi8(0x41100000)
- 899 0462 0E94 0000 		call __gesf2
- 900 0466 87FD      		sbrc r24,7
- 901 0468 00C0      		rjmp .L152
- 902               		.stabn	68,0,243,.LM85-.LFBB7
- 903               	.LM85:
- 904 046a 8D2D      		mov r24,r13
- 905 046c 875F      		subi r24,lo8(-(9))
- 906 046e 00C0      		rjmp .L163
- 907               	.L152:
- 244:main.c        **** 	else if(num0>=8){PORTD=decimas+0x08;}
- 908               		.stabn	68,0,244,.LM86-.LFBB7
- 909               	.LM86:
- 910 0470 6E2D      		mov r22,r14
- 911 0472 7F2D      		mov r23,r15
- 912 0474 802F      		mov r24,r16
- 913 0476 912F      		mov r25,r17
- 914 0478 20E0      		ldi r18,lo8(0x41000000)
- 915 047a 30E0      		ldi r19,hi8(0x41000000)
- 916 047c 40E0      		ldi r20,hlo8(0x41000000)
- 917 047e 51E4      		ldi r21,hhi8(0x41000000)
- 918 0480 0E94 0000 		call __gesf2
- 919 0484 87FD      		sbrc r24,7
- 920 0486 00C0      		rjmp .L153
- 921               		.stabn	68,0,244,.LM87-.LFBB7
- 922               	.LM87:
- 923 0488 8D2D      		mov r24,r13
- 924 048a 885F      		subi r24,lo8(-(8))
- 925 048c 00C0      		rjmp .L163
- 926               	.L153:
- 245:main.c        **** 	else if(num0>=7){PORTD=decimas+0x07;}
- 927               		.stabn	68,0,245,.LM88-.LFBB7
- 928               	.LM88:
- 929 048e 6E2D      		mov r22,r14
- 930 0490 7F2D      		mov r23,r15
- 931 0492 802F      		mov r24,r16
- 932 0494 912F      		mov r25,r17
- 933 0496 20E0      		ldi r18,lo8(0x40e00000)
- 934 0498 30E0      		ldi r19,hi8(0x40e00000)
- 935 049a 40EE      		ldi r20,hlo8(0x40e00000)
- 936 049c 50E4      		ldi r21,hhi8(0x40e00000)
- 937 049e 0E94 0000 		call __gesf2
- 938 04a2 87FD      		sbrc r24,7
- 939 04a4 00C0      		rjmp .L154
- 940               		.stabn	68,0,245,.LM89-.LFBB7
- 941               	.LM89:
- 942 04a6 8D2D      		mov r24,r13
- 943 04a8 895F      		subi r24,lo8(-(7))
- 944 04aa 00C0      		rjmp .L163
- 945               	.L154:
- 246:main.c        **** 	else if(num0>=6){PORTD=decimas+0x06;}
- 946               		.stabn	68,0,246,.LM90-.LFBB7
- 947               	.LM90:
- 948 04ac 6E2D      		mov r22,r14
- 949 04ae 7F2D      		mov r23,r15
- 950 04b0 802F      		mov r24,r16
- 951 04b2 912F      		mov r25,r17
-GAS LISTING /tmp/ccIBfZSu.s 			page 22
-
-
- 952 04b4 20E0      		ldi r18,lo8(0x40c00000)
- 953 04b6 30E0      		ldi r19,hi8(0x40c00000)
- 954 04b8 40EC      		ldi r20,hlo8(0x40c00000)
- 955 04ba 50E4      		ldi r21,hhi8(0x40c00000)
- 956 04bc 0E94 0000 		call __gesf2
- 957 04c0 87FD      		sbrc r24,7
- 958 04c2 00C0      		rjmp .L155
- 959               		.stabn	68,0,246,.LM91-.LFBB7
- 960               	.LM91:
- 961 04c4 8D2D      		mov r24,r13
- 962 04c6 8A5F      		subi r24,lo8(-(6))
- 963 04c8 00C0      		rjmp .L163
- 964               	.L155:
- 247:main.c        **** 	else if(num0>=5){PORTD=decimas+0x05;}
- 965               		.stabn	68,0,247,.LM92-.LFBB7
- 966               	.LM92:
- 967 04ca 6E2D      		mov r22,r14
- 968 04cc 7F2D      		mov r23,r15
- 969 04ce 802F      		mov r24,r16
- 970 04d0 912F      		mov r25,r17
- 971 04d2 20E0      		ldi r18,lo8(0x40a00000)
- 972 04d4 30E0      		ldi r19,hi8(0x40a00000)
- 973 04d6 40EA      		ldi r20,hlo8(0x40a00000)
- 974 04d8 50E4      		ldi r21,hhi8(0x40a00000)
- 975 04da 0E94 0000 		call __gesf2
- 976 04de 87FD      		sbrc r24,7
- 977 04e0 00C0      		rjmp .L156
- 978               		.stabn	68,0,247,.LM93-.LFBB7
- 979               	.LM93:
- 980 04e2 8D2D      		mov r24,r13
- 981 04e4 8B5F      		subi r24,lo8(-(5))
- 982 04e6 00C0      		rjmp .L163
- 983               	.L156:
- 248:main.c        **** 	else if(num0>=4){PORTD=decimas+0x04;}
- 984               		.stabn	68,0,248,.LM94-.LFBB7
- 985               	.LM94:
- 986 04e8 6E2D      		mov r22,r14
- 987 04ea 7F2D      		mov r23,r15
- 988 04ec 802F      		mov r24,r16
- 989 04ee 912F      		mov r25,r17
- 990 04f0 20E0      		ldi r18,lo8(0x40800000)
- 991 04f2 30E0      		ldi r19,hi8(0x40800000)
- 992 04f4 40E8      		ldi r20,hlo8(0x40800000)
- 993 04f6 50E4      		ldi r21,hhi8(0x40800000)
- 994 04f8 0E94 0000 		call __gesf2
- 995 04fc 87FD      		sbrc r24,7
- 996 04fe 00C0      		rjmp .L157
- 997               		.stabn	68,0,248,.LM95-.LFBB7
- 998               	.LM95:
- 999 0500 8D2D      		mov r24,r13
- 1000 0502 8C5F      		subi r24,lo8(-(4))
- 1001 0504 00C0      		rjmp .L163
- 1002               	.L157:
- 249:main.c        **** 	else if(num0>=3){PORTD=decimas+0x03;}
- 1003               		.stabn	68,0,249,.LM96-.LFBB7
- 1004               	.LM96:
- 1005 0506 6E2D      		mov r22,r14
-GAS LISTING /tmp/ccIBfZSu.s 			page 23
-
-
- 1006 0508 7F2D      		mov r23,r15
- 1007 050a 802F      		mov r24,r16
- 1008 050c 912F      		mov r25,r17
- 1009 050e 20E0      		ldi r18,lo8(0x40400000)
- 1010 0510 30E0      		ldi r19,hi8(0x40400000)
- 1011 0512 40E4      		ldi r20,hlo8(0x40400000)
- 1012 0514 50E4      		ldi r21,hhi8(0x40400000)
- 1013 0516 0E94 0000 		call __gesf2
- 1014 051a 87FD      		sbrc r24,7
- 1015 051c 00C0      		rjmp .L158
- 1016               		.stabn	68,0,249,.LM97-.LFBB7
- 1017               	.LM97:
- 1018 051e 8D2D      		mov r24,r13
- 1019 0520 8D5F      		subi r24,lo8(-(3))
- 1020 0522 00C0      		rjmp .L163
- 1021               	.L158:
- 250:main.c        **** 	else if(num0>=2){PORTD=decimas+0x02;}
- 1022               		.stabn	68,0,250,.LM98-.LFBB7
- 1023               	.LM98:
- 1024 0524 6E2D      		mov r22,r14
- 1025 0526 7F2D      		mov r23,r15
- 1026 0528 802F      		mov r24,r16
- 1027 052a 912F      		mov r25,r17
- 1028 052c 20E0      		ldi r18,lo8(0x40000000)
- 1029 052e 30E0      		ldi r19,hi8(0x40000000)
- 1030 0530 40E0      		ldi r20,hlo8(0x40000000)
- 1031 0532 50E4      		ldi r21,hhi8(0x40000000)
- 1032 0534 0E94 0000 		call __gesf2
- 1033 0538 87FD      		sbrc r24,7
- 1034 053a 00C0      		rjmp .L159
- 1035               		.stabn	68,0,250,.LM99-.LFBB7
- 1036               	.LM99:
- 1037 053c 8D2D      		mov r24,r13
- 1038 053e 8E5F      		subi r24,lo8(-(2))
- 1039 0540 00C0      		rjmp .L163
- 1040               	.L159:
- 251:main.c        **** 	else if(num0>=1){PORTD=decimas+0x01;}
- 1041               		.stabn	68,0,251,.LM100-.LFBB7
- 1042               	.LM100:
- 1043 0542 6E2D      		mov r22,r14
- 1044 0544 7F2D      		mov r23,r15
- 1045 0546 802F      		mov r24,r16
- 1046 0548 912F      		mov r25,r17
- 1047 054a 20E0      		ldi r18,lo8(0x3f800000)
- 1048 054c 30E0      		ldi r19,hi8(0x3f800000)
- 1049 054e 40E8      		ldi r20,hlo8(0x3f800000)
- 1050 0550 5FE3      		ldi r21,hhi8(0x3f800000)
- 1051 0552 0E94 0000 		call __gesf2
- 1052 0556 87FD      		sbrc r24,7
- 1053 0558 00C0      		rjmp .L160
- 1054               		.stabn	68,0,251,.LM101-.LFBB7
- 1055               	.LM101:
- 1056 055a D394      		inc r13
- 1057 055c 00C0      		rjmp .L162
- 1058               	.L160:
- 252:main.c        **** 	else if(num0>=0){PORTD=decimas+0x00;}
- 1059               		.stabn	68,0,252,.LM102-.LFBB7
-GAS LISTING /tmp/ccIBfZSu.s 			page 24
-
-
- 1060               	.LM102:
- 1061 055e 6E2D      		mov r22,r14
- 1062 0560 7F2D      		mov r23,r15
- 1063 0562 802F      		mov r24,r16
- 1064 0564 912F      		mov r25,r17
- 1065 0566 20E0      		ldi r18,lo8(0x0)
- 1066 0568 30E0      		ldi r19,hi8(0x0)
- 1067 056a A901      		movw r20,r18
- 1068 056c 0E94 0000 		call __gesf2
- 1069 0570 87FD      		sbrc r24,7
- 1070 0572 00C0      		rjmp .L161
- 1071               	.L162:
- 1072               		.stabn	68,0,252,.LM103-.LFBB7
- 1073               	.LM103:
- 1074 0574 D2BA      		out 50-32,r13
- 1075 0576 00C0      		rjmp .L83
- 1076               	.L161:
- 253:main.c        **** 	else {PORTD=0xAA;}
- 1077               		.stabn	68,0,253,.LM104-.LFBB7
- 1078               	.LM104:
- 1079 0578 8AEA      		ldi r24,lo8(-86)
- 1080               	.L163:
- 1081 057a 82BB      		out 50-32,r24
- 1082               	.L83:
- 1083               	/* epilogue start */
+ 1118 0598 C298      		cbi 56-32,2
+ 1119               	.L174:
+ 1120 059a C198      		cbi 56-32,1
+ 1121               	.L172:
+ 1122 059c C09A      		sbi 56-32,0
+ 1123 059e 0895      		ret
+ 1124               	.L170:
+ 252:main.c        **** else {			        cbi(PORTB,PB2);cbi(PORTB,PB1);cbi(PORTB,PB0);} //PORD=000//
+ 1125               		.stabn	68,0,252,.LM117-.LFBB6
+ 1126               	.LM117:
+ 1127 05a0 C298      		cbi 56-32,2
+ 1128               	.L176:
+ 1129 05a2 C198      		cbi 56-32,1
+ 1130               	.L171:
+ 1131 05a4 C098      		cbi 56-32,0
+ 1132 05a6 0895      		ret
+ 1133               		.size	print_Time_Binary, .-print_Time_Binary
+ 1134               	.Lscope6:
+ 1135               		.stabs	"",36,0,0,.Lscope6-.LFBB6
+ 1136               		.stabd	78,0,0
+ 1137               		.stabs	"final_distance:F(0,13)",36,0,262,final_distance
+ 1138               		.stabs	"angle0xz:P(0,13)",64,0,262,14
+ 1139               		.stabs	"tf:P(0,13)",64,0,262,18
+ 1140               	.global	final_distance
+ 1141               		.type	final_distance, @function
+ 1142               	final_distance:
+ 1143               		.stabd	46,0,0
+ 253:main.c        **** 
  254:main.c        **** 
  255:main.c        **** }
- 1084               		.stabn	68,0,255,.LM105-.LFBB7
- 1085               	.LM105:
- 1086 057c 1F91      		pop r17
- 1087 057e 0F91      		pop r16
- 1088 0580 FF90      		pop r15
- 1089 0582 EF90      		pop r14
- 1090 0584 DF90      		pop r13
- 1091 0586 0895      		ret
- 1092               		.size	print_Decimes, .-print_Decimes
- 1093               		.stabs	"decimas:r(0,2)",64,0,229,13
- 1094               		.stabn	192,0,0,.LFBB7-.LFBB7
- 1095               		.stabn	224,0,0,.Lscope7-.LFBB7
- 1096               	.Lscope7:
- 1097               		.stabs	"",36,0,0,.Lscope7-.LFBB7
- 1098               		.stabd	78,0,0
- 1099               		.stabs	"print_Time_Binary:F(0,15)",36,0,281,print_Time_Binary
- 1100               		.stabs	"time:P(0,1)",64,0,281,24
- 1101               	.global	print_Time_Binary
- 1102               		.type	print_Time_Binary, @function
- 1103               	print_Time_Binary:
- 1104               		.stabd	46,0,0
- 256:main.c        **** 
+ 256:main.c        **** //------------------------------------------------------//
  257:main.c        **** 
- 258:main.c        **** /*
- 259:main.c        **** void print_Units(double num_in, char decimas){
- 260:main.c        **** 
- 261:main.c        **** 	int num0;
- 262:main.c        **** 
- 263:main.c        **** 	num0=num_in;
- 264:main.c        **** 
-GAS LISTING /tmp/ccIBfZSu.s 			page 25
+ 258:main.c        **** //------------------------------------------------------//
+ 259:main.c        **** //--------------------Final_Distance--------------------//
+ 260:main.c        **** //------------------------------------------------------//
+ 261:main.c        **** 
+ 262:main.c        **** double final_distance(double angle0xz,double tf){
+ 1144               		.stabn	68,0,262,.LM118-.LFBB7
+ 1145               	.LM118:
+ 1146               	.LFBB7:
+ 1147 05a8 2F92      		push r2
+ 1148 05aa 3F92      		push r3
+ 1149 05ac 4F92      		push r4
+ 1150 05ae 5F92      		push r5
+ 1151 05b0 6F92      		push r6
+ 1152 05b2 7F92      		push r7
+ 1153 05b4 8F92      		push r8
+ 1154 05b6 9F92      		push r9
+ 1155 05b8 AF92      		push r10
+ 1156 05ba BF92      		push r11
+ 1157 05bc CF92      		push r12
+ 1158 05be DF92      		push r13
+ 1159 05c0 EF92      		push r14
+ 1160 05c2 FF92      		push r15
+ 1161 05c4 0F93      		push r16
+ 1162 05c6 1F93      		push r17
+ 1163               	/* prologue: function */
+GAS LISTING /tmp/ccDlPBYj.s 			page 26
 
 
- 265:main.c        **** 	if(num0>=9){PORTD=decimas+0x09;}
- 266:main.c        **** 	else if(num0>=8){PORTD=decimas+0x08;}
- 267:main.c        **** 	else if(num0>=7){PORTD=decimas+0x07;}
- 268:main.c        **** 	else if(num0>=6){PORTD=decimas+0x06;}
- 269:main.c        **** 	else if(num0>=5){PORTD=decimas+0x05;}
- 270:main.c        **** 	else if(num0>=4){PORTD=decimas+0x04;}
- 271:main.c        **** 	else if(num0>=3){PORTD=decimas+0x03;}
- 272:main.c        **** 	else if(num0>=2){PORTD=decimas+0x02;}
- 273:main.c        **** 	else if(num0>=1){PORTD=decimas+0x01;}
- 274:main.c        **** 	else if(num0>=0){PORTD=decimas+0x00;}
- 275:main.c        **** 	else {PORTD=decimas+0xAA;}
- 276:main.c        **** }
- 277:main.c        **** */
- 278:main.c        **** //------------------------------------------------------//
- 279:main.c        **** //----------------------Print time---------------------//
- 280:main.c        **** //------------------------------------------------------//
- 281:main.c        **** void print_Time_Binary(int time){
- 1105               		.stabn	68,0,281,.LM106-.LFBB8
- 1106               	.LM106:
- 1107               	.LFBB8:
- 1108               	/* prologue: function */
- 1109               	/* frame size = 0 */
- 1110               	/* stack size = 0 */
- 1111               	.L__stack_usage = 0
- 282:main.c        **** int time_segment_1=1;
- 283:main.c        **** int time_segment_2=2;
- 284:main.c        **** int time_segment_3=3;
- 285:main.c        **** int time_segment_4=4;
- 286:main.c        **** int time_segment_5=5;
- 287:main.c        **** int time_segment_6=6;
- 288:main.c        **** int time_segment_7=7;
- 289:main.c        **** int times=time;
- 290:main.c        **** if(times>time_segment_7){	sbi(PORTC,PC7);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORC=111//
- 1112               		.stabn	68,0,290,.LM107-.LFBB8
- 1113               	.LM107:
- 1114 0588 8830      		cpi r24,8
- 1115 058a 9105      		cpc r25,__zero_reg__
- 1116 058c 04F0      		brlt .L165
- 1117               		.stabn	68,0,290,.LM108-.LFBB8
- 1118               	.LM108:
- 1119 058e AF9A      		sbi 53-32,7
- 1120 0590 00C0      		rjmp .L175
- 1121               	.L165:
- 291:main.c        **** else if(times>time_segment_6){  sbi(PORTC,PC7);sbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=110//
- 1122               		.stabn	68,0,291,.LM109-.LFBB8
- 1123               	.LM109:
- 1124 0592 8730      		cpi r24,7
- 1125 0594 9105      		cpc r25,__zero_reg__
- 1126 0596 01F4      		brne .L167
- 1127               		.stabn	68,0,291,.LM110-.LFBB8
- 1128               	.LM110:
- 1129 0598 AF9A      		sbi 53-32,7
- 1130 059a 00C0      		rjmp .L177
- 1131               	.L167:
- 292:main.c        **** else if(times>time_segment_5){  sbi(PORTC,PC7);cbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=101//
- 1132               		.stabn	68,0,292,.LM111-.LFBB8
- 1133               	.LM111:
-GAS LISTING /tmp/ccIBfZSu.s 			page 26
+ 1164               	/* frame size = 0 */
+ 1165               	/* stack size = 16 */
+ 1166               	.L__stack_usage = 16
+ 1167 05c8 7B01      		movw r14,r22
+ 1168 05ca 8C01      		movw r16,r24
+ 263:main.c        **** 	float theta=(90-angle0xz)*0.017453;
+ 264:main.c        **** 	//float t=2.75;
+ 265:main.c        **** 	float t=tf;
+ 266:main.c        **** 	float t2=t*t;
+ 1169               		.stabn	68,0,266,.LM119-.LFBB7
+ 1170               	.LM119:
+ 1171 05cc CA01      		movw r24,r20
+ 1172 05ce B901      		movw r22,r18
+ 1173 05d0 0E94 0000 		call __mulsf3
+ 1174 05d4 962E      		mov r9,r22
+ 1175 05d6 872E      		mov r8,r23
+ 1176 05d8 782E      		mov r7,r24
+ 1177 05da 692E      		mov r6,r25
+ 263:main.c        **** 	float theta=(90-angle0xz)*0.017453;
+ 1178               		.stabn	68,0,263,.LM120-.LFBB7
+ 1179               	.LM120:
+ 1180 05dc 60E0      		ldi r22,lo8(0x42b40000)
+ 1181 05de 70E0      		ldi r23,hi8(0x42b40000)
+ 1182 05e0 84EB      		ldi r24,hlo8(0x42b40000)
+ 1183 05e2 92E4      		ldi r25,hhi8(0x42b40000)
+ 1184 05e4 A801      		movw r20,r16
+ 1185 05e6 9701      		movw r18,r14
+ 1186 05e8 0E94 0000 		call __subsf3
+ 1187 05ec 28E9      		ldi r18,lo8(0x3c8ef998)
+ 1188 05ee 39EF      		ldi r19,hi8(0x3c8ef998)
+ 1189 05f0 4EE8      		ldi r20,hlo8(0x3c8ef998)
+ 1190 05f2 5CE3      		ldi r21,hhi8(0x3c8ef998)
+ 1191 05f4 0E94 0000 		call __mulsf3
+ 1192 05f8 9B01      		movw r18,r22
+ 1193 05fa AC01      		movw r20,r24
+ 267:main.c        **** 	float g=9.8;
+ 268:main.c        **** 	float a=-sin(2.0*theta)/(t2); 
+ 1194               		.stabn	68,0,268,.LM121-.LFBB7
+ 1195               	.LM121:
+ 1196 05fc 0E94 0000 		call __addsf3
+ 1197 0600 0E94 0000 		call sin
+ 1198 0604 5B01      		movw r10,r22
+ 1199 0606 6C01      		movw r12,r24
+ 1200 0608 9058      		subi r25,0x80
+ 1201 060a D401      		movw r26,r8
+ 1202 060c F301      		movw r30,r6
+ 1203 060e 2B2F      		mov r18,r27
+ 1204 0610 3A2F      		mov r19,r26
+ 1205 0612 4F2F      		mov r20,r31
+ 1206 0614 5E2F      		mov r21,r30
+ 1207 0616 0E94 0000 		call __divsf3
+ 1208 061a F62E      		mov r15,r22
+ 1209 061c 072F      		mov r16,r23
+ 1210 061e 182F      		mov r17,r24
+ 1211 0620 E92E      		mov r14,r25
+ 269:main.c        **** 	float b=g;
+ 270:main.c        **** 	float g2=g*g;
+GAS LISTING /tmp/ccDlPBYj.s 			page 27
 
 
- 1134 059c 8630      		cpi r24,6
- 1135 059e 9105      		cpc r25,__zero_reg__
- 1136 05a0 01F4      		brne .L168
- 1137               		.stabn	68,0,292,.LM112-.LFBB8
- 1138               	.LM112:
- 1139 05a2 AF9A      		sbi 53-32,7
- 1140 05a4 00C0      		rjmp .L176
- 1141               	.L168:
- 293:main.c        **** else if(times>time_segment_4){  sbi(PORTC,PC7);cbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=100//
- 1142               		.stabn	68,0,293,.LM113-.LFBB8
- 1143               	.LM113:
- 1144 05a6 8530      		cpi r24,5
- 1145 05a8 9105      		cpc r25,__zero_reg__
- 1146 05aa 01F4      		brne .L169
- 1147               		.stabn	68,0,293,.LM114-.LFBB8
- 1148               	.LM114:
- 1149 05ac AF9A      		sbi 53-32,7
- 1150 05ae 00C0      		rjmp .L178
- 1151               	.L169:
- 294:main.c        **** else if(times>time_segment_3){  cbi(PORTC,PC7);sbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=011//
- 1152               		.stabn	68,0,294,.LM115-.LFBB8
- 1153               	.LM115:
- 1154 05b0 8430      		cpi r24,4
- 1155 05b2 9105      		cpc r25,__zero_reg__
- 1156 05b4 01F4      		brne .L170
- 1157               		.stabn	68,0,294,.LM116-.LFBB8
- 1158               	.LM116:
- 1159 05b6 AF98      		cbi 53-32,7
- 1160               	.L175:
- 1161 05b8 A99A      		sbi 53-32,1
- 1162 05ba 00C0      		rjmp .L174
- 1163               	.L170:
- 295:main.c        **** else if(times>time_segment_2){  cbi(PORTC,PC7);sbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=010//
- 1164               		.stabn	68,0,295,.LM117-.LFBB8
- 1165               	.LM117:
- 1166 05bc 8330      		cpi r24,3
- 1167 05be 9105      		cpc r25,__zero_reg__
- 1168 05c0 01F4      		brne .L171
- 1169               		.stabn	68,0,295,.LM118-.LFBB8
- 1170               	.LM118:
- 1171 05c2 AF98      		cbi 53-32,7
- 1172               	.L177:
- 1173 05c4 A99A      		sbi 53-32,1
- 1174 05c6 00C0      		rjmp .L173
- 1175               	.L171:
- 296:main.c        **** else if(times>time_segment_1){  cbi(PORTC,PC7);cbi(PORTC,PC1);sbi(PORTC,PC0);} //PORD=001//
- 1176               		.stabn	68,0,296,.LM119-.LFBB8
- 1177               	.LM119:
- 1178 05c8 8230      		cpi r24,2
- 1179 05ca 9105      		cpc r25,__zero_reg__
- 1180 05cc 01F4      		brne .L172
- 1181               		.stabn	68,0,296,.LM120-.LFBB8
- 1182               	.LM120:
- 1183 05ce AF98      		cbi 53-32,7
- 1184               	.L176:
- 1185 05d0 A998      		cbi 53-32,1
- 1186               	.L174:
-GAS LISTING /tmp/ccIBfZSu.s 			page 27
-
-
- 1187 05d2 A89A      		sbi 53-32,0
- 1188 05d4 0895      		ret
- 1189               	.L172:
- 297:main.c        **** else {			        cbi(PORTC,PC7);cbi(PORTC,PC1);cbi(PORTC,PC0);} //PORD=000//
- 1190               		.stabn	68,0,297,.LM121-.LFBB8
- 1191               	.LM121:
- 1192 05d6 AF98      		cbi 53-32,7
- 1193               	.L178:
- 1194 05d8 A998      		cbi 53-32,1
- 1195               	.L173:
- 1196 05da A898      		cbi 53-32,0
- 1197 05dc 0895      		ret
- 1198               		.size	print_Time_Binary, .-print_Time_Binary
- 1199               	.Lscope8:
- 1200               		.stabs	"",36,0,0,.Lscope8-.LFBB8
- 1201               		.stabd	78,0,0
- 1202               		.stabs	"main:F(0,15)",36,0,44,main
- 1203               	.global	main
- 1204               		.type	main, @function
- 1205               	main:
- 1206               		.stabd	46,0,0
-  45:main.c        **** {
- 1207               		.stabn	68,0,45,.LM122-.LFBB9
- 1208               	.LM122:
- 1209               	.LFBB9:
- 1210 05de 6F92      		push r6
- 1211 05e0 7F92      		push r7
- 1212 05e2 8F92      		push r8
- 1213 05e4 9F92      		push r9
- 1214 05e6 AF92      		push r10
- 1215 05e8 BF92      		push r11
- 1216 05ea CF92      		push r12
- 1217 05ec DF92      		push r13
- 1218 05ee EF92      		push r14
- 1219 05f0 FF92      		push r15
- 1220 05f2 0F93      		push r16
- 1221 05f4 1F93      		push r17
- 1222 05f6 DF93      		push r29
- 1223 05f8 CF93      		push r28
- 1224 05fa CDB7      		in r28,__SP_L__
- 1225 05fc DEB7      		in r29,__SP_H__
- 1226 05fe 6497      		sbiw r28,20
- 1227 0600 0FB6      		in __tmp_reg__,__SREG__
- 1228 0602 F894      		cli
- 1229 0604 DEBF      		out __SP_H__,r29
- 1230 0606 0FBE      		out __SREG__,__tmp_reg__
- 1231 0608 CDBF      		out __SP_L__,r28
- 1232               	/* prologue: function */
- 1233               	/* frame size = 20 */
- 1234               	/* stack size = 34 */
- 1235               	.L__stack_usage = 34
-  46:main.c        **** 	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
- 1236               		.stabn	68,0,46,.LM123-.LFBB9
- 1237               	.LM123:
- 1238 060a 0E94 0000 		call init_ports
-  55:main.c        **** 	double ms_time=0.0;
- 1239               		.stabn	68,0,55,.LM124-.LFBB9
-GAS LISTING /tmp/ccIBfZSu.s 			page 28
-
-
+ 271:main.c        **** 	
+ 272:main.c        **** 	float c=(0.25)*(g2)*(t2)*(sin(2.0*theta));
+ 273:main.c        **** 	float r=(1.0/(2.0*a))*(-b+sqrt(b*b+4.0*a*c));
+ 1212               		.stabn	68,0,273,.LM122-.LFBB7
+ 1213               	.LM122:
+ 1214 0622 20E0      		ldi r18,lo8(0x40800000)
+ 1215 0624 30E0      		ldi r19,hi8(0x40800000)
+ 1216 0626 40E8      		ldi r20,hlo8(0x40800000)
+ 1217 0628 50E4      		ldi r21,hhi8(0x40800000)
+ 1218 062a 0E94 0000 		call __mulsf3
+ 1219 062e 1B01      		movw r2,r22
+ 1220 0630 2C01      		movw r4,r24
+ 272:main.c        **** 	float c=(0.25)*(g2)*(t2)*(sin(2.0*theta));
+ 1221               		.stabn	68,0,272,.LM123-.LFBB7
+ 1222               	.LM123:
+ 1223 0632 A401      		movw r20,r8
+ 1224 0634 9301      		movw r18,r6
+ 1225 0636 652F      		mov r22,r21
+ 1226 0638 742F      		mov r23,r20
+ 1227 063a 832F      		mov r24,r19
+ 1228 063c 922F      		mov r25,r18
+ 1229 063e 2BE7      		ldi r18,lo8(0x41c0147b)
+ 1230 0640 34E1      		ldi r19,hi8(0x41c0147b)
+ 1231 0642 40EC      		ldi r20,hlo8(0x41c0147b)
+ 1232 0644 51E4      		ldi r21,hhi8(0x41c0147b)
+ 1233 0646 0E94 0000 		call __mulsf3
+ 1234 064a A601      		movw r20,r12
+ 1235 064c 9501      		movw r18,r10
+ 1236 064e 0E94 0000 		call __mulsf3
+ 1237 0652 9B01      		movw r18,r22
+ 1238 0654 AC01      		movw r20,r24
+ 1239               		.stabn	68,0,273,.LM124-.LFBB7
  1240               	.LM124:
- 1241 060e EE24      		clr r14
- 1242 0610 FF24      		clr r15
- 1243 0612 DD24      		clr r13
- 1244 0614 CC24      		clr r12
-  54:main.c        **** 	int time=0;
- 1245               		.stabn	68,0,54,.LM125-.LFBB9
- 1246               	.LM125:
- 1247 0616 AA24      		clr r10
- 1248 0618 BB24      		clr r11
-  46:main.c        **** 	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
- 1249               		.stabn	68,0,46,.LM126-.LFBB9
- 1250               	.LM126:
- 1251 061a 3E01      		movw r6,r28
- 1252 061c 0894      		sec
- 1253 061e 611C      		adc r6,__zero_reg__
- 1254 0620 711C      		adc r7,__zero_reg__
- 1255               	.L190:
- 1256 0622 4301      		movw r8,r6
-  60:main.c        **** 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Ca
- 1257               		.stabn	68,0,60,.LM127-.LFBB9
- 1258               	.LM127:
- 1259 0624 00E0      		ldi r16,lo8(0)
- 1260 0626 10E0      		ldi r17,hi8(0)
- 1261               	.L181:
-  60:main.c        **** 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Ca
- 1262               		.stabn	68,0,60,.LM128-.LFBB9
- 1263               	.LM128:
- 1264 0628 C801      		movw r24,r16
- 1265 062a 0E94 0000 		call select_ADC_port
- 1266 062e 65B1      		in r22,37-32
- 1267 0630 70E0      		ldi r23,lo8(0)
- 1268 0632 6155      		subi r22,lo8(-(-81))
- 1269 0634 7040      		sbci r23,hi8(-(-81))
- 1270 0636 8827      		clr r24
- 1271 0638 77FD      		sbrc r23,7
- 1272 063a 8095      		com r24
- 1273 063c 982F      		mov r25,r24
- 1274 063e 0E94 0000 		call __floatsisf
- 1275 0642 F401      		movw r30,r8
- 1276 0644 6193      		st Z+,r22
- 1277 0646 7193      		st Z+,r23
- 1278 0648 8193      		st Z+,r24
- 1279 064a 9193      		st Z+,r25
- 1280 064c 4F01      		movw r8,r30
- 1281 064e 0F5F      		subi r16,lo8(-(1))
- 1282 0650 1F4F      		sbci r17,hi8(-(1))
- 1283 0652 0630      		cpi r16,6
- 1284 0654 1105      		cpc r17,__zero_reg__
- 1285 0656 01F4      		brne .L181
-  61:main.c        **** 	a[3]=a[3]+81;
- 1286               		.stabn	68,0,61,.LM129-.LFBB9
- 1287               	.LM129:
- 1288 0658 6D85      		ldd r22,Y+13
- 1289 065a 7E85      		ldd r23,Y+14
- 1290 065c 8F85      		ldd r24,Y+15
- 1291 065e 9889      		ldd r25,Y+16
-GAS LISTING /tmp/ccIBfZSu.s 			page 29
+ 1241 0656 C201      		movw r24,r4
+ 1242 0658 B101      		movw r22,r2
+ 1243 065a 0E94 0000 		call __mulsf3
+ 1244 065e 2BE7      		ldi r18,lo8(0x42c0147b)
+ 1245 0660 34E1      		ldi r19,hi8(0x42c0147b)
+ 1246 0662 40EC      		ldi r20,hlo8(0x42c0147b)
+ 1247 0664 52E4      		ldi r21,hhi8(0x42c0147b)
+ 1248 0666 0E94 0000 		call __addsf3
+ 1249 066a 0E94 0000 		call sqrt
+ 1250 066e 5B01      		movw r10,r22
+ 1251 0670 6C01      		movw r12,r24
+ 1252 0672 6F2D      		mov r22,r15
+ 1253 0674 702F      		mov r23,r16
+ 1254 0676 812F      		mov r24,r17
+ 1255 0678 9E2D      		mov r25,r14
+ 1256 067a 2F2D      		mov r18,r15
+ 1257 067c 302F      		mov r19,r16
+ 1258 067e 412F      		mov r20,r17
+ 1259 0680 5E2D      		mov r21,r14
+ 1260 0682 0E94 0000 		call __addsf3
+ 1261 0686 9B01      		movw r18,r22
+ 1262 0688 AC01      		movw r20,r24
+ 1263 068a 60E0      		ldi r22,lo8(0x3f800000)
+ 1264 068c 70E0      		ldi r23,hi8(0x3f800000)
+GAS LISTING /tmp/ccDlPBYj.s 			page 28
 
 
- 1292 0660 20E0      		ldi r18,lo8(0x42a20000)
- 1293 0662 30E0      		ldi r19,hi8(0x42a20000)
- 1294 0664 42EA      		ldi r20,hlo8(0x42a20000)
- 1295 0666 52E4      		ldi r21,hhi8(0x42a20000)
- 1296 0668 0E94 0000 		call __addsf3
- 1297 066c 262F      		mov r18,r22
- 1298 066e 372F      		mov r19,r23
- 1299 0670 482F      		mov r20,r24
- 1300 0672 592F      		mov r21,r25
- 1301 0674 2D87      		std Y+13,r18
- 1302 0676 3E87      		std Y+14,r19
- 1303 0678 4F87      		std Y+15,r20
- 1304 067a 588B      		std Y+16,r21
-  68:main.c        **** 		if(a[3]>132){count=1;}
- 1305               		.stabn	68,0,68,.LM130-.LFBB9
- 1306               	.LM130:
- 1307 067c 20E0      		ldi r18,lo8(0x43040000)
- 1308 067e 30E0      		ldi r19,hi8(0x43040000)
- 1309 0680 44E0      		ldi r20,hlo8(0x43040000)
- 1310 0682 53E4      		ldi r21,hhi8(0x43040000)
- 1311 0684 0E94 0000 		call __gtsf2
- 1312 0688 1816      		cp __zero_reg__,r24
- 1313 068a 04F4      		brge .L189
- 1314 068c 00C0      		rjmp .L191
- 1315               	.L185:
-  78:main.c        **** 				if(ms_time==10){time=time+1;ms_time=0;}else{time=time+0;}
- 1316               		.stabn	68,0,78,.LM131-.LFBB9
- 1317               	.LM131:
- 1318 068e 0894      		sec
- 1319 0690 A11C      		adc r10,__zero_reg__
- 1320 0692 B11C      		adc r11,__zero_reg__
- 1321 0694 EE24      		clr r14
- 1322 0696 FF24      		clr r15
- 1323 0698 DD24      		clr r13
- 1324 069a CC24      		clr r12
- 1325               	.L186:
- 1326               	.LBB14:
- 1327               	.LBB15:
- 1328               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h",132,0,0,.Ltext1
- 1329               	.Ltext1:
+ 1265 068e 80E8      		ldi r24,hlo8(0x3f800000)
+ 1266 0690 9FE3      		ldi r25,hhi8(0x3f800000)
+ 1267 0692 0E94 0000 		call __divsf3
+ 1268 0696 7B01      		movw r14,r22
+ 1269 0698 8C01      		movw r16,r24
+ 1270 069a C601      		movw r24,r12
+ 1271 069c B501      		movw r22,r10
+ 1272 069e 2DEC      		ldi r18,lo8(0x411ccccd)
+ 1273 06a0 3CEC      		ldi r19,hi8(0x411ccccd)
+ 1274 06a2 4CE1      		ldi r20,hlo8(0x411ccccd)
+ 1275 06a4 51E4      		ldi r21,hhi8(0x411ccccd)
+ 1276 06a6 0E94 0000 		call __subsf3
+ 1277 06aa 9B01      		movw r18,r22
+ 1278 06ac AC01      		movw r20,r24
+ 1279 06ae C801      		movw r24,r16
+ 1280 06b0 B701      		movw r22,r14
+ 1281 06b2 0E94 0000 		call __mulsf3
+ 1282               	/* epilogue start */
+ 274:main.c        **** 
+ 275:main.c        **** 	return r;
+ 276:main.c        **** }
+ 1283               		.stabn	68,0,276,.LM125-.LFBB7
+ 1284               	.LM125:
+ 1285 06b6 1F91      		pop r17
+ 1286 06b8 0F91      		pop r16
+ 1287 06ba FF90      		pop r15
+ 1288 06bc EF90      		pop r14
+ 1289 06be DF90      		pop r13
+ 1290 06c0 CF90      		pop r12
+ 1291 06c2 BF90      		pop r11
+ 1292 06c4 AF90      		pop r10
+ 1293 06c6 9F90      		pop r9
+ 1294 06c8 8F90      		pop r8
+ 1295 06ca 7F90      		pop r7
+ 1296 06cc 6F90      		pop r6
+ 1297 06ce 5F90      		pop r5
+ 1298 06d0 4F90      		pop r4
+ 1299 06d2 3F90      		pop r3
+ 1300 06d4 2F90      		pop r2
+ 1301 06d6 0895      		ret
+ 1302               		.size	final_distance, .-final_distance
+ 1303               	.Lscope7:
+ 1304               		.stabs	"",36,0,0,.Lscope7-.LFBB7
+ 1305               		.stabd	78,0,0
+ 1306               		.stabs	"main:F(0,15)",36,0,42,main
+ 1307               	.global	main
+ 1308               		.type	main, @function
+ 1309               	main:
+ 1310               		.stabd	46,0,0
+  43:main.c        **** {
+ 1311               		.stabn	68,0,43,.LM126-.LFBB8
+ 1312               	.LM126:
+ 1313               	.LFBB8:
+ 1314 06d8 2F92      		push r2
+ 1315 06da 3F92      		push r3
+ 1316 06dc 4F92      		push r4
+ 1317 06de 5F92      		push r5
+GAS LISTING /tmp/ccDlPBYj.s 			page 29
+
+
+ 1318 06e0 6F92      		push r6
+ 1319 06e2 7F92      		push r7
+ 1320 06e4 8F92      		push r8
+ 1321 06e6 9F92      		push r9
+ 1322 06e8 AF92      		push r10
+ 1323 06ea BF92      		push r11
+ 1324 06ec CF92      		push r12
+ 1325 06ee DF92      		push r13
+ 1326 06f0 EF92      		push r14
+ 1327 06f2 FF92      		push r15
+ 1328 06f4 0F93      		push r16
+ 1329 06f6 1F93      		push r17
+ 1330 06f8 DF93      		push r29
+ 1331 06fa CF93      		push r28
+ 1332 06fc CDB7      		in r28,__SP_L__
+ 1333 06fe DEB7      		in r29,__SP_H__
+ 1334 0700 6697      		sbiw r28,22
+ 1335 0702 0FB6      		in __tmp_reg__,__SREG__
+ 1336 0704 F894      		cli
+ 1337 0706 DEBF      		out __SP_H__,r29
+ 1338 0708 0FBE      		out __SREG__,__tmp_reg__
+ 1339 070a CDBF      		out __SP_L__,r28
+ 1340               	/* prologue: function */
+ 1341               	/* frame size = 22 */
+ 1342               	/* stack size = 40 */
+ 1343               	.L__stack_usage = 40
+  44:main.c        **** 	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
+ 1344               		.stabn	68,0,44,.LM127-.LFBB8
+ 1345               	.LM127:
+ 1346 070c 0E94 0000 		call init_ports
+  50:main.c        **** 	double ms_time=0.0;
+ 1347               		.stabn	68,0,50,.LM128-.LFBB8
+ 1348               	.LM128:
+ 1349 0710 FF24      		clr r15
+ 1350 0712 EE24      		clr r14
+ 1351 0714 9924      		clr r9
+ 1352 0716 4424      		clr r4
+  49:main.c        **** 	int time=0;
+ 1353               		.stabn	68,0,49,.LM129-.LFBB8
+ 1354               	.LM129:
+ 1355 0718 00E0      		ldi r16,lo8(0)
+ 1356 071a 10E0      		ldi r17,hi8(0)
+  46:main.c        **** 	double angle0xz=0.0;
+ 1357               		.stabn	68,0,46,.LM130-.LFBB8
+ 1358               	.LM130:
+ 1359 071c 3324      		clr r3
+ 1360 071e 2224      		clr r2
+ 1361 0720 1D8A      		std Y+21,__zero_reg__
+ 1362 0722 1E8A      		std Y+22,__zero_reg__
+ 1363               	.L190:
+  44:main.c        **** 	init_ports(); // Inicializa puertos A=>ADC, B=Inputs ,C=Outputs , D=Outputs
+ 1364               		.stabn	68,0,44,.LM131-.LFBB8
+ 1365               	.LM131:
+ 1366 0724 5E01      		movw r10,r28
+ 1367 0726 0894      		sec
+ 1368 0728 A11C      		adc r10,__zero_reg__
+ 1369 072a B11C      		adc r11,__zero_reg__
+GAS LISTING /tmp/ccDlPBYj.s 			page 30
+
+
+  55:main.c        **** 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Ca
+ 1370               		.stabn	68,0,55,.LM132-.LFBB8
+ 1371               	.LM132:
+ 1372 072c CC24      		clr r12
+ 1373 072e DD24      		clr r13
+ 1374               	.L180:
+  55:main.c        **** 	{  for(i=0;i<6;i++){select_ADC_port(i); /*Seleccionar puerto de entrada ADC*/ a[i]=ADCH-81;} // Ca
+ 1375               		.stabn	68,0,55,.LM133-.LFBB8
+ 1376               	.LM133:
+ 1377 0730 C601      		movw r24,r12
+ 1378 0732 0E94 0000 		call select_ADC_port
+ 1379 0736 65B1      		in r22,37-32
+ 1380 0738 70E0      		ldi r23,lo8(0)
+ 1381 073a 6155      		subi r22,lo8(-(-81))
+ 1382 073c 7040      		sbci r23,hi8(-(-81))
+ 1383 073e 8827      		clr r24
+ 1384 0740 77FD      		sbrc r23,7
+ 1385 0742 8095      		com r24
+ 1386 0744 982F      		mov r25,r24
+ 1387 0746 0E94 0000 		call __floatsisf
+ 1388 074a F501      		movw r30,r10
+ 1389 074c 6193      		st Z+,r22
+ 1390 074e 7193      		st Z+,r23
+ 1391 0750 8193      		st Z+,r24
+ 1392 0752 9193      		st Z+,r25
+ 1393 0754 5F01      		movw r10,r30
+ 1394 0756 0894      		sec
+ 1395 0758 C11C      		adc r12,__zero_reg__
+ 1396 075a D11C      		adc r13,__zero_reg__
+ 1397 075c F6E0      		ldi r31,lo8(6)
+ 1398 075e CF16      		cp r12,r31
+ 1399 0760 D104      		cpc r13,__zero_reg__
+ 1400 0762 01F4      		brne .L180
+  56:main.c        **** 	a[3]=a[3]+81;
+ 1401               		.stabn	68,0,56,.LM134-.LFBB8
+ 1402               	.LM134:
+ 1403 0764 6D85      		ldd r22,Y+13
+ 1404 0766 7E85      		ldd r23,Y+14
+ 1405 0768 8F85      		ldd r24,Y+15
+ 1406 076a 9889      		ldd r25,Y+16
+ 1407 076c 20E0      		ldi r18,lo8(0x42a20000)
+ 1408 076e 30E0      		ldi r19,hi8(0x42a20000)
+ 1409 0770 42EA      		ldi r20,hlo8(0x42a20000)
+ 1410 0772 52E4      		ldi r21,hhi8(0x42a20000)
+ 1411 0774 0E94 0000 		call __addsf3
+ 1412 0778 862E      		mov r8,r22
+ 1413 077a 772E      		mov r7,r23
+ 1414 077c 682E      		mov r6,r24
+ 1415 077e 592E      		mov r5,r25
+ 1416 0780 862F      		mov r24,r22
+ 1417 0782 972D      		mov r25,r7
+ 1418 0784 A62D      		mov r26,r6
+ 1419 0786 B52D      		mov r27,r5
+ 1420 0788 8D87      		std Y+13,r24
+ 1421 078a 9E87      		std Y+14,r25
+ 1422 078c AF87      		std Y+15,r26
+ 1423 078e B88B      		std Y+16,r27
+GAS LISTING /tmp/ccDlPBYj.s 			page 31
+
+
+  57:main.c        **** 	a[4]=a[4]+81;
+ 1424               		.stabn	68,0,57,.LM135-.LFBB8
+ 1425               	.LM135:
+ 1426 0790 6989      		ldd r22,Y+17
+ 1427 0792 7A89      		ldd r23,Y+18
+ 1428 0794 8B89      		ldd r24,Y+19
+ 1429 0796 9C89      		ldd r25,Y+20
+ 1430 0798 20E0      		ldi r18,lo8(0x42a20000)
+ 1431 079a 30E0      		ldi r19,hi8(0x42a20000)
+ 1432 079c 42EA      		ldi r20,hlo8(0x42a20000)
+ 1433 079e 52E4      		ldi r21,hhi8(0x42a20000)
+ 1434 07a0 0E94 0000 		call __addsf3
+ 1435 07a4 262F      		mov r18,r22
+ 1436 07a6 372F      		mov r19,r23
+ 1437 07a8 482F      		mov r20,r24
+ 1438 07aa 592F      		mov r21,r25
+ 1439 07ac 298B      		std Y+17,r18
+ 1440 07ae 3A8B      		std Y+18,r19
+ 1441 07b0 4B8B      		std Y+19,r20
+ 1442 07b2 5C8B      		std Y+20,r21
+  64:main.c        **** 		if(a[4]>132){aterrizo=1;}
+ 1443               		.stabn	68,0,64,.LM136-.LFBB8
+ 1444               	.LM136:
+ 1445 07b4 A1E0      		ldi r26,lo8(1)
+ 1446 07b6 CA2E      		mov r12,r26
+ 1447 07b8 D12C      		mov r13,__zero_reg__
+ 1448 07ba 20E0      		ldi r18,lo8(0x43040000)
+ 1449 07bc 30E0      		ldi r19,hi8(0x43040000)
+ 1450 07be 44E0      		ldi r20,hlo8(0x43040000)
+ 1451 07c0 53E4      		ldi r21,hhi8(0x43040000)
+ 1452 07c2 0E94 0000 		call __gtsf2
+ 1453 07c6 1816      		cp __zero_reg__,r24
+ 1454 07c8 04F0      		brlt .L181
+ 1455 07ca CC24      		clr r12
+ 1456 07cc DD24      		clr r13
+ 1457               	.L181:
+  61:main.c        **** 		if(a[3]>132){count=1;}
+ 1458               		.stabn	68,0,61,.LM137-.LFBB8
+ 1459               	.LM137:
+ 1460 07ce F1E0      		ldi r31,lo8(1)
+ 1461 07d0 AF2E      		mov r10,r31
+ 1462 07d2 B12C      		mov r11,__zero_reg__
+ 1463 07d4 682D      		mov r22,r8
+ 1464 07d6 772D      		mov r23,r7
+ 1465 07d8 862D      		mov r24,r6
+ 1466 07da 952D      		mov r25,r5
+ 1467 07dc 20E0      		ldi r18,lo8(0x43040000)
+ 1468 07de 30E0      		ldi r19,hi8(0x43040000)
+ 1469 07e0 44E0      		ldi r20,hlo8(0x43040000)
+ 1470 07e2 53E4      		ldi r21,hhi8(0x43040000)
+ 1471 07e4 0E94 0000 		call __gtsf2
+ 1472 07e8 1816      		cp __zero_reg__,r24
+ 1473 07ea 04F0      		brlt .L183
+ 1474 07ec AA24      		clr r10
+ 1475 07ee BB24      		clr r11
+ 1476               	.L183:
+  69:main.c        **** 	    if ((count==1) && (aterrizo==0)) {
+GAS LISTING /tmp/ccDlPBYj.s 			page 32
+
+
+ 1477               		.stabn	68,0,69,.LM138-.LFBB8
+ 1478               	.LM138:
+ 1479 07f0 81E0      		ldi r24,lo8(1)
+ 1480 07f2 A816      		cp r10,r24
+ 1481 07f4 B104      		cpc r11,__zero_reg__
+ 1482 07f6 01F4      		brne .L182
+  69:main.c        **** 	    if ((count==1) && (aterrizo==0)) {
+ 1483               		.stabn	68,0,69,.LM139-.LFBB8
+ 1484               	.LM139:
+ 1485 07f8 C114      		cp r12,__zero_reg__
+ 1486 07fa D104      		cpc r13,__zero_reg__
+ 1487 07fc 01F0      		breq .+2
+ 1488 07fe 00C0      		rjmp .L184
+ 1489               	.LBB6:
+ 1490               	.LBB7:
+ 142:main.c        **** 	return atan(az/ax)*(57.2958);
+ 1491               		.stabn	68,0,142,.LM140-.LFBB8
+ 1492               	.LM140:
+ 1493 0800 6985      		ldd r22,Y+9
+ 1494 0802 7A85      		ldd r23,Y+10
+ 1495 0804 8B85      		ldd r24,Y+11
+ 1496 0806 9C85      		ldd r25,Y+12
+ 1497 0808 2981      		ldd r18,Y+1
+ 1498 080a 3A81      		ldd r19,Y+2
+ 1499 080c 4B81      		ldd r20,Y+3
+ 1500 080e 5C81      		ldd r21,Y+4
+ 1501 0810 0E94 0000 		call __divsf3
+ 1502 0814 0E94 0000 		call atan
+ 1503 0818 26EE      		ldi r18,lo8(0x42652ee6)
+ 1504 081a 3EE2      		ldi r19,hi8(0x42652ee6)
+ 1505 081c 45E6      		ldi r20,hlo8(0x42652ee6)
+ 1506 081e 52E4      		ldi r21,hhi8(0x42652ee6)
+ 1507 0820 0E94 0000 		call __mulsf3
+ 1508 0824 362E      		mov r3,r22
+ 1509 0826 272E      		mov r2,r23
+ 1510 0828 8D8B      		std Y+21,r24
+ 1511 082a 9E8B      		std Y+22,r25
+ 1512 082c 00C0      		rjmp .L191
+ 1513               	.L182:
+ 1514               	.LBE7:
+ 1515               	.LBE6:
+  78:main.c        **** 	    else if ((count==0) && (aterrizo==0))     {
+ 1516               		.stabn	68,0,78,.LM141-.LFBB8
+ 1517               	.LM141:
+ 1518 082e C114      		cp r12,__zero_reg__
+ 1519 0830 D104      		cpc r13,__zero_reg__
+ 1520 0832 01F4      		brne .L184
+  80:main.c        **** 				if(ms_time==8){time=time+1;ms_time=0;}else{time=time+0;}
+ 1521               		.stabn	68,0,80,.LM142-.LFBB8
+ 1522               	.LM142:
+ 1523 0834 A701      		movw r20,r14
+ 1524 0836 652F      		mov r22,r21
+ 1525 0838 7E2D      		mov r23,r14
+ 1526 083a 892D      		mov r24,r9
+ 1527 083c 942D      		mov r25,r4
+ 1528 083e 20E0      		ldi r18,lo8(0x41000000)
+ 1529 0840 30E0      		ldi r19,hi8(0x41000000)
+GAS LISTING /tmp/ccDlPBYj.s 			page 33
+
+
+ 1530 0842 40E0      		ldi r20,hlo8(0x41000000)
+ 1531 0844 51E4      		ldi r21,hhi8(0x41000000)
+ 1532 0846 0E94 0000 		call __eqsf2
+ 1533 084a 8823      		tst r24
+ 1534 084c 01F4      		brne .L186
+  80:main.c        **** 				if(ms_time==8){time=time+1;ms_time=0;}else{time=time+0;}
+ 1535               		.stabn	68,0,80,.LM143-.LFBB8
+ 1536               	.LM143:
+ 1537 084e 0F5F      		subi r16,lo8(-(1))
+ 1538 0850 1F4F      		sbci r17,hi8(-(1))
+ 1539 0852 FF24      		clr r15
+ 1540 0854 EE24      		clr r14
+ 1541 0856 9924      		clr r9
+ 1542 0858 4424      		clr r4
+ 1543               	.L186:
+ 1544               	.LBB8:
+ 1545               	.LBB9:
+ 1546               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h",132,0,0,.Ltext1
+ 1547               	.Ltext1:
    1:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** /* Copyright (c) 2002, Marek Michalkiewicz
    2:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****    Copyright (c) 2004,2005,2007 Joerg Wunsch
    3:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****    Copyright (c) 2007  Florin-Viorel Petrov
@@ -1738,9 +1957,6 @@ GAS LISTING /tmp/ccIBfZSu.s 			page 1
   15:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****      distribution.
   16:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
   17:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****    * Neither the name of the copyright holders nor the names of
-GAS LISTING /tmp/ccIBfZSu.s 			page 30
-
-
   18:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****      contributors may be used to endorse or promote products derived
   19:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****      from this software without specific prior written permission.
   20:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
@@ -1762,6 +1978,9 @@ GAS LISTING /tmp/ccIBfZSu.s 			page 1
   36:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #define _UTIL_DELAY_H_ 1
   37:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
   38:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #ifndef __HAS_DELAY_CYCLES
+GAS LISTING /tmp/ccDlPBYj.s 			page 34
+
+
   39:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #define __HAS_DELAY_CYCLES 1
   40:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #endif
   41:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
@@ -1798,9 +2017,6 @@ GAS LISTING /tmp/ccIBfZSu.s 			page 1
   72:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****     delay will be much longer (and basically unpredictable), and
   73:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****     applications that otherwise do not use floating-point calculations
   74:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****     will experience severe code bloat by the floating-point library
-GAS LISTING /tmp/ccIBfZSu.s 			page 31
-
-
   75:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****     routines linked into the application.
   76:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
   77:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****     The functions available allow the specification of microsecond, and
@@ -1822,6 +2038,9 @@ GAS LISTING /tmp/ccIBfZSu.s 			page 1
   93:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
   94:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #ifndef __OPTIMIZE__
   95:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+GAS LISTING /tmp/ccDlPBYj.s 			page 35
+
+
   96:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** #endif
   97:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
   98:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** /**
@@ -1858,9 +2077,6 @@ GAS LISTING /tmp/ccIBfZSu.s 			page 1
  129:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****    although this will be deprecated in future.
  130:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
  131:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h ****  */
-GAS LISTING /tmp/ccIBfZSu.s 			page 32
-
-
  132:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** void
  133:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** _delay_ms(double __ms)
  134:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** {
@@ -1882,149 +2098,133 @@ GAS LISTING /tmp/ccIBfZSu.s 			page 1
  150:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
  151:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 	#endif
  152:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 
+GAS LISTING /tmp/ccDlPBYj.s 			page 36
+
+
  153:/usr/lib/gcc/avr/4.5.3/../../../avr/include/util/delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
- 1330               		.stabn	68,0,153,.LM132-.LFBB9
- 1331               	.LM132:
- 1332 069c 87EA      		 ldi r24,lo8(24999)
- 1333 069e 91E6      	    ldi r25,hi8(24999)
- 1334 06a0 0197      	    1:sbiw r24,1
- 1335 06a2 01F4      	    brne 1b
- 1336 06a4 00C0      		rjmp .
- 1337 06a6 0000      		nop
- 1338               	.LBE15:
- 1339               	.LBE14:
- 1340               		.stabs	"main.c",132,0,0,.Ltext2
- 1341               	.Ltext2:
-  80:main.c        **** 				ms_time=ms_time+1;	
- 1342               		.stabn	68,0,80,.LM133-.LFBB9
- 1343               	.LM133:
- 1344 06a8 9601      		movw r18,r12
- 1345 06aa 6E2D      		mov r22,r14
- 1346 06ac 7F2D      		mov r23,r15
- 1347 06ae 832F      		mov r24,r19
- 1348 06b0 9C2D      		mov r25,r12
- 1349 06b2 20E0      		ldi r18,lo8(0x3f800000)
- 1350 06b4 30E0      		ldi r19,hi8(0x3f800000)
- 1351 06b6 40E8      		ldi r20,hlo8(0x3f800000)
- 1352 06b8 5FE3      		ldi r21,hhi8(0x3f800000)
- 1353 06ba 0E94 0000 		call __addsf3
- 1354 06be 7B01      		movw r14,r22
- 1355 06c0 D82E      		mov r13,r24
- 1356 06c2 C92E      		mov r12,r25
-  81:main.c        **** 				print_Time_Binary(time);
- 1357               		.stabn	68,0,81,.LM134-.LFBB9
- 1358               	.LM134:
- 1359 06c4 C501      		movw r24,r10
- 1360 06c6 0E94 0000 		call print_Time_Binary
- 1361               	.L191:
-  87:main.c        **** 				print_Decimes(x_total);
-GAS LISTING /tmp/ccIBfZSu.s 			page 33
+ 1548               		.stabn	68,0,153,.LM144-.LFBB8
+ 1549               	.LM144:
+ 1550 085a EDEA      		 ldi r30,lo8(24749)
+ 1551 085c F0E6      	    ldi r31,hi8(24749)
+ 1552 085e 3197      	    1:sbiw r30,1
+ 1553 0860 01F4      	    brne 1b
+ 1554 0862 00C0      		rjmp .
+ 1555 0864 0000      		nop
+ 1556               	.LBE9:
+ 1557               	.LBE8:
+ 1558               		.stabs	"main.c",132,0,0,.Ltext2
+ 1559               	.Ltext2:
+  82:main.c        **** 				ms_time=ms_time+1;	
+ 1560               		.stabn	68,0,82,.LM145-.LFBB8
+ 1561               	.LM145:
+ 1562 0866 A701      		movw r20,r14
+ 1563 0868 652F      		mov r22,r21
+ 1564 086a 7E2D      		mov r23,r14
+ 1565 086c 892D      		mov r24,r9
+ 1566 086e 942D      		mov r25,r4
+ 1567 0870 20E0      		ldi r18,lo8(0x3f800000)
+ 1568 0872 30E0      		ldi r19,hi8(0x3f800000)
+ 1569 0874 40E8      		ldi r20,hlo8(0x3f800000)
+ 1570 0876 5FE3      		ldi r21,hhi8(0x3f800000)
+ 1571 0878 0E94 0000 		call __addsf3
+ 1572 087c F62E      		mov r15,r22
+ 1573 087e E72E      		mov r14,r23
+ 1574 0880 982E      		mov r9,r24
+ 1575 0882 492E      		mov r4,r25
+ 1576               	.L184:
+  94:main.c        **** 				print_Time_Binary(time);				
+ 1577               		.stabn	68,0,94,.LM146-.LFBB8
+ 1578               	.LM146:
+ 1579 0884 C801      		movw r24,r16
+ 1580 0886 0E94 0000 		call print_Time_Binary
+ 1581               	.L191:
+  96:main.c        **** 				print_Angle_Binary(1,angle0xz);
+ 1582               		.stabn	68,0,96,.LM147-.LFBB8
+ 1583               	.LM147:
+ 1584 088a 81E0      		ldi r24,lo8(1)
+ 1585 088c 90E0      		ldi r25,hi8(1)
+ 1586 088e F101      		movw r30,r2
+ 1587 0890 3D89      		ldd r19,Y+21
+ 1588 0892 2E89      		ldd r18,Y+22
+ 1589 0894 4F2F      		mov r20,r31
+ 1590 0896 522D      		mov r21,r2
+ 1591 0898 632F      		mov r22,r19
+ 1592 089a 722F      		mov r23,r18
+ 1593 089c 0E94 0000 		call print_Angle_Binary
+  97:main.c        **** 				x_total=final_distance(angle0xz,(time+(ms_time/10))); // Calcula la distancia final.
+ 1594               		.stabn	68,0,97,.LM148-.LFBB8
+ 1595               	.LM148:
+ 1596 08a0 B801      		movw r22,r16
+ 1597 08a2 8827      		clr r24
+ 1598 08a4 77FD      		sbrc r23,7
+ 1599 08a6 8095      		com r24
+GAS LISTING /tmp/ccDlPBYj.s 			page 37
 
 
- 1362               		.stabn	68,0,87,.LM135-.LFBB9
- 1363               	.LM135:
- 1364 06ca 60E0      		ldi r22,lo8(0x0)
- 1365 06cc 70E0      		ldi r23,hi8(0x0)
- 1366 06ce CB01      		movw r24,r22
- 1367 06d0 0E94 0000 		call print_Decimes
- 1368 06d4 00C0      		rjmp .L190
- 1369               	.L189:
-  78:main.c        **** 				if(ms_time==10){time=time+1;ms_time=0;}else{time=time+0;}
- 1370               		.stabn	68,0,78,.LM136-.LFBB9
- 1371               	.LM136:
- 1372 06d6 9601      		movw r18,r12
- 1373 06d8 6E2D      		mov r22,r14
- 1374 06da 7F2D      		mov r23,r15
- 1375 06dc 832F      		mov r24,r19
- 1376 06de 9C2D      		mov r25,r12
- 1377 06e0 20E0      		ldi r18,lo8(0x41200000)
- 1378 06e2 30E0      		ldi r19,hi8(0x41200000)
- 1379 06e4 40E2      		ldi r20,hlo8(0x41200000)
- 1380 06e6 51E4      		ldi r21,hhi8(0x41200000)
- 1381 06e8 0E94 0000 		call __eqsf2
- 1382 06ec 8823      		tst r24
- 1383 06ee 01F0      		breq .L185
- 1384 06f0 00C0      		rjmp .L186
- 1385               		.size	main, .-main
- 1386               		.stabs	"i:r(0,1)",64,0,47,16
- 1387               		.stabs	"a:(0,16)=ar(0,17)=r(0,17);0;0177777;;0;4;(0,13)",128,0,53,1
- 1388               		.stabs	"time:r(0,1)",64,0,54,10
- 1389               		.stabn	192,0,0,.LFBB9-.LFBB9
- 1390               		.stabn	224,0,0,.Lscope9-.LFBB9
- 1391               	.Lscope9:
- 1392               		.stabs	"",36,0,0,.Lscope9-.LFBB9
- 1393               		.stabd	78,0,0
- 1394               		.stabs	"final_distance:F(0,13)",36,0,307,final_distance
- 1395               		.stabs	"angle0xz:P(0,13)",64,0,307,22
- 1396               		.stabs	"tf:P(0,13)",64,0,307,18
- 1397               	.global	final_distance
- 1398               		.type	final_distance, @function
- 1399               	final_distance:
- 1400               		.stabd	46,0,0
- 298:main.c        **** 
- 299:main.c        **** 
- 300:main.c        **** }
- 301:main.c        **** //------------------------------------------------------//
- 302:main.c        **** 
- 303:main.c        **** //------------------------------------------------------//
- 304:main.c        **** //--------------------Final_Distance--------------------//
- 305:main.c        **** //------------------------------------------------------//
- 306:main.c        **** 
- 307:main.c        **** double final_distance(double angle0xz,double tf){
- 1401               		.stabn	68,0,307,.LM137-.LFBB10
- 1402               	.LM137:
- 1403               	.LFBB10:
- 1404               	/* prologue: function */
- 1405               	/* frame size = 0 */
- 1406               	/* stack size = 0 */
- 1407               	.L__stack_usage = 0
-GAS LISTING /tmp/ccIBfZSu.s 			page 34
-
-
- 308:main.c        **** 	float theta=45/57.2958;
- 309:main.c        **** 	float t=1;
- 310:main.c        **** 	float g=9.8;
- 311:main.c        **** 	float a=-sin(2*theta)/(t*t); 
- 312:main.c        **** 	float b=g;
- 313:main.c        **** 	float c=(-1/4)*(g*g)*(t*t)*(sin(2*theta));
- 314:main.c        **** 	float r=(1/(2*a))*(-b+sqrt(b*b-4*a*c));
- 315:main.c        **** 	float h=10*sqrt(4);
- 316:main.c        **** 	return sqrt(c*c);
- 317:main.c        **** }
- 1408               		.stabn	68,0,317,.LM138-.LFBB10
- 1409               	.LM138:
- 1410 06f2 60E0      		ldi r22,lo8(0x0)
- 1411 06f4 70E0      		ldi r23,hi8(0x0)
- 1412 06f6 CB01      		movw r24,r22
- 1413               	/* epilogue start */
- 1414 06f8 0895      		ret
- 1415               		.size	final_distance, .-final_distance
- 1416               	.Lscope10:
- 1417               		.stabs	"",36,0,0,.Lscope10-.LFBB10
- 1418               		.stabd	78,0,0
- 1419               		.stabs	"",100,0,0,.Letext0
- 1420               	.Letext0:
-GAS LISTING /tmp/ccIBfZSu.s 			page 35
+ 1600 08a8 982F      		mov r25,r24
+ 1601 08aa 0E94 0000 		call __floatsisf
+ 1602 08ae 5B01      		movw r10,r22
+ 1603 08b0 6C01      		movw r12,r24
+ 1604 08b2 A701      		movw r20,r14
+ 1605 08b4 652F      		mov r22,r21
+ 1606 08b6 7E2D      		mov r23,r14
+ 1607 08b8 892D      		mov r24,r9
+ 1608 08ba 942D      		mov r25,r4
+ 1609 08bc 20E0      		ldi r18,lo8(0x41200000)
+ 1610 08be 30E0      		ldi r19,hi8(0x41200000)
+ 1611 08c0 40E2      		ldi r20,hlo8(0x41200000)
+ 1612 08c2 51E4      		ldi r21,hhi8(0x41200000)
+ 1613 08c4 0E94 0000 		call __divsf3
+ 1614 08c8 9B01      		movw r18,r22
+ 1615 08ca AC01      		movw r20,r24
+ 1616 08cc C601      		movw r24,r12
+ 1617 08ce B501      		movw r22,r10
+ 1618 08d0 0E94 0000 		call __addsf3
+ 1619 08d4 9B01      		movw r18,r22
+ 1620 08d6 AC01      		movw r20,r24
+ 1621 08d8 D101      		movw r26,r2
+ 1622 08da FD89      		ldd r31,Y+21
+ 1623 08dc EE89      		ldd r30,Y+22
+ 1624 08de 6B2F      		mov r22,r27
+ 1625 08e0 722D      		mov r23,r2
+ 1626 08e2 8F2F      		mov r24,r31
+ 1627 08e4 9E2F      		mov r25,r30
+ 1628 08e6 0E94 0000 		call final_distance
+  98:main.c        **** 				print_Decimes(x_total);
+ 1629               		.stabn	68,0,98,.LM149-.LFBB8
+ 1630               	.LM149:
+ 1631 08ea 0E94 0000 		call print_Decimes
+ 1632 08ee 00C0      		rjmp .L190
+ 1633               		.size	main, .-main
+ 1634               		.stabs	"i:r(0,1)",64,0,45,12
+ 1635               		.stabs	"a:(0,16)=ar(0,17)=r(0,17);0;0177777;;0;4;(0,13)",128,0,48,1
+ 1636               		.stabs	"time:r(0,1)",64,0,49,16
+ 1637               		.stabn	192,0,0,.LFBB8-.LFBB8
+ 1638               		.stabn	224,0,0,.Lscope8-.LFBB8
+ 1639               	.Lscope8:
+ 1640               		.stabs	"",36,0,0,.Lscope8-.LFBB8
+ 1641               		.stabd	78,0,0
+ 1642               		.stabs	"",100,0,0,.Letext0
+ 1643               	.Letext0:
+GAS LISTING /tmp/ccDlPBYj.s 			page 38
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-     /tmp/ccIBfZSu.s:2      *ABS*:0000003f __SREG__
-     /tmp/ccIBfZSu.s:3      *ABS*:0000003e __SP_H__
-     /tmp/ccIBfZSu.s:4      *ABS*:0000003d __SP_L__
-     /tmp/ccIBfZSu.s:5      *ABS*:00000034 __CCP__
-     /tmp/ccIBfZSu.s:6      *ABS*:00000000 __tmp_reg__
-     /tmp/ccIBfZSu.s:7      *ABS*:00000001 __zero_reg__
-     /tmp/ccIBfZSu.s:74     .text:00000000 init_ports
-     /tmp/ccIBfZSu.s:123    .text:00000018 select_ADC_port
-     /tmp/ccIBfZSu.s:158    .text:00000024 initial_anglexy
-     /tmp/ccIBfZSu.s:190    .text:0000003a initial_anglexz
-     /tmp/ccIBfZSu.s:234    .text:00000068 initial_angleyz
-     /tmp/ccIBfZSu.s:277    .text:00000096 print_Angle_Binary
-     /tmp/ccIBfZSu.s:601    .text:00000260 print_Decimes
-     /tmp/ccIBfZSu.s:1103   .text:00000588 print_Time_Binary
-     /tmp/ccIBfZSu.s:1205   .text:000005de main
-     /tmp/ccIBfZSu.s:1399   .text:000006f2 final_distance
+     /tmp/ccDlPBYj.s:2      *ABS*:0000003f __SREG__
+     /tmp/ccDlPBYj.s:3      *ABS*:0000003e __SP_H__
+     /tmp/ccDlPBYj.s:4      *ABS*:0000003d __SP_L__
+     /tmp/ccDlPBYj.s:5      *ABS*:00000034 __CCP__
+     /tmp/ccDlPBYj.s:6      *ABS*:00000000 __tmp_reg__
+     /tmp/ccDlPBYj.s:7      *ABS*:00000001 __zero_reg__
+     /tmp/ccDlPBYj.s:74     .text:00000000 init_ports
+     /tmp/ccDlPBYj.s:134    .text:00000026 select_ADC_port
+     /tmp/ccDlPBYj.s:169    .text:00000032 initial_anglexz
+     /tmp/ccDlPBYj.s:212    .text:00000060 print_Angle_Binary
+     /tmp/ccDlPBYj.s:536    .text:0000022a print_Decimes
+     /tmp/ccDlPBYj.s:1038   .text:00000552 print_Time_Binary
+     /tmp/ccDlPBYj.s:1142   .text:000005a8 final_distance
+     /tmp/ccDlPBYj.s:1309   .text:000006d8 main
 
 UNDEFINED SYMBOLS
 __divsf3
@@ -2033,6 +2233,8 @@ __mulsf3
 __gtsf2
 __gesf2
 __subsf3
-__floatsisf
 __addsf3
+sin
+sqrt
+__floatsisf
 __eqsf2

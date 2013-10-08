@@ -1,0 +1,234 @@
+GAS LISTING /tmp/ccZaAgdN.s 			page 1
+
+
+   1               		.file	"led.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__ = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.stabs	"/home/monica/Documents/ADSD_Proyecto2_2013_2/PruebasATMEGA16/PruebaAcelerometro/",100,0,2,
+   9               		.stabs	"led.c",100,0,2,.Ltext0
+  10               		.text
+  11               	.Ltext0:
+  12               		.stabs	"gcc2_compiled.",60,0,0,0
+  13               		.stabs	"int:t(0,1)=r(0,1);-32768;32767;",128,0,0,0
+  14               		.stabs	"char:t(0,2)=@s8;r(0,2);0;255;",128,0,0,0
+  15               		.stabs	"long int:t(0,3)=@s32;r(0,3);020000000000;017777777777;",128,0,0,0
+  16               		.stabs	"unsigned int:t(0,4)=r(0,4);0;0177777;",128,0,0,0
+  17               		.stabs	"long unsigned int:t(0,5)=@s32;r(0,5);0;037777777777;",128,0,0,0
+  18               		.stabs	"long long int:t(0,6)=@s64;r(0,6);01000000000000000000000;0777777777777777777777;",128,0,0,
+  19               		.stabs	"long long unsigned int:t(0,7)=@s64;r(0,7);0;01777777777777777777777;",128,0,0,0
+  20               		.stabs	"short int:t(0,8)=r(0,8);-32768;32767;",128,0,0,0
+  21               		.stabs	"short unsigned int:t(0,9)=r(0,9);0;0177777;",128,0,0,0
+  22               		.stabs	"signed char:t(0,10)=@s8;r(0,10);-128;127;",128,0,0,0
+  23               		.stabs	"unsigned char:t(0,11)=@s8;r(0,11);0;255;",128,0,0,0
+  24               		.stabs	"float:t(0,12)=r(0,1);4;0;",128,0,0,0
+  25               		.stabs	"double:t(0,13)=r(0,1);4;0;",128,0,0,0
+  26               		.stabs	"long double:t(0,14)=r(0,1);4;0;",128,0,0,0
+  27               		.stabs	"void:t(0,15)=(0,15)",128,0,0,0
+  28               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/avr/io.h",130,0,0,0
+  29               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/avr/sfr_defs.h",130,0,0,0
+  30               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/inttypes.h",130,0,0,0
+  31               		.stabs	"/usr/lib/gcc/avr/4.5.3/include/stdint.h",130,0,0,0
+  32               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/stdint.h",130,0,0,0
+  33               		.stabs	"int8_t:t(5,1)=(0,10)",128,0,121,0
+  34               		.stabs	"uint8_t:t(5,2)=(0,11)",128,0,122,0
+  35               		.stabs	"int16_t:t(5,3)=(0,1)",128,0,123,0
+  36               		.stabs	"uint16_t:t(5,4)=(0,4)",128,0,124,0
+  37               		.stabs	"int32_t:t(5,5)=(0,3)",128,0,125,0
+  38               		.stabs	"uint32_t:t(5,6)=(0,5)",128,0,126,0
+  39               		.stabs	"int64_t:t(5,7)=(0,6)",128,0,128,0
+  40               		.stabs	"uint64_t:t(5,8)=(0,7)",128,0,129,0
+  41               		.stabs	"intptr_t:t(5,9)=(5,3)",128,0,142,0
+  42               		.stabs	"uintptr_t:t(5,10)=(5,4)",128,0,147,0
+  43               		.stabs	"int_least8_t:t(5,11)=(5,1)",128,0,159,0
+  44               		.stabs	"uint_least8_t:t(5,12)=(5,2)",128,0,164,0
+  45               		.stabs	"int_least16_t:t(5,13)=(5,3)",128,0,169,0
+  46               		.stabs	"uint_least16_t:t(5,14)=(5,4)",128,0,174,0
+  47               		.stabs	"int_least32_t:t(5,15)=(5,5)",128,0,179,0
+  48               		.stabs	"uint_least32_t:t(5,16)=(5,6)",128,0,184,0
+  49               		.stabs	"int_least64_t:t(5,17)=(5,7)",128,0,192,0
+  50               		.stabs	"uint_least64_t:t(5,18)=(5,8)",128,0,199,0
+  51               		.stabs	"int_fast8_t:t(5,19)=(5,1)",128,0,213,0
+  52               		.stabs	"uint_fast8_t:t(5,20)=(5,2)",128,0,218,0
+  53               		.stabs	"int_fast16_t:t(5,21)=(5,3)",128,0,223,0
+  54               		.stabs	"uint_fast16_t:t(5,22)=(5,4)",128,0,228,0
+  55               		.stabs	"int_fast32_t:t(5,23)=(5,5)",128,0,233,0
+  56               		.stabs	"uint_fast32_t:t(5,24)=(5,6)",128,0,238,0
+  57               		.stabs	"int_fast64_t:t(5,25)=(5,7)",128,0,246,0
+GAS LISTING /tmp/ccZaAgdN.s 			page 2
+
+
+  58               		.stabs	"uint_fast64_t:t(5,26)=(5,8)",128,0,253,0
+  59               		.stabs	"intmax_t:t(5,27)=(5,7)",128,0,273,0
+  60               		.stabs	"uintmax_t:t(5,28)=(5,8)",128,0,278,0
+  61               		.stabn	162,0,0,0
+  62               		.stabn	162,0,0,0
+  63               		.stabs	"int_farptr_t:t(3,1)=(5,5)",128,0,77,0
+  64               		.stabs	"uint_farptr_t:t(3,2)=(5,6)",128,0,81,0
+  65               		.stabn	162,0,0,0
+  66               		.stabn	162,0,0,0
+  67               		.stabs	"/usr/lib/gcc/avr/4.5.3/../../../avr/include/avr/fuse.h",130,0,0,0
+  68               		.stabs	"__fuse_t:t(6,1)=(6,2)=s2low:(0,11),0,8;high:(0,11),8,8;;",128,0,252,0
+  69               		.stabn	162,0,0,0
+  70               		.stabn	162,0,0,0
+  71               		.stabs	"main:F(0,1)",36,0,9,main
+  72               	.global	main
+  73               		.type	main, @function
+  74               	main:
+  75               		.stabd	46,0,0
+   1:led.c         **** #include<avr/io.h>
+   2:led.c         **** #define seg_1 130
+   3:led.c         **** #define seg_2 140
+   4:led.c         **** #define seg_3 152
+   5:led.c         **** #define seg_4 163
+   6:led.c         **** #define sbi(x,y) x |= _BV(y)
+   7:led.c         **** #define cbi(x,y) x &=~_BV(y)
+   8:led.c         **** 
+   9:led.c         **** int main(void)
+  10:led.c         **** {
+  76               		.stabn	68,0,10,.LM0-.LFBB1
+  77               	.LM0:
+  78               	.LFBB1:
+  79               	/* prologue: function */
+  80               	/* frame size = 0 */
+  81               	/* stack size = 0 */
+  82               	.L__stack_usage = 0
+  11:led.c         **** 	DDRB=0xff; //PORTB as output
+  83               		.stabn	68,0,11,.LM1-.LFBB1
+  84               	.LM1:
+  85 0000 8FEF      		ldi r24,lo8(-1)
+  86 0002 87BB      		out 55-32,r24
+  12:led.c         **** 	PORTB=0x00;
+  87               		.stabn	68,0,12,.LM2-.LFBB1
+  88               	.LM2:
+  89 0004 18BA      		out 56-32,__zero_reg__
+  13:led.c         **** 	DDRA=0x00; //PORTA set as input (since we want to take inputs for the ADC)
+  90               		.stabn	68,0,13,.LM3-.LFBB1
+  91               	.LM3:
+  92 0006 1ABA      		out 58-32,__zero_reg__
+  14:led.c         **** 	PORTA=0xff; //Enable the pull-ups on PORTA
+  93               		.stabn	68,0,14,.LM4-.LFBB1
+  94               	.LM4:
+  95 0008 8BBB      		out 59-32,r24
+  15:led.c         **** 
+  16:led.c         **** 	ADMUX =_BV(ADLAR); //Enable the Left aligning of the ADC result
+  96               		.stabn	68,0,16,.LM5-.LFBB1
+  97               	.LM5:
+  98 000a 80E2      		ldi r24,lo8(32)
+GAS LISTING /tmp/ccZaAgdN.s 			page 3
+
+
+  99 000c 87B9      		out 39-32,r24
+  17:led.c         **** 
+  18:led.c         **** 	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0); //Enable the ADC with prescaler=128
+ 100               		.stabn	68,0,18,.LM6-.LFBB1
+ 101               	.LM6:
+ 102 000e 87E8      		ldi r24,lo8(-121)
+ 103 0010 86B9      		out 38-32,r24
+ 104               	.L11:
+  19:led.c         **** 
+  20:led.c         **** 	ADCSRA |=_BV(ADSC); //Set the bit to start the conversion
+ 105               		.stabn	68,0,20,.LM7-.LFBB1
+ 106               	.LM7:
+ 107 0012 369A      		sbi 38-32,6
+ 108               	.L10:
+  21:led.c         **** 	while(1)
+  22:led.c         **** 	{
+  23:led.c         **** 		while(ADCSRA &_BV(ADSC)) {} //Waits for ADC conversion to complete
+ 109               		.stabn	68,0,23,.LM8-.LFBB1
+ 110               	.LM8:
+ 111 0014 3699      		sbic 38-32,6
+ 112 0016 00C0      		rjmp .L10
+  24:led.c         **** 
+  25:led.c         **** 		if(ADCH>=seg_4)
+ 113               		.stabn	68,0,25,.LM9-.LFBB1
+ 114               	.LM9:
+ 115 0018 85B1      		in r24,37-32
+ 116 001a 833A      		cpi r24,lo8(-93)
+ 117 001c 00F0      		brlo .L3
+  26:led.c         **** 		{
+  27:led.c         **** 			sbi(PORTB,PB0); //Suppose a motor between PB0 and PB1 with proper buffers
+ 118               		.stabn	68,0,27,.LM10-.LFBB1
+ 119               	.LM10:
+ 120 001e C09A      		sbi 56-32,0
+ 121 0020 00C0      		rjmp .L12
+ 122               	.L3:
+  28:led.c         **** 			sbi(PORTB,PB1); // In this case, the motor runs forward
+  29:led.c         **** 		}
+  30:led.c         **** 		else if (ADCH>=seg_3)
+ 123               		.stabn	68,0,30,.LM11-.LFBB1
+ 124               	.LM11:
+ 125 0022 85B1      		in r24,37-32
+ 126 0024 8839      		cpi r24,lo8(-104)
+ 127 0026 00F0      		brlo .L5
+  31:led.c         **** 		{
+  32:led.c         **** 			sbi(PORTB,PB0); //Here the motor runs backward
+ 128               		.stabn	68,0,32,.LM12-.LFBB1
+ 129               	.LM12:
+ 130 0028 C09A      		sbi 56-32,0
+ 131 002a 00C0      		rjmp .L13
+ 132               	.L5:
+  33:led.c         **** 			cbi(PORTB,PB1);
+  34:led.c         **** 		}
+  35:led.c         **** 		else if (ADCH>=seg_2)
+ 133               		.stabn	68,0,35,.LM13-.LFBB1
+ 134               	.LM13:
+ 135 002c 85B1      		in r24,37-32
+ 136 002e 8C38      		cpi r24,lo8(-116)
+GAS LISTING /tmp/ccZaAgdN.s 			page 4
+
+
+ 137 0030 00F0      		brlo .L6
+  36:led.c         **** 		{
+  37:led.c         **** 			cbi(PORTB,PB0); //Here the motor runs backward
+ 138               		.stabn	68,0,37,.LM14-.LFBB1
+ 139               	.LM14:
+ 140 0032 C098      		cbi 56-32,0
+ 141               	.L12:
+  38:led.c         **** 			sbi(PORTB,PB1);
+ 142               		.stabn	68,0,38,.LM15-.LFBB1
+ 143               	.LM15:
+ 144 0034 C19A      		sbi 56-32,1
+ 145 0036 00C0      		rjmp .L11
+ 146               	.L6:
+  39:led.c         **** 		}
+  40:led.c         **** 		else if (ADCH>=seg_1)
+ 147               		.stabn	68,0,40,.LM16-.LFBB1
+ 148               	.LM16:
+ 149 0038 85B1      		in r24,37-32
+ 150 003a 8238      		cpi r24,lo8(-126)
+ 151 003c 00F0      		brlo .L11
+  41:led.c         **** 		{
+  42:led.c         **** 			cbi(PORTB,PB0); //Here the motor runs backward
+ 152               		.stabn	68,0,42,.LM17-.LFBB1
+ 153               	.LM17:
+ 154 003e C098      		cbi 56-32,0
+ 155               	.L13:
+  43:led.c         **** 			cbi(PORTB,PB1);
+ 156               		.stabn	68,0,43,.LM18-.LFBB1
+ 157               	.LM18:
+ 158 0040 C198      		cbi 56-32,1
+ 159 0042 00C0      		rjmp .L11
+ 160               		.size	main, .-main
+ 161               	.Lscope1:
+ 162               		.stabs	"",36,0,0,.Lscope1-.LFBB1
+ 163               		.stabd	78,0,0
+ 164               		.stabs	"",100,0,0,.Letext0
+ 165               	.Letext0:
+GAS LISTING /tmp/ccZaAgdN.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 led.c
+     /tmp/ccZaAgdN.s:2      *ABS*:0000003f __SREG__
+     /tmp/ccZaAgdN.s:3      *ABS*:0000003e __SP_H__
+     /tmp/ccZaAgdN.s:4      *ABS*:0000003d __SP_L__
+     /tmp/ccZaAgdN.s:5      *ABS*:00000034 __CCP__
+     /tmp/ccZaAgdN.s:6      *ABS*:00000000 __tmp_reg__
+     /tmp/ccZaAgdN.s:7      *ABS*:00000001 __zero_reg__
+     /tmp/ccZaAgdN.s:74     .text:00000000 main
+
+NO UNDEFINED SYMBOLS
