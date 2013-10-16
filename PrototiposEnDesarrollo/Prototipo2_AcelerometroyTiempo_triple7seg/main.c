@@ -49,7 +49,7 @@ void main(void)
 	double angle0xz=0.0;
 
 	double a[5];
-	double count;
+	double despegue;
 	int aterrizo=0;
 	double xmax=0.0;
 	double angle=0.0;
@@ -63,16 +63,20 @@ void main(void)
 	
 		// Conversión de entrada análoga
 		
-		if(a[3]>132){count=1;}
-		else{count=0;}
+		if(a[3]>132){despegue=1;}
+		else{despegue=0;}
 
 		if(a[4]>132){aterrizo=1;}
 		else{aterrizo=0;}
 
 		// Código de funcionamiento:
 
-		angle=calculate_angle(a[0],a[2]);
-		print_Number(angle);
+		if(despegue==1){
+			angle=calculate_angle(a[0],a[2]);
+			print_Number(angle);}
+		else{angle=angle;
+			print_Number(angle);}
+		
 		
 }			
 }
@@ -245,6 +249,7 @@ else{
 
 	PORTC=decimales;
 	PORTD=Disp3;
+	_delay_us(100);
 
 }
 }
@@ -255,18 +260,40 @@ else{
 
 double calculate_angle(double ax, double az){
 
-double angle=0.0;
+//regz=-8,1926*z+755,19
+//regX=0,6586*x^2-106,73*x+4325
 
-if(ax==92.0 && az==80.9){angle=90.0;}
-else if(ax==92.0 && az==83.0){angle=75.0;}
-else if(ax==91.0 && az==85.0){angle=60.0;}
-else if(ax==89.0 && az==87.0){angle=45.0;}
-else if(ax==88.0 && az==89.0){angle=30.0;}
-else if(ax==85.0 && az==90.9){angle=15.0;}
-else if(ax==82.0 && az==91.0){angle=0.0;}
-else{angle=00.0;}
+//SUMA=regX+regZ;
 
-return angle;
+//ANGULO=0,00003*SUMA^3-0,0073*SUMA^2+1,0438*SUMA-8,4633
+//ERROR=(0,001*SUMA*xSUMA)-0,067*SUMA+0,9513
+
+double angulo=0.0;
+double error=0.0;
+double func=0.0;
+double regz=0.0;
+double regx=0.0;
+double suma=0.0;
+double error_f=0.0;
+
+//regz
+regz=-8.1926*az+755.19;
+
+//regx
+regx=0.6586*(ax*ax)-106.73*(ax)+4325;
+
+//Suma
+suma=regx+regz;
+
+//Angulo
+angulo=0.00003*(suma*suma*suma)-0.0073*(suma*suma)+1.0438*(suma)-8.4633;
+
+//Error
+error_f=0.001*(suma*suma)-0.067*(suma)+0.9513;
+
+func=angulo-error_f;
+
+return func;
 }
 
 
