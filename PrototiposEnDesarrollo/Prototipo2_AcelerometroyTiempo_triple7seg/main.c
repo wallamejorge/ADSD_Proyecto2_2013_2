@@ -31,6 +31,7 @@ void init_ports(void); //Inicializa los puertos
 void select_ADC_port(int i);// Seleccion cual puerto de ADC leer
 void print_Number(double num_in);// Imprime en PORTD el angulo medido en binario
 double calculate_angle(double ax, double az); // calcula en ángulo
+double calculate_distance(double angle); // calcula la distancia
 //------------------------------------------------------//
 
 
@@ -53,6 +54,8 @@ void main(void)
 	int aterrizo=0;
 	double xmax=0.0;
 	double angle=0.0;
+	double angulo=0.0;
+	double distancia=0.0;
 
 	while (1)
 	{ 
@@ -74,8 +77,9 @@ void main(void)
 		if(despegue==1){
 			angle=calculate_angle(a[0],a[2]);
 			print_Number(angle);}
-		else{angle=angle;
-			print_Number(angle);}
+		else{angulo=angle;
+			distancia=calculate_distance(angulo);
+			print_Number(distancia);}
 		
 		
 }			
@@ -260,14 +264,6 @@ else{
 
 double calculate_angle(double ax, double az){
 
-//regz=-8,1926*z+755,19
-//regX=0,6586*x^2-106,73*x+4325
-
-//SUMA=regX+regZ;
-
-//ANGULO=0,00003*SUMA^3-0,0073*SUMA^2+1,0438*SUMA-8,4633
-//ERROR=(0,001*SUMA*xSUMA)-0,067*SUMA+0,9513
-
 double angulo=0.0;
 double error=0.0;
 double func=0.0;
@@ -296,6 +292,22 @@ func=angulo-error_f;
 return func;
 }
 
+//---------------------------------------------------------------------------------//
+//--------------------------Calcular Distancia----------------------------------------//
+//---------------------------------------------------------------------------------//
+
+double calculate_distance(double angle){
+
+double distance=0.0;
+
+double grado2=-0.0101*(angle*angle);
+double grado1=0.9208*(angle);
+double grado0=0.1832;
+
+distance=grado2+grado1+grado0;
+
+return distance;
+}
 
 
 
